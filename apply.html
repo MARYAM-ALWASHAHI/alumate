@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en"><head><base target="_top"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ألوميت · ALUMATE</title>
+<meta name="theme-color" content="#0B2D4A">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAABgFBMVEVVlKMWNF9QWGlU4ukKIzkHOV4nqNJdrsmz1uELIj4HHjcgKDAAMoQzZmYQRG8OQWgvZH0AZpkscZwngI4H1uJVAFVqf6EJKkYINVkGIzsEGzELOmIAAAAMR3QKZ5YJl7QIiKycpa4LV4gLt8uiq7UJd6eyusMHqMSqsrwTxdMGd5UNpbkwydQLhpu6w8vM09rDytIKVHMoqLcvuMUCCRkNbaKSmqYBDSIAVVUIKUoKKkYAAFUJmsUsOU3S2+IKKUQMQ1cOZXcLK0UPTYItY4hXYnNOaIkAAP8PNE0HNlpodIh5hJQLMlQHNFgLOmIXsb01S2ku0Nja4+jj5uoAAH8KLT8HIzoLLUkLLUkAMzMKOWIU09wwQlUlm6xJV2ns9PUAHkAIJDsIKEsBNFcJNGUIOmARisEZ4es3hakusb435u5AytRQ5etjaXp0mrONpsQFGzcKJjwGIjsLPWMAVaoAf38RzuAuV3VbeJ1YltRG1+FlbIKCi5iTtdaZzd0KHzVL4RycAAAAgHRSTlP/IP//X0////8tpf//BU6N/wX///8D//7+/v/+AP///////////////////////////////////wMT0AP///+y//9y/////wETs///cM3P//////8CEs9PhgVx////////bC2IDLH/////////////LoyvhgMC////////////GMNlhgkAAAgdSURBVHjatZqHf9pIE4aV5NpX72t3W1QBIUCAhGwMwQbc0mzHTnF6ubRLuXwp13v5129mV6jQZZPxDxsb/D56Z3ZnV0iKFse38DhxZ+eAylAh6HCQqbG6vvX4mqadTogq0TP464U7B6qqq0JZDSMjgpD9ixc0bW0UsAbyqq5HuuqYmAsAb0HEEOC8pr1/kNIaFlbndSBS9d4Q4Jr2j2/UMO1CnY45dHx5TgAhX91OAs5rnz9V48qOt5AJwMh6Jwac1zo7cTEnJj9DijDWr0eA7/79NCExCzA/4fY1CTitfTxD/2gAeguHvgLj858jwz0WPXqKgHATHUCBD0Zmkxr/HJlq8wPIakc7r3yrfaPS0fmaBh0RgElStA4e4yTC8QCEdKAGFzOIZyZsacrawbsErK4pj1X13ekT8li5qNJ3SdhSdrJmKBtg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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Cairo:wght@400;600;700;800&family=Montserrat:wght@600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<script src="kh.js"></script>
+</head><body>
+<div id="app">
+  <header class="top"><div class="wrap bar"><div class="brand">
+    <span class="mk" aria-hidden="true"></span>
+    <span class="bn"><b>ألوميت</b><small><i>ALU</i>MATE</small></span></div>
+    <nav class="tabs navs" id="nav" data-t-aria aria-label="Main menu"></nav>
+    <div class="side" id="langslot"></div></div></header>
+  <main class="wrap">
+    <div class="demo-note" id="demo" hidden><b>!</b><span data-t>Demonstration version. Please do not enter real personal data or upload real documents.</span></div>
+    <section id="v-app">
+      <div class="hero" id="hero">
+        <p class="eyebrow" data-t>Your Journey. Your Opportunity.</p>
+        <h1 data-t>Your future starts with one step.</h1>
+        <p class="lead" data-t>Register in the discipline you studied. Shortlisted applicants get an SMS with a code for two short online tests, and places are awarded on the results.</p>
+        <div class="actions"><button class="btn amber" id="browse" data-t>Register for an internship</button><button class="btn hghost" id="trackbtn" type="button" data-t>Track my application</button><a class="btn hghost" id="havecode" href="test.html" target="_top" data-t>I have an access code</a></div>
+        <div class="route" aria-hidden="true">
+          <svg viewBox="0 0 800 200">
+            <path class="base" d="M64 150 C160 150 200 50 300 50 C400 50 440 120 540 120 C640 120 680 50 736 50" fill="none" stroke-width="3" stroke-linecap="round"/>
+            <path class="drawn" pathLength="1" d="M64 150 C160 150 200 50 300 50 C400 50 440 120 540 120 C640 120 680 50 736 50" fill="none" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="64" cy="150" r="11" fill="var(--hero-bg)" stroke="var(--seat)" stroke-width="3"/>
+            <circle cx="300" cy="50" r="11" fill="var(--hero-bg)" stroke="var(--seat)" stroke-width="3"/>
+            <circle cx="540" cy="120" r="11" fill="var(--hero-bg)" stroke="var(--seat)" stroke-width="3"/>
+            <circle cx="736" cy="50" r="13" fill="var(--seat)"/>
+          </svg>
+          <ul id="routel"></ul>
+        </div>
+      </div>
+      <div class="steps" id="steps" data-t-aria aria-label="Steps"></div>
+      <div id="stage"></div>
+    </section>
+  </main>
+  <div id="toast" role="status" aria-live="polite"><span id="toast-t"></span></div>
+</div>
+<script>
+var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(new URLSearchParams(location.search).get('lang')||''),DEMO=!!window.ALUMATE_DEMO;
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  var t=KH.t;
+  KH.add({
+    'Main menu':'القائمة الرئيسية','Programmes':'البرامج','My application':'طلبي','Help':'المساعدة',
+    'Demonstration version. Please do not enter real personal data or upload real documents.':'نسخة تجريبية. يرجى عدم إدخال بيانات شخصية حقيقية أو رفع مستندات حقيقية.',
+    'Your Journey. Your Opportunity.':'رحلتك. فرصتك.',
+    'Your future starts with one step.':'مستقبلك يبدأ بخطوة.','Dates will be announced soon.':'ستُعلن المواعيد قريباً.',
+    'Register in the discipline you studied. Shortlisted applicants get an SMS with a code for two short online tests, and places are awarded on the results.':'سجّل في التخصص الذي درسته. يتلقى المرشّحون رسالة نصية فيها رمز للدخول إلى اختبارين قصيرين عبر الإنترنت، وتُمنح المقاعد حسب النتائج.',
+    'Register for an internship':'سجّل في برنامج التدريب',
+    'Track my application':'تتبّع طلبي',
+    'I have an access code':'لدي رمز دخول',
+    'Register':'التسجيل','Screening':'الفرز','Tests':'الاختبارات','Offer':'القبول',
+    'Steps':'المراحل','Discipline':'التخصص','Details':'البيانات','Confirmed':'التأكيد',
+    'Disciplines we are hiring for':'التخصصات المطلوبة',
+    'Register in the discipline you studied. This intake is closed to other majors.':'سجّل في التخصص الذي درسته. باب هذا الموسم مغلق أمام التخصصات الأخرى.',
+    'Intake':'الموسم',
+    'Typical degrees: {x}':'الدرجات العلمية المعتادة: {x}',
+    'Applications open':'التسجيل مفتوح','Applications closed':'التسجيل مغلق',
+    'Duration':'المدة','Starts':'البداية','Apply by':'آخر موعد للتقديم','To be announced':'سيُعلن لاحقاً',
+    'Register for this discipline':'سجّل في هذا التخصص',
+    'Studied something else?':'درست تخصصاً آخر؟',
+    'We are only accepting the five disciplines above this time.':'نقبل هذه المرة التخصصات الخمسة أعلاه فقط.',
+    'My major isn’t listed':'تخصصي غير مذكور',
+    'Registration':'التسجيل','Change':'تغيير',
+    'Full name':'الاسم الكامل','e.g. Noora Al Kindi':'مثال: نورة بنت سعيد الكندي',
+    'Email':'البريد الإلكتروني',
+    'Mobile number (8 digits)':'رقم الجوال (8 أرقام)',
+    'University':'الجامعة','University name':'اسم الجامعة','Choose…':'اختر…',
+    'Your degree':'التخصص الدراسي','Degree name':'اسم التخصص','e.g. {x}':'مثال: {x}',
+    'GPA (out of 4)':'المعدل التراكمي (من 4)','e.g. 3.45':'مثال: 3.45',
+    'Governorate':'المحافظة','Wilayat':'الولاية','Choose your governorate first':'اختر المحافظة أولاً',
+    'Transcript':'الترانسكربت (كشف الدرجات)','PDF, JPG or PNG, up to 4 MB.':'ملف PDF أو JPG أو PNG بحجم أقصى 4 ميغابايت.',
+    'Selected file: {n}':'الملف المختار: {n}',
+    'Choose your transcript file.':'اختر ملف الترانسكربت.',
+    'Why this discipline?':'لماذا هذا التخصص؟','(optional)':'(اختياري)','One or two sentences.':'جملة أو جملتان.',
+    'After you register, the team reviews applications. If you are shortlisted you will receive an SMS with a link and an access code for the IQ and personality tests.':'بعد التسجيل يراجع الفريق الطلبات. إذا تم ترشيحك ستصلك رسالة نصية فيها رابط ورمز دخول لاختبار الذكاء واختبار الشخصية.',
+    'Submit registration':'إرسال التسجيل','Sending':'جارٍ الإرسال','Uploading your transcript':'جارٍ رفع الترانسكربت',
+    'Enter a number between 0 and 4.':'اكتب رقماً بين 0 و 4.',
+    'You are registered':'تم تسجيلك',
+    'Your reference is {ref} for {d}, {s}.':'رقم طلبك {ref} لتخصص {d}، {s}.',
+    'Keep your reference number. You need it, with your mobile number, to track your application.':'احتفظ برقم طلبك. تحتاجه مع رقم جوالك لتتبّع طلبك.',
+    'Your transcript was received.':'تم استلام الترانسكربت.',
+    'Registration saved, but the transcript could not be uploaded: {e}':'تم حفظ التسجيل، لكن تعذّر رفع الترانسكربت: {e}',
+    'You can upload it again from My application.':'يمكنك رفعه مرة أخرى من صفحة «طلبي».',
+    'Registration received':'تم استلام التسجيل',
+    'Screening by the HR team':'الفرز من فريق الموارد البشرية',
+    'SMS with your test link and access code, if shortlisted':'رسالة نصية فيها رابط الاختبار ورمز الدخول، إذا تم ترشيحك',
+    'IQ and personality tests':'اختبار الذكاء واختبار الشخصية',
+    'Decision':'القرار',
+    'Register someone else':'تسجيل متقدم آخر',
+    'Not open to your major yet':'التسجيل غير متاح لتخصصك حالياً',
+    'This intake only accepts the five disciplines listed. Please check back for the next intake.':'يقبل هذا الموسم التخصصات الخمسة المذكورة فقط. نرجو مراجعة الموقع في الموسم القادم.',
+    'Back to disciplines':'العودة إلى التخصصات',
+    /* My application */
+    'Track your application':'تتبّع طلبك',
+    'Enter the mobile number you registered with and your reference number.':'اكتب رقم الجوال الذي سجّلت به ورقم طلبك.',
+    'Reference number':'رقم الطلب','e.g. ALU-HSE-W26-0001':'مثال: ALU-HSE-W26-0001',
+    'Check my application':'اعرض حالة طلبي','Checking':'جارٍ التحقق',
+    'Enter your 8-digit mobile number and your reference number.':'اكتب رقم جوالك المكوّن من 8 أرقام ورقم طلبك.',
+    'Hello, {n}':'مرحباً {n}',
+    'Application received':'تم استلام الطلب','HR review':'مراجعة الموارد البشرية','Assessment':'التقييم','Final decision':'القرار النهائي',
+    'Received {d}':'استُلم في {d}','Next step':'الخطوة التالية',
+    'Your application is under review':'طلبك قيد المراجعة',
+    'The HR team is reviewing registrations for {d}. If you are shortlisted you will receive an SMS with a link and an access code for the tests.':'يراجع فريق الموارد البشرية طلبات التسجيل في تخصص {d}. إذا تم ترشيحك ستصلك رسالة نصية فيها رابط ورمز دخول للاختبارات.',
+    'You are invited to the tests':'تمت دعوتك إلى الاختبارات',
+    'Use the link and the access code from your SMS. You can take the IQ and personality tests once, in about 10 minutes.':'استخدم الرابط ورمز الدخول من الرسالة النصية. يمكنك أداء اختبار الذكاء واختبار الشخصية مرة واحدة، في نحو 10 دقائق.',
+    'Go to the tests':'الانتقال إلى الاختبارات',
+    'Your tests are submitted':'تم تسليم اختباراتك',
+    'The team is reviewing the results. You will be contacted with the outcome.':'يراجع الفريق النتائج. سيتم التواصل معك بالنتيجة.',
+    'Not shortlisted this time':'لم يتم ترشيحك هذه المرة',
+    'Thank you for applying. We are unable to move your application to the tests in this intake. You are welcome to apply again in a future intake.':'شكراً لتقديمك. نعتذر عن عدم نقل طلبك إلى مرحلة الاختبارات في هذا الموسم. نرحّب بتقديمك في المواسم القادمة.',
+    'You have been selected':'تم اختيارك',
+    'Congratulations. The team will email you the next steps.':'مبروك. سيرسل لك الفريق الخطوات التالية على بريدك الإلكتروني.',
+    'You are on the waiting list':'أنت على قائمة الانتظار',
+    'The team will contact you if a place opens.':'سيتواصل معك الفريق إذا توفر مقعد.',
+    'No place this time':'لا يتوفر مقعد هذه المرة',
+    'Thank you for completing the tests. We are unable to offer you a place in this intake. Please apply again in a future intake.':'شكراً لإكمالك الاختبارات. نعتذر عن عدم توفر مقعد لك في هذا الموسم. نرحّب بتقديمك في المواسم القادمة.',
+    'Your transcript':'الترانسكربت','Received':'تم الاستلام','Not uploaded yet':'لم يُرفع بعد',
+    'Upload your transcript':'ارفع الترانسكربت','Replace transcript':'استبدال الترانسكربت','Upload':'رفع',
+    'Transcript uploaded':'تم رفع الترانسكربت','Check another application':'عرض طلب آخر',
+    /* Help Center */
+    'Help Center':'مركز المساعدة',
+    'Answers to common questions about registration, the tests and your result.':'إجابات عن الأسئلة الشائعة حول التسجيل والاختبارات والنتيجة.',
+    'Who can apply?':'من يحق له التقديم؟',
+    'Applicants who studied one of the disciplines shown on the Programmes page. Each intake shows whether applications are open and the apply-by date once it is announced.':'المتقدمون الذين درسوا أحد التخصصات المعروضة في صفحة البرامج. يوضح كل موسم إن كان التسجيل مفتوحاً وآخر موعد للتقديم عند الإعلان عنه.',
+    'How do I register?':'كيف أسجّل؟',
+    'Choose your discipline on the Programmes page, fill in your details and upload your transcript. You get a reference number when you finish. Keep it, you need it to track your application.':'اختر تخصصك من صفحة البرامج، واملأ بياناتك، وارفع الترانسكربت. ستحصل على رقم طلب عند الانتهاء. احتفظ به لأنك تحتاجه لتتبّع طلبك.',
+    'Which documents do I need?':'ما المستندات المطلوبة؟',
+    'Your academic transcript as a PDF, JPG or PNG file of up to 4 MB. It should show your GPA out of 4.':'الترانسكربت الأكاديمي بصيغة PDF أو JPG أو PNG بحجم أقصى 4 ميغابايت، ويُفضّل أن يوضح معدلك من 4.',
+    'My university or degree is not in the list.':'جامعتي أو تخصصي غير موجود في القائمة.',
+    'Choose “Other (type it)” at the end of the list and write the name yourself.':'اختر «أخرى (اكتبها)» في آخر القائمة واكتب الاسم بنفسك.',
+    'How do I know where my application stands?':'كيف أعرف حالة طلبي؟',
+    'Open My application and enter your mobile number and reference number. The status comes from the HR team’s own records, it is not an estimate.':'افتح صفحة «طلبي» واكتب رقم جوالك ورقم طلبك. تأتي الحالة من سجلات فريق الموارد البشرية نفسها، وليست تقديراً.',
+    'How do the tests work?':'كيف تعمل الاختبارات؟',
+    'If you are shortlisted you receive an SMS with a link and an access code. The IQ test has short timed questions and the personality questionnaire has no time limit. Each test can be taken once.':'إذا تم ترشيحك ستصلك رسالة نصية فيها رابط ورمز دخول. اختبار الذكاء أسئلته قصيرة ومحددة بوقت، واستبيان الشخصية بدون وقت محدد. يمكن أداء كل اختبار مرة واحدة.',
+    'I lost my reference number or access code.':'فقدت رقم طلبي أو رمز الدخول.',
+    'Contact the HR team and give your full name and mobile number. They can look up your application.':'تواصل مع فريق الموارد البشرية وأعطهم اسمك الكامل ورقم جوالك. يستطيعون البحث عن طلبك.',
+    'Can I retake a test?':'هل يمكنني إعادة الاختبار؟',
+    'Tests are taken once. If you had a technical problem, contact the HR team and ask them to reopen it.':'يُؤدّى الاختبار مرة واحدة. إذا واجهت مشكلة تقنية فتواصل مع فريق الموارد البشرية واطلب إعادة فتحه.',
+    'When will I hear back?':'متى سأعرف النتيجة؟',
+    'After the tests the team reviews the results and sends the outcome by SMS. Dates for each intake appear on the Programmes page once they are announced.':'بعد الاختبارات يراجع الفريق النتائج ويرسل النتيجة برسالة نصية. تظهر مواعيد كل موسم في صفحة البرامج عند الإعلان عنها.',
+    'Still need help? Contact the HR team using the details in the programme announcement.':'ما زلت بحاجة إلى مساعدة؟ تواصل مع فريق الموارد البشرية عبر بيانات التواصل المذكورة في إعلان البرنامج.'
+  });
+  var SEASONS={w26:'Winter 2026',s27:'Summer 2027'};
+  var DISC=KH.DISC,D={};DISC.forEach(function(d){D[d.id]=d});
+  var glyph=function(d){return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d.g+'</svg>'};
+  var dt=KH.dt,OTHER='__other',MAXB=4*1024*1024;
+
+  var S={disc:null,season:'w26',step:0,view:'catalog',vals:null,done:null,info:null,file:null,tr:{phone:'',ref:'',res:null,auto:false}};
+  var RN=['Discipline','Details','Confirmed'];
+  var NAV=[['catalog','Programmes'],['track','My application'],['help','Help']];
+  function toast(m){var el=$('#toast');$('#toast-t').textContent=m;el.className='on';clearTimeout(toast.h);toast.h=setTimeout(function(){el.className=''},2600)}
+  function weeksTxt(n){
+    if(KH.lang()==='ar'){if(n===1)return 'أسبوع واحد';if(n===2)return 'أسبوعان';return n+(n<=10?' أسابيع':' أسبوعاً')}
+    return n+(n===1?' week':' weeks');
+  }
+  function renderNav(){
+    var cur=(S.view==='track'||S.view==='help')?S.view:'catalog';
+    $('#nav').innerHTML=NAV.map(function(x){return '<button type="button" class="tab" data-nav="'+x[0]+'"'+(cur===x[0]?' aria-current="page"':'')+'>'+esc(t(x[1]))+'</button>'}).join('');
+  }
+  function renderRoute(){
+    var rtl=KH.lang()==='ar',pos=[8,37.5,67.5,92],names=['Register','Screening','Tests','Offer'];
+    $('#routel').innerHTML=names.map(function(n,i){return '<li style="left:'+(rtl?100-pos[i]:pos[i])+'%">'+esc(t(n))+'</li>'}).join('');
+  }
+  function renderSteps(step){
+    var h='';
+    for(var i=0;i<RN.length;i++){
+      var cls=step>i?'done':(step===i?'cur':'');
+      h+='<div class="st '+cls+'"><b>'+(step>i?'✓':(i+1))+'</b><span>'+esc(t(RN[i]))+'</span></div>';
+      if(i<RN.length-1)h+='<div class="ln '+(step>i?'done':'')+'"></div>';
+    }
+    $('#steps').innerHTML=h;
+  }
+  function focusStage(){
+    var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    $('#steps').scrollIntoView({block:'start',behavior:rm?'auto':'smooth'});
+  }
+  function panel(inner){$('#stage').innerHTML='<div class="panel" id="panel">'+inner+'</div>'}
+  function goReg(step,noscroll){
+    S.step=step;S.view=step===0?'catalog':'form';
+    paintAll();
+    if(step>0&&!noscroll)focusStage();
+    if(step===0&&noscroll===false)window.scrollTo(0,0);
+  }
+  function goView(v){S.view=v;if(v==='catalog')S.step=0;paintAll();window.scrollTo(0,0)}
+  $('#browse').addEventListener('click',focusStage);
+  $('#trackbtn').addEventListener('click',function(){goView('track')});
+  $('#nav').addEventListener('click',function(e){var b=e.target.closest('[data-nav]');if(!b)return;if(b.dataset.nav==='catalog'){S.view='catalog';S.step=0;paintAll();window.scrollTo(0,0)}else goView(b.dataset.nav)});
+
+  /* ---------- programmes ---------- */
+  function intakeInfo(){return S.info&&S.info[S.season]?S.info[S.season]:null}
+  function showCatalog(){
+    var inf=intakeInfo(),closed=!!(inf&&inf.closed);
+    var tba=t('To be announced'),any=!!(inf&&(inf.weeks||inf.start||inf.deadline));
+    $('#stage').innerHTML=
+      '<div class="sec-h"><h2 class="h2">'+esc(t('Disciplines we are hiring for'))+'</h2><p class="muted">'+esc(t('Register in the discipline you studied. This intake is closed to other majors.'))+'</p></div>'+
+      '<div class="ctrl"><span class="muted">'+esc(t('Intake'))+'</span><div class="seg" role="group" aria-label="'+esc(t('Intake'))+'">'+['w26','s27'].map(function(s){return '<button type="button" data-season="'+s+'" aria-pressed="'+(S.season===s)+'">'+esc(t(SEASONS[s]))+'</button>'}).join('')+'</div>'+
+        (inf?'<span class="ap '+(closed?'closed':'open')+'">'+esc(t(closed?'Applications closed':'Applications open'))+'</span>':'')+'</div>'+
+      '<div class="cards">'+DISC.map(function(d){
+        return '<article class="card"><div class="top-r"><div class="tile" style="--h:'+d.h+'">'+glyph(d)+'</div><div><h3>'+esc(dt(d,'title'))+'</h3></div></div>'+
+          '<p class="d">'+esc(dt(d,'desc'))+'</p><p class="meta">'+esc(t('Typical degrees: {x}',{x:dt(d,'eg')}))+'</p>'+
+          (any?'<dl class="facts"><div><dt>'+esc(t('Duration'))+'</dt><dd>'+esc(inf.weeks?weeksTxt(inf.weeks):tba)+'</dd></div>'+
+          '<div><dt>'+esc(t('Starts'))+'</dt><dd>'+esc(inf.start?KH.fmtDate(inf.start):tba)+'</dd></div>'+
+          '<div><dt>'+esc(t('Apply by'))+'</dt><dd>'+esc(inf.deadline?KH.fmtDate(inf.deadline):tba)+'</dd></div></dl>':'<p class="soon">'+esc(t('Dates will be announced soon.'))+'</p>')+
+          '<button class="btn sm'+(closed?' closedbtn':'')+'" type="button" data-pick="'+d.id+'" id="pick-'+d.id+'"'+(closed?' disabled':'')+'>'+esc(t(closed?'Applications closed':'Register for this discipline'))+'</button></article>';
+      }).join('')+'</div>'+
+      '<div class="closed"><div><b>'+esc(t('Studied something else?'))+'</b><p class="muted">'+esc(t('We are only accepting the five disciplines above this time.'))+'</p></div><button class="btn ghost sm" type="button" id="other">'+esc(t('My major isn’t listed'))+'</button></div>';
+  }
+
+  /* ---------- registration form ---------- */
+  function opt(v,label,sel){return '<option value="'+esc(v)+'"'+(sel?' selected':'')+'>'+esc(label)+'</option>'}
+  function wilOptions(gov,cur){
+    var g=KH.GEO.filter(function(x){return x[0]===gov})[0];
+    if(!g)return opt('',t('Choose your governorate first'),true);
+    return opt('',t('Choose…'),!cur)+g[2].map(function(w){return opt(w[0],t(w[0]),w[0]===cur)}).join('');
+  }
+  function readVals(){
+    if(!$('#f'))return null;
+    return {name:$('#f-name').value,email:$('#f-email').value,phone:$('#f-phone').value,uni:$('#f-uni').value,uniOther:$('#f-uni-o').value,major:$('#f-major').value,majorOther:$('#f-major-o').value,gpa:$('#f-gpa').value,gov:$('#f-gov').value,wil:$('#f-wil').value,why:$('#f-why').value};
+  }
+  function syncOther(){
+    $('#w-uni-o').hidden=$('#f-uni').value!==OTHER;
+    $('#w-major-o').hidden=$('#f-major').value!==OTHER;
+  }
+  function pickFile(inp,errId,label){
+    var f=inp.files&&inp.files[0],er=$(errId);
+    if(!f)return null;
+    var ok=/\.(pdf|jpe?g|png)$/i.test(f.name);
+    if(!ok){er.textContent=t('Upload a PDF, JPG or PNG file.');inp.value='';return null}
+    if(f.size>MAXB){er.textContent=t('The file is larger than 4 MB. Please send a smaller file.');inp.value='';return null}
+    er.textContent='';
+    if(label)label.textContent=t('Selected file: {n}',{n:f.name});
+    return f;
+  }
+  function toB64(file,cb){
+    var r=new FileReader();
+    r.onload=function(){var s=String(r.result||'');cb(s.indexOf(',')>-1?s.split(',')[1]:'')};
+    r.onerror=function(){cb('')};
+    r.readAsDataURL(file);
+  }
+  function showForm(){
+    var d=D[S.disc];
+    var majorsEn=d.majors,majorsLoc=dt(d,'majors');
+    panel(
+      '<div class="pick"><div class="tile" style="--h:'+d.h+'">'+glyph(d)+'</div><div class="grow"><h2 class="h3">'+esc(dt(d,'title'))+'</h2><p class="meta">'+esc(t('Registration'))+' · '+esc(t(SEASONS[S.season]))+'</p></div><button class="linkbtn" type="button" id="chg">'+esc(t('Change'))+'</button></div>'+
+      '<form id="f" novalidate><div class="grid2">'+
+        '<div class="f"><label for="f-name">'+esc(t('Full name'))+'</label><input id="f-name" autocomplete="name" placeholder="'+esc(t('e.g. Noora Al Kindi'))+'"><div class="err" id="e-name"></div></div>'+
+        '<div class="f"><label for="f-email">'+esc(t('Email'))+'</label><input id="f-email" type="email" dir="ltr" autocomplete="email" placeholder="you@example.com"><div class="err" id="e-email"></div></div>'+
+        '<div class="f"><label for="f-phone">'+esc(t('Mobile number (8 digits)'))+'</label><input id="f-phone" dir="ltr" inputmode="numeric" autocomplete="tel" placeholder="9XXXXXXX"><div class="err" id="e-phone"></div></div>'+
+        '<div class="f"><label for="f-uni">'+esc(t('University'))+'</label><select id="f-uni">'+opt('',t('Choose…'),true)+KH.UNIS.map(function(u){return opt(u[0],t(u[0]))}).join('')+opt(OTHER,t('Other (type it)'))+'</select><div class="err" id="e-uni"></div></div>'+
+        '<div class="f" id="w-uni-o" hidden><label for="f-uni-o">'+esc(t('University name'))+'</label><input id="f-uni-o" maxlength="80"></div>'+
+        '<div class="f"><label for="f-major">'+esc(t('Your degree'))+'</label><select id="f-major">'+opt('',t('Choose…'),true)+majorsEn.map(function(m,i){return opt(m,majorsLoc[i]||m)}).join('')+opt(OTHER,t('Other (type it)'))+'</select><div class="err" id="e-major"></div></div>'+
+        '<div class="f" id="w-major-o" hidden><label for="f-major-o">'+esc(t('Degree name'))+'</label><input id="f-major-o" maxlength="80"></div>'+
+        '<div class="f"><label for="f-gpa">'+esc(t('GPA (out of 4)'))+'</label><input id="f-gpa" dir="ltr" inputmode="decimal" placeholder="'+esc(t('e.g. 3.45'))+'"><div class="err" id="e-gpa"></div></div>'+
+        '<div class="f"><label for="f-gov">'+esc(t('Governorate'))+'</label><select id="f-gov">'+opt('',t('Choose…'),true)+KH.GEO.map(function(g){return opt(g[0],t(g[0]))}).join('')+'</select></div>'+
+        '<div class="f"><label for="f-wil">'+esc(t('Wilayat'))+'</label><select id="f-wil">'+wilOptions('','')+'</select><div class="err" id="e-gov"></div></div>'+
+        '<div class="f"><label for="f-file">'+esc(t('Transcript'))+'</label><input id="f-file" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"><span class="sub">'+esc(t('PDF, JPG or PNG, up to 4 MB.'))+'</span><span class="sub" id="f-file-n"></span><div class="err" id="e-file"></div></div>'+
+        '<div class="f full"><label for="f-why">'+esc(t('Why this discipline?'))+' <span class="muted" style="font-weight:400">'+esc(t('(optional)'))+'</span></label><textarea id="f-why" maxlength="300" placeholder="'+esc(t('One or two sentences.'))+'"></textarea></div>'+
+      '</div>'+
+      '<p class="hint">'+esc(t('After you register, the team reviews applications. If you are shortlisted you will receive an SMS with a link and an access code for the IQ and personality tests.'))+'</p>'+
+      '<div class="err big" id="e-form"></div>'+
+      '<div class="actions"><button class="btn" type="submit" id="f-go">'+esc(t('Submit registration'))+'</button></div></form>');
+    if(S.vals){
+      var v=S.vals;$('#f-name').value=v.name;$('#f-email').value=v.email;$('#f-phone').value=v.phone;$('#f-uni').value=v.uni;$('#f-uni-o').value=v.uniOther;
+      $('#f-major').value=v.major;$('#f-major-o').value=v.majorOther;$('#f-gpa').value=v.gpa;$('#f-gov').value=v.gov;$('#f-wil').innerHTML=wilOptions(v.gov,v.wil);$('#f-why').value=v.why;
+    }
+    if(S.file)$('#f-file-n').textContent=t('Selected file: {n}',{n:S.file.name});
+    syncOther();
+    $('#f-uni').addEventListener('change',syncOther);
+    $('#f-major').addEventListener('change',syncOther);
+    $('#f-gov').addEventListener('change',function(){$('#f-wil').innerHTML=wilOptions($('#f-gov').value,'')});
+    $('#f-file').addEventListener('change',function(){var f=pickFile($('#f-file'),'#e-file',$('#f-file-n'));if(f)S.file=f});
+    $('#chg').addEventListener('click',function(){S.vals=readVals();goReg(0,false)});
+    $('#f').addEventListener('submit',function(e){
+      e.preventDefault();
+      var name=$('#f-name').value.trim(),email=$('#f-email').value.trim(),phone=$('#f-phone').value.replace(/\s/g,''),gpa=parseFloat($('#f-gpa').value.replace(',','.'));
+      var uni=$('#f-uni').value===OTHER?$('#f-uni-o').value.trim():$('#f-uni').value;
+      var major=$('#f-major').value===OTHER?$('#f-major-o').value.trim():$('#f-major').value;
+      var gov=$('#f-gov').value,wil=$('#f-wil').value;
+      var bad=false;
+      var chk=function(id,cond,msg){$('#e-'+id).textContent=cond?'':t(msg);if(!cond)bad=true};
+      chk('name',name.split(/\s+/).length>=2,'Enter your first name and family name.');
+      chk('email',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),'Enter a valid email address.');
+      chk('phone',/^\d{8}$/.test(phone),'Use 8 digits without the country code.');
+      chk('uni',uni.length>=2,'Choose your university, or type its name.');
+      chk('major',major.length>=2,'Enter your degree.');
+      chk('gpa',!isNaN(gpa)&&gpa>=0&&gpa<=4,'Enter a number between 0 and 4.');
+      chk('gov',!!(gov&&wil),'Choose your governorate and wilayat.');
+      chk('file',!!S.file,'Choose your transcript file.');
+      if(bad)return;
+      var go=$('#f-go');go.disabled=true;go.textContent=t('Sending');$('#e-form').textContent='';
+      var fail=function(m){go.disabled=false;go.textContent=t('Submit registration');$('#e-form').textContent=m};
+      var disc=S.disc,season=S.season,file=S.file;
+      google.script.run.withSuccessHandler(function(r){
+        if(!r||r.error){fail(t((r&&r.error)||'Something went wrong. Please try again.'));return}
+        var finish=function(trErr){
+          S.vals=null;S.file=null;S.tr={phone:phone,ref:r.ref,res:null,auto:true};
+          S.done={ref:r.ref,disc:disc,season:season,trErr:trErr||''};S.view='done';S.step=3;
+          paintAll();focusStage();
+        };
+        go.textContent=t('Uploading your transcript');
+        toB64(file,function(b64){
+          google.script.run.withSuccessHandler(function(u){finish(u&&u.error?u.error:'')}).withFailureHandler(function(){finish('We could not reach the server. Please try again in a moment.')}).uploadTranscript(phone,r.ref,b64);
+        });
+      }).withFailureHandler(function(){
+        fail(t('We could not reach the server. Please try again in a moment.'));
+      }).register({name:name,email:email,phone:phone,uni:uni,major:major,gpa:gpa,gov:gov,wil:wil,disc:disc,season:season,why:$('#f-why').value.trim(),lang:KH.lang()});
+    });
+  }
+  function showDone(){
+    var x=S.done,d=D[x.disc];
+    panel('<div class="done"><div class="tick">✓</div><h2 class="h2">'+esc(t('You are registered'))+'</h2>'+
+      '<p>'+t('Your reference is {ref} for {d}, {s}.',{ref:'<b class="num" dir="ltr" style="font-family:var(--f-mono);color:var(--ink)">'+esc(x.ref)+'</b>',d:esc(dt(d,'title')),s:esc(t(SEASONS[x.season]))})+'</p>'+
+      '<p>'+esc(t('Keep your reference number. You need it, with your mobile number, to track your application.'))+'</p>'+
+      (x.trErr?'<div class="next" style="max-width:32rem;margin-inline:auto"><span class="ic">!</span><div><h3>'+esc(t('Registration saved, but the transcript could not be uploaded: {e}',{e:t(x.trErr)}))+'</h3><p>'+esc(t('You can upload it again from My application.'))+'</p></div></div>':'<p class="ok-line" style="color:var(--ok);font-weight:600">✓ '+esc(t('Your transcript was received.'))+'</p>')+
+      '<ol class="tl"><li class="d">'+esc(t('Registration received'))+'</li><li>'+esc(t('Screening by the HR team'))+'</li><li>'+esc(t('SMS with your test link and access code, if shortlisted'))+'</li><li>'+esc(t('IQ and personality tests'))+'</li><li>'+esc(t('Decision'))+'</li></ol>'+
+      '<div class="actions"><button class="btn" id="trk" type="button">'+esc(t('Track my application'))+'</button><button class="btn ghost" id="again" type="button">'+esc(t('Register someone else'))+'</button></div></div>');
+    $('#again').addEventListener('click',function(){goReg(0,false)});
+    $('#trk').addEventListener('click',function(){goView('track')});
+  }
+  function showClosed(){
+    panel('<div class="done"><h2 class="h2">'+esc(t('Not open to your major yet'))+'</h2><p>'+esc(t('This intake only accepts the five disciplines listed. Please check back for the next intake.'))+'</p><div class="actions"><button class="btn ghost" id="backc">'+esc(t('Back to disciplines'))+'</button></div></div>');
+    $('#backc').addEventListener('click',function(){goReg(0,false)});
+  }
+
+  /* ---------- My application ---------- */
+  function lookup(phone,ref){
+    var er=$('#e-track'),go=$('#t-go');
+    if(go){go.disabled=true;go.textContent=t('Checking')}
+    if(er)er.textContent='';
+    google.script.run.withSuccessHandler(function(r){
+      if(!r||r.error){
+        S.tr.res=null;S.view='track';paintAll();
+        $('#t-phone').value=phone;$('#t-ref').value=ref;$('#e-track').textContent=t((r&&r.error)||'Something went wrong. Please try again.');
+        return;
+      }
+      S.tr.phone=phone;S.tr.ref=ref;S.tr.res=r;S.view='track';paintAll();window.scrollTo(0,0);
+    }).withFailureHandler(function(){
+      if(go){go.disabled=false;go.textContent=t('Check my application')}
+      if(er)er.textContent=t('We could not reach the server. Please try again in a moment.');
+    }).myStatus(phone,ref);
+  }
+  function showTrackForm(){
+    panel('<h2 class="h2">'+esc(t('Track your application'))+'</h2><p class="muted" style="margin-top:.3rem">'+esc(t('Enter the mobile number you registered with and your reference number.'))+'</p>'+
+      '<form id="tf" novalidate><div class="grid2"><div class="f"><label for="t-phone">'+esc(t('Mobile number (8 digits)'))+'</label><input id="t-phone" dir="ltr" inputmode="numeric" autocomplete="tel" placeholder="9XXXXXXX"></div>'+
+      '<div class="f"><label for="t-ref">'+esc(t('Reference number'))+'</label><input id="t-ref" dir="ltr" autocomplete="off" style="text-transform:uppercase" placeholder="'+esc(t('e.g. ALU-HSE-W26-0001'))+'"></div></div>'+
+      '<div class="err big" id="e-track"></div><div class="actions"><button class="btn" type="submit" id="t-go">'+esc(t('Check my application'))+'</button></div></form>');
+    $('#t-phone').value=S.tr.phone;$('#t-ref').value=S.tr.ref;
+    $('#tf').addEventListener('submit',function(e){
+      e.preventDefault();
+      var phone=$('#t-phone').value.replace(/\s/g,''),ref=$('#t-ref').value.trim();
+      if(!/^\d{8}$/.test(phone)||ref.length<4){$('#e-track').textContent=t('Enter your 8-digit mobile number and your reference number.');return}
+      lookup(phone,ref);
+    });
+  }
+  var NEXT={
+    review:['…','Your application is under review','The HR team is reviewing registrations for {d}. If you are shortlisted you will receive an SMS with a link and an access code for the tests.'],
+    invited:['→','You are invited to the tests','Use the link and the access code from your SMS. You can take the IQ and personality tests once, in about 10 minutes.'],
+    assessed:['✓','Your tests are submitted','The team is reviewing the results. You will be contacted with the outcome.'],
+    out:['i','Not shortlisted this time','Thank you for applying. We are unable to move your application to the tests in this intake. You are welcome to apply again in a future intake.'],
+    offer:['★','You have been selected','Congratulations. The team will email you the next steps.'],
+    wl:['…','You are on the waiting list','The team will contact you if a place opens.'],
+    reg:['i','No place this time','Thank you for completing the tests. We are unable to offer you a place in this intake. Please apply again in a future intake.']
+  };
+  var STEPN=['Application received','HR review','Assessment','Final decision'];
+  function showTrackResult(){
+    var r=S.tr.res,d=D[r.disc],first=String(r.name).split(' ')[0],nx=NEXT[r.state]||NEXT.review;
+    var cls={done:'d',current:'c',stop:'s',todo:''};
+    var tl=r.steps.map(function(s,i){
+      return '<li class="'+cls[s]+'">'+esc(t(STEPN[i]))+(i===0&&r.at?'<small>'+esc(t('Received {d}',{d:KH.date(r.at)}))+'</small>':'')+'</li>';
+    }).join('');
+    var go=r.state==='invited'?'<div class="actions"><a class="btn sm" id="gotest" href="'+esc(KH.link(BASE+'?p=test'))+'" target="_top">'+esc(t('Go to the tests'))+'</a></div>':'';
+    var trBlock=r.transcript
+      ?'<div class="hello" style="margin-top:1rem"><span><b>'+esc(t('Your transcript'))+'</b> · <span style="color:var(--ok);font-weight:600">✓ '+esc(t('Received'))+'</span></span></div>'
+      :'<div class="next"><span class="ic">!</span><div><h3>'+esc(t('Your transcript'))+': '+esc(t('Not uploaded yet'))+'</h3><p>'+esc(t('PDF, JPG or PNG, up to 4 MB.'))+'</p>'+
+        '<div class="f" style="margin-top:.6rem"><label for="t-file" style="position:absolute;inset-inline-start:-9999px">'+esc(t('Upload your transcript'))+'</label><input id="t-file" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"><span class="sub" id="t-file-n"></span><div class="err" id="e-tfile"></div></div>'+
+        '<div class="actions"><button class="btn sm" type="button" id="t-up">'+esc(t('Upload your transcript'))+'</button></div></div></div>';
+    panel('<div class="hello"><div><h2 class="h2">'+esc(t('Hello, {n}',{n:first}))+'</h2><p class="muted" style="margin-top:.2rem">'+esc(dt(d,'title'))+' · '+esc(t(SEASONS[r.season]))+'</p></div><span class="ref" dir="ltr">'+esc(r.ref)+'</span></div>'+
+      '<ol class="tl wide" style="margin-block:1.2rem 0">'+tl+'</ol>'+
+      '<div class="next"><span class="ic" aria-hidden="true">'+nx[0]+'</span><div><p class="sub-h" style="margin:0 0 .2rem">'+esc(t('Next step'))+'</p><h3>'+esc(t(nx[1]))+'</h3><p>'+esc(t(nx[2],{d:dt(d,'title')}))+'</p>'+go+'</div></div>'+
+      trBlock+
+      '<div class="actions" style="margin-top:1rem"><button class="btn ghost sm" id="t-again" type="button">'+esc(t('Check another application'))+'</button></div>');
+    $('#t-again').addEventListener('click',function(){S.tr={phone:'',ref:'',res:null,auto:false};paintAll()});
+    if($('#t-up')){
+      var tf=null;
+      $('#t-file').addEventListener('change',function(){tf=pickFile($('#t-file'),'#e-tfile',$('#t-file-n'))});
+      $('#t-up').addEventListener('click',function(){
+        if(!tf){$('#e-tfile').textContent=t('Choose your transcript file.');return}
+        var b=$('#t-up');b.disabled=true;b.textContent=t('Uploading your transcript');
+        toB64(tf,function(b64){
+          google.script.run.withSuccessHandler(function(u){
+            if(u&&u.error){b.disabled=false;b.textContent=t('Upload your transcript');$('#e-tfile').textContent=t(u.error);return}
+            S.tr.res.transcript=true;paintAll();toast(t('Transcript uploaded'));
+          }).withFailureHandler(function(){b.disabled=false;b.textContent=t('Upload your transcript');$('#e-tfile').textContent=t('We could not reach the server. Please try again in a moment.')}).uploadTranscript(S.tr.phone,S.tr.ref,b64);
+        });
+      });
+    }
+  }
+  function showTrack(){
+    if(S.tr.res)showTrackResult();
+    else if(S.tr.auto&&S.tr.phone&&S.tr.ref){S.tr.auto=false;showTrackForm();lookup(S.tr.phone,S.tr.ref)}
+    else showTrackForm();
+  }
+
+  /* ---------- Help Center ---------- */
+  var FAQ=[
+    ['Who can apply?','Applicants who studied one of the disciplines shown on the Programmes page. Each intake shows whether applications are open and the apply-by date once it is announced.'],
+    ['How do I register?','Choose your discipline on the Programmes page, fill in your details and upload your transcript. You get a reference number when you finish. Keep it, you need it to track your application.'],
+    ['Which documents do I need?','Your academic transcript as a PDF, JPG or PNG file of up to 4 MB. It should show your GPA out of 4.'],
+    ['My university or degree is not in the list.','Choose “Other (type it)” at the end of the list and write the name yourself.'],
+    ['How do I know where my application stands?','Open My application and enter your mobile number and reference number. The status comes from the HR team’s own records, it is not an estimate.'],
+    ['How do the tests work?','If you are shortlisted you receive an SMS with a link and an access code. The IQ test has short timed questions and the personality questionnaire has no time limit. Each test can be taken once.'],
+    ['I lost my reference number or access code.','Contact the HR team and give your full name and mobile number. They can look up your application.'],
+    ['Can I retake a test?','Tests are taken once. If you had a technical problem, contact the HR team and ask them to reopen it.'],
+    ['When will I hear back?','After the tests the team reviews the results and sends the outcome by SMS. Dates for each intake appear on the Programmes page once they are announced.']
+  ];
+  function showHelp(){
+    panel('<h2 class="h2">'+esc(t('Help Center'))+'</h2><p class="muted" style="margin:.3rem 0 1rem">'+esc(t('Answers to common questions about registration, the tests and your result.'))+'</p>'+
+      FAQ.map(function(q){return '<details class="faq"><summary>'+esc(t(q[0]))+'</summary><p>'+esc(t(q[1]))+'</p></details>'}).join('')+
+      '<p class="hint" style="margin-bottom:0;margin-top:1rem">'+esc(t('Still need help? Contact the HR team using the details in the programme announcement.'))+'</p>');
+  }
+
+  $('#stage').addEventListener('click',function(e){
+    var s=e.target.closest('[data-season]');
+    if(s){S.season=s.dataset.season;showCatalog();return}
+    var b=e.target.closest('[data-pick]');
+    if(b&&!b.disabled){if(S.disc!==b.dataset.pick){S.vals=null}S.disc=b.dataset.pick;goReg(1);return}
+    if(e.target.closest('#other')){
+      google.script.run.countBlocked(S.season);
+      S.view='closed';paintAll();
+    }
+  });
+  function paintAll(){
+    var reg=S.view==='catalog'||S.view==='form'||S.view==='done'||S.view==='closed';
+    renderNav();renderRoute();
+    $('#hero').hidden=S.view!=='catalog';
+    $('#steps').hidden=!reg;
+    if(reg)renderSteps(S.step);
+    $('#havecode').href=KH.link(BASE+'?p=test');
+    $('#demo').hidden=!DEMO;
+    if(S.view==='catalog')showCatalog();
+    else if(S.view==='form')showForm();
+    else if(S.view==='done')showDone();
+    else if(S.view==='closed')showClosed();
+    else if(S.view==='track')showTrack();
+    else if(S.view==='help')showHelp();
+  }
+  KH.init(FORCE_LANG);KH.mount('#langslot');
+  KH.on(function(){if(S.view==='form')S.vals=readVals();paintAll()});
+  paintAll();
+  google.script.run.withSuccessHandler(function(r){if(r&&r.programme){S.info=r.programme;if(S.view==='catalog')showCatalog()}}).publicInfo();
+})();
+</script>
+</body></html>
