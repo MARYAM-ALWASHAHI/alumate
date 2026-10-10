@@ -155,6 +155,54 @@ KH.fmtDate=function(iso){
   if(!/^\d{4}-\d{2}-\d{2}$/.test(String(iso||'')))return '';
   try{return new Date(iso+'T12:00:00').toLocaleDateString(KH.lang()==='ar'?'ar-u-nu-latn':'en-GB',{day:'numeric',month:'long',year:'numeric'})}catch(e){return iso}
 };
+
+/* qualification levels (an applicant picks one; HR can require some for each discipline) */
+KH.QUAL=[['dip','Diploma','دبلوم'],['hd','Higher Diploma','دبلوم عالٍ'],['bsc','Bachelor’s degree','بكالوريوس'],['msc','Master’s degree','ماجستير']];
+KH.qualName=function(k,lang){var q=KH.QUAL.filter(function(x){return x[0]===k})[0];return q?((lang||KH.lang())==='ar'?q[2]:q[1]):''};
+KH.qualText=function(keys,lang){
+  lang=lang||KH.lang();
+  var n=(keys||[]).map(function(k){return KH.qualName(k,lang)}).filter(Boolean),or=lang==='ar'?' أو ':' or ';
+  if(n.length<2)return n.join('');
+  return n.length===2?n[0]+or+n[1]:n.slice(0,-1).join(lang==='ar'?'، ':', ')+or+n[n.length-1];
+};
+/* test days are whole days in Muscat time (UTC+4), counted from 1970-01-01 */
+KH.todayNo=function(){return Math.floor((Date.now()+4*36e5)/864e5)};
+KH.dayIso=function(n){return new Date(n*864e5).toISOString().slice(0,10)};
+KH.isoNo=function(iso){return /^\d{4}-\d{2}-\d{2}$/.test(String(iso||''))?Math.floor(Date.parse(iso+'T00:00:00Z')/864e5):0};
+KH.dayFmt=function(n,lang,mode){
+  var o=mode==='long'?{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'}:(mode==='short'?{day:'numeric',month:'short',timeZone:'UTC'}:{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'});
+  try{return new Date(n*864e5).toLocaleDateString((lang||KH.lang())==='ar'?'ar-u-nu-latn':'en-GB',o)}catch(e){return KH.dayIso(n)}
+};
+/* Outside Apps Script (for example on GitHub Pages) every back-end call goes to the web app address in config.js.
+   This makes sure all calls exist, even when an older config.js is still in use. */
+(function(){
+  var NAMES=['register','countBlocked','publicInfo','myStatus','uploadTranscript','recoverStart','recoverVerify','tVerify','tPick','tStart','tSubmit','api'];
+  var API=window.ALUMATE_API;
+  if(typeof API!=='string'||!API)return;
+  var g=window.google&&window.google.script&&window.google.script.run;
+  if(g&&NAMES.every(function(n){return typeof g[n]==='function'}))return;
+  function call(fn,args,ok,fail){
+    var done=false;
+    function bad(m){if(!done){done=true;if(fail)fail({message:m})}}
+    if(!/^https?:\/\/[^\s]+$/.test(API)){bad('The web app address is not set in config.js.');return}
+    fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:fn,args:args})})
+      .then(function(r){return r.json()})
+      .then(function(r){
+        if(done)return;done=true;
+        if(r&&r.ok){if(ok)ok(r.value)}else if(fail)fail({message:(r&&r.error)||'Something went wrong.'});
+      })
+      .catch(function(){bad('Could not reach the server.')});
+  }
+  function runner(ok,fail){
+    var o={
+      withSuccessHandler:function(f){return runner(f,fail)},
+      withFailureHandler:function(f){return runner(ok,f)}
+    };
+    NAMES.forEach(function(n){o[n]=function(){call(n,Array.prototype.slice.call(arguments),ok,fail)}});
+    return o;
+  }
+  window.google={script:{run:runner()}};
+})();
 KH.add({
   'Winter 2026':'شتوي 2026','Summer 2027':'صيفي 2027',
   'Sultan Qaboos University':'جامعة السلطان قابوس','University of Technology and Applied Sciences':'جامعة التقنية والعلوم التطبيقية','Sohar University':'جامعة صحار','University of Nizwa':'جامعة نزوى','Dhofar University':'جامعة ظفار','A’Sharqiyah University':'جامعة الشرقية','Muscat University':'جامعة مسقط','Another university':'جامعة أخرى',
@@ -162,7 +210,7 @@ KH.add({
   'Enter your first name and family name.':'اكتب اسمك الأول واسم العائلة.',
   'Enter a valid email address.':'اكتب بريداً إلكترونياً صحيحاً.',
   'Use 8 digits without the country code.':'استخدم 8 أرقام بدون مفتاح الدولة.',
-  'Enter your degree.':'اكتب تخصصك الدراسي.',
+  'Enter your field of study.':'اكتب مجال دراستك.',
   'Choose your university, or type its name.':'اختر جامعتك، أو اكتب اسمها.',
   'Choose your governorate and wilayat.':'اختر محافظتك وولايتك.',
   'Applications for this intake are closed.':'التسجيل لهذا الموسم مغلق.',
@@ -190,5 +238,19 @@ KH.add({
   'Too many wrong attempts. Try again in 10 minutes.':'محاولات خاطئة كثيرة. حاول مرة أخرى بعد 10 دقائق.',
   'Set HR_PASSWORD at the top of Code.gs and deploy again.':'غيّر HR_PASSWORD في أعلى ملف Code.gs ثم انشر التطبيق من جديد.',
   'Could not reach the server.':'تعذّر الوصول إلى الخادم.',
-  'Run setup() once from the Apps Script editor first.':'شغّل setup() مرة واحدة من محرر Apps Script أولاً.'
+  'Run setup() once from the Apps Script editor first.':'شغّل setup() مرة واحدة من محرر Apps Script أولاً.',
+  'Choose your qualification.':'اختر مؤهلك الدراسي.',
+  'Applications for this intake have not opened yet.':'التسجيل لهذا الموسم لم يبدأ بعد.',
+  'Your qualification does not meet the requirement for this programme.':'مؤهلك الدراسي لا يحقق شرط هذا البرنامج.',
+  'Enter the email address or 8-digit mobile number you registered with.':'اكتب البريد الإلكتروني أو رقم الجوال (8 أرقام) الذي سجّلت به.',
+  'We could not find an application with that email address or mobile number.':'لم نعثر على طلب بهذا البريد الإلكتروني أو رقم الجوال.',
+  'This code has expired or was not requested. Please ask for a new one.':'انتهت صلاحية هذا الرمز أو لم يُطلب. اطلب رمزاً جديداً.',
+  'Too many wrong codes. Please ask for a new one.':'أخطأت في الرمز مرات كثيرة. اطلب رمزاً جديداً.',
+  'That code is not correct.':'الرمز غير صحيح.',
+  'The test period for your code has ended. Please contact the HR team.':'انتهت فترة الاختبار المخصصة لرمزك. تواصل مع فريق الموارد البشرية.',
+  'No test period is set for this code.':'لا توجد فترة اختبار محددة لهذا الرمز.',
+  'Choose a day inside your test period.':'اختر يوماً ضمن فترة الاختبار.',
+  'Choose your test day first.':'اختر يوم الاختبار أولاً.',
+  'Your test is booked for a later day. Please come back on that day.':'اختبارك محجوز ليوم لاحق. عد في ذلك اليوم.',
+  'The day you chose has passed. Please choose a new day.':'انتهى اليوم الذي اخترته. اختر يوماً جديداً.'
 });
