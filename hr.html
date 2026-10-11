@@ -6,9 +6,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 <script src="config.js"></script>
-<script src="kh.js?v=3"></script>
+<script src="kh.js?v=4"></script>
 </head><body>
 <div id="app">
   <header class="top"><div class="wrap bar">
@@ -47,7 +47,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     'New':'جديد','registered {d}':'سجّل في {d}','GPA':'المعدل','No registrations match.':'لا توجد تسجيلات مطابقة.','{n} shown':'المعروض: {n}',
     'Registered':'المسجّلون','Awaiting screening':'بانتظار الفرز','Average GPA':'متوسط المعدل','Stopped at the form':'توقفوا عند النموذج',
     'Registrations by discipline':'التسجيلات حسب التخصص',
-    'Only the five required disciplines can register. Other majors are stopped at the form automatically. Tap a bar to filter.':'يمكن التسجيل في التخصصات الخمسة المطلوبة فقط. تتوقف التخصصات الأخرى عند النموذج تلقائياً. اضغط على أي شريط للتصفية.',
+    'Only the listed disciplines can register. Other majors are stopped at the form automatically. Tap a bar to filter.':'يمكن التسجيل في التخصصات المدرجة فقط. تتوقف التخصصات الأخرى عند النموذج تلقائياً. اضغط على أي شريط للتصفية.',
     'Search':'بحث','Search name, phone or email':'ابحث بالاسم أو الجوال أو البريد الإلكتروني','Copy contacts (CSV)':'نسخ بيانات التواصل (CSV)',
     'Select {n}':'تحديد {n}','{a} waiting · {b} meet the minimum · {c} selected':'{a} بالانتظار · {b} يحققون الحد الأدنى · {c} محدد',
     'Select all meeting minimum':'تحديد كل من يحقق الحد الأدنى','Clear':'مسح التحديد','Not this time ({n})':'ليس هذه المرة ({n})','Invite to tests ({n})':'دعوة إلى الاختبارات ({n})',
@@ -66,7 +66,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     'Applicants to import':'المتقدمون المراد استيرادهم','Import':'استيراد','Load sample applicants':'تحميل متقدمين تجريبيين','Remove sample applicants':'حذف المتقدمين التجريبيين',
     'IQ test (0 to 100)':'اختبار الذكاء (من 0 إلى 100)','IQ test score':'درجة اختبار الذكاء','{l} score':'درجة {l}','Save scores':'حفظ الدرجات',
     'Personality is the average of the five traits.':'درجة الشخصية هي متوسط الصفات الخمس.',
-    'Code':'الرمز','Mobile':'الجوال','In progress':'قيد الأداء','Reopen test':'إعادة فتح الاختبار','IQ test {a} · Personality {p}':'اختبار الذكاء {a} · الشخصية {p}','took {m} min':'استغرق {m} دقيقة',
+    'Code':'الرمز','Mobile':'الجوال','{n} links':'{n} روابط','{n} disciplines':'{n} تخصصات','{n} sample applicants':'{n} متقدمين تجريبيين','No sample applicants':'لا يوجد متقدمون تجريبيون','In progress':'قيد الأداء','Reopen test':'إعادة فتح الاختبار','IQ test {a} · Personality {p}':'اختبار الذكاء {a} · الشخصية {p}','took {m} min':'استغرق {m} دقيقة',
     'Invited':'المدعوون','Completed':'أكملوا','Pending':'قيد الإنجاز','Completion':'نسبة الإكمال','Messages to send':'رسائل بانتظار الإرسال',
     'ALUMATE prepares each personalised SMS with its access code. Copy them into your SMS service, then mark them as sent. {n} waiting.':'تجهّز ألوميت رسالة نصية لكل متقدم مع رمز الدخول الخاص به. انسخها إلى خدمة الرسائل النصية ثم علّمها كمُرسلة. بالانتظار: {n}.',
     'Copy numbers and messages':'نسخ الأرقام والرسائل','Mark all as sent':'تعليم الكل كمُرسل','and {n} more':'و{n} أخرى',
@@ -199,7 +199,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
   var A={mode:'reg',lastId:null};
   var S={disc:null,form:null};
   var T=null;
-  var H={stage:1,season:'w26',disc:'all',screenGpa:2.7,sel:{},composer:false,sms:{en:DEFAULT_SMS.en,ar:DEFAULT_SMS.ar},q:'',openIds:{},open:{},tw:{from:'',days:3}};
+  var H={stage:1,fold:{},season:'w26',disc:'all',screenGpa:2.7,sel:{},composer:false,sms:{en:DEFAULT_SMS.en,ar:DEFAULT_SMS.ar},q:'',openIds:{},open:{},tw:{from:'',days:3}};
   var W={gpa:30,ab:40,pe:30};
   var G={minGpa:2.7,minAb:50};
   var PRE={balanced:{gpa:30,ab:40,pe:30},academic:{gpa:50,ab:25,pe:25},iq:{gpa:20,ab:60,pe:20},personality:{gpa:20,ab:30,pe:50}};
@@ -252,6 +252,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
   $('#sn-s27').addEventListener('click',function(){H.season='s27';resetSel();render()});
   $('#dchips').addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(b&&!b.disabled)act(b.dataset.act,b)});
   $('#pipe').addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(b)act(b.dataset.act,b)});
+  $('#sbody').addEventListener('toggle',function(e){var d=e.target;if(d&&d.dataset&&d.dataset.fold)H.fold[d.dataset.fold]=d.open},true);
 
   /* ----- stage 1: registered ----- */
   /* qualification and field of study, written for the current language */
@@ -285,7 +286,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     var mx=Math.max(1,Math.max.apply(null,DISC.map(function(d){return ap.filter(function(a){return a.disc===d.id}).length})));
     $('#sbody').innerHTML=
       linksPanel()+progPanel()+demoPanel()+'<div class="stats"><div><span>'+esc(t('Registered'))+'</span><b class="num">'+sc.length+'</b></div><div><span>'+esc(t('Awaiting screening'))+'</span><b class="num">'+sc.filter(function(a){return a.status==='new'}).length+'</b></div><div><span>'+esc(t('Average GPA'))+'</span><b class="num">'+avg.toFixed(2)+'</b></div><div><span>'+esc(t('Stopped at the form'))+'</span><b class="num">'+blocked[H.season]+'</b></div></div>'+
-      '<div class="panel" style="margin-bottom:1rem"><h3 class="h3">'+esc(t('Registrations by discipline'))+'</h3><p class="hint" style="margin-bottom:0">'+esc(t('Only the five required disciplines can register. Other majors are stopped at the form automatically. Tap a bar to filter.'))+'</p>'+
+      '<div class="panel" style="margin-bottom:1rem"><h3 class="h3">'+esc(t('Registrations by discipline'))+'</h3><p class="hint" style="margin-bottom:0">'+esc(t('Only the listed disciplines can register. Other majors are stopped at the form automatically. Tap a bar to filter.'))+'</p>'+
       '<div class="fun" style="--fc:15rem">'+DISC.map(function(d){var n=ap.filter(function(a){return a.disc===d.id}).length;return '<button class="drow" type="button" data-act="disc" data-id="'+d.id+'" aria-pressed="'+(H.disc===d.id)+'"><span>'+esc(dt(d,'title'))+'</span><span class="tr"><i style="width:'+(n/mx*100).toFixed(1)+'%"></i></span><b class="num">'+n+'</b></button>'}).join('')+'</div></div>'+
       '<div class="ctrl"><div class="f" style="flex:1;min-width:12rem"><label for="q" style="position:absolute;inset-inline-start:-9999px">'+esc(t('Search'))+'</label><input id="q" placeholder="'+esc(t('Search name, phone or email'))+'" value="'+esc(H.q)+'"></div><span class="muted num" id="s1cnt"></span><button class="btn ghost sm" type="button" data-act="copy-contacts">'+esc(t('Copy contacts (CSV)'))+'</button></div>'+
       '<ol class="rows" id="s1list"></ol>';
@@ -332,10 +333,14 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
   }
 
   /* ----- data tools (stage 1) ----- */
+  /* a setup panel that stays closed until HR opens it (and remembers whether it was open) */
+  function fold(id,title,sum,body){
+    return '<details class="panel fold" data-fold="'+id+'"'+(H.fold[id]?' open':'')+'><summary><span class="ft">'+esc(title)+'</span><span class="sum">'+esc(sum)+'</span></summary><div class="fold-body">'+body+'</div></details>';
+  }
   function linksPanel(){
     var rows=[['Registration',BASE+'?p=apply'],['Registration · Arabic',BASE+'?p=apply&lang=ar'],['Registration · English',BASE+'?p=apply&lang=en'],['Tests',BASE+'?p=test']];
-    return '<div class="panel" style="margin-bottom:1rem"><h3 class="h3">'+esc(t('Links to share'))+'</h3><p class="hint" style="margin-bottom:.2rem">'+esc(t('Put the registration link in your advertisement. The page has a language button, and the Arabic and English links open it in that language. The tests link goes in the SMS, together with each applicant’s own access code.'))+'</p>'+
-      rows.map(function(r){return '<div class="linkrow"><span>'+esc(t(r[0]))+'</span><input readonly dir="ltr" value="'+esc(r[1])+'" aria-label="'+esc(t('{l} link',{l:t(r[0])}))+'"><button class="btn ghost sm" type="button" data-act="copy-link" data-u="'+esc(r[1])+'">'+esc(t('Copy'))+'</button></div>'}).join('')+'</div>';
+    return fold('links',t('Links to share'),t('{n} links',{n:rows.length}),'<p class="hint" style="margin-bottom:.2rem">'+esc(t('Put the registration link in your advertisement. The page has a language button, and the Arabic and English links open it in that language. The tests link goes in the SMS, together with each applicant’s own access code.'))+'</p>'+
+      rows.map(function(r){return '<div class="linkrow"><span>'+esc(t(r[0]))+'</span><input readonly dir="ltr" value="'+esc(r[1])+'" aria-label="'+esc(t('{l} link',{l:t(r[0])}))+'"><button class="btn ghost sm" type="button" data-act="copy-link" data-u="'+esc(r[1])+'">'+esc(t('Copy'))+'</button></div>'}).join(''));
   }
   function todayIso(){return new Date(Date.now()+4*36e5).toISOString().slice(0,10)}
   function progPanel(){
@@ -349,7 +354,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
           QK.map(function(k){return '<label class="chk"><input type="checkbox" data-dq="'+d.id+'|'+k[0]+'"'+(q.indexOf(k[0])>-1?' checked':'')+'><span>'+esc(KH.qualName(k[0]))+'</span></label>'}).join('')+'</div></div>'+
         '<div class="f dqw"><label for="dw-'+d.id+'">'+esc(t('Training duration (weeks)'))+'</label><input id="dw-'+d.id+'" type="number" min="1" max="52" inputmode="numeric" dir="ltr" data-dw="'+d.id+'" placeholder="'+esc(p.weeks||t('Same as above'))+'" value="'+esc(w)+'"></div></div>';
     }).join('');
-    return '<div class="panel" style="margin-bottom:1rem"><h3 class="h3">'+esc(t('Programme details'))+' · '+esc(sn(H.season))+'</h3>'+
+    return fold('prog',t('Programme details')+' · '+sn(H.season),why+' · '+t('{n} disciplines',{n:DISC.length}),
       '<div class="fgroup" style="border-top:0;padding-top:0;margin-top:0"><h4>'+esc(t('Application period'))+'</h4><p class="hint">'+esc(t('The dates between which students can register. When the switch is off, nobody can register.'))+'</p>'+
         '<div class="grid2"><div class="f"><label for="pg-opens">'+esc(t('Applications open from'))+'</label><input id="pg-opens" type="date" dir="ltr" data-prog="opens" value="'+esc(p.opens)+'"></div>'+
         '<div class="f"><label for="pg-deadline">'+esc(t('Applications close on'))+'</label><input id="pg-deadline" type="date" dir="ltr" data-prog="deadline" value="'+esc(p.deadline)+'"></div></div>'+
@@ -358,13 +363,14 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
       '<div class="fgroup"><h4>'+esc(t('Training'))+'</h4>'+
         '<div class="grid2"><div class="f"><label for="pg-start">'+esc(t('Training starts on'))+'</label><input id="pg-start" type="date" dir="ltr" data-prog="start" value="'+esc(p.start)+'"></div></div>'+
         '<div class="f" style="max-width:22rem"><label for="pg-weeks">'+esc(t('Training duration (in weeks)'))+'</label><input id="pg-weeks" type="number" min="1" max="52" inputmode="numeric" dir="ltr" data-prog="weeks" value="'+esc(p.weeks)+'"><span class="sub">'+esc(t('Used for every discipline that has no duration of its own below.'))+'</span></div></div>'+
-      '<div class="fgroup"><h4>'+esc(t('Disciplines: required qualification and training duration'))+'</h4><p class="hint">'+esc(t('Tick every qualification you accept for each discipline. Students see this on the programme card, and the form stops anyone who does not match. Leave all unticked to accept any qualification.'))+'</p><div class="dq">'+rows+'</div></div></div>';
+      '<div class="fgroup"><h4>'+esc(t('Disciplines: required qualification and training duration'))+'</h4><p class="hint">'+esc(t('Tick every qualification you accept for each discipline. Students see this on the programme card, and the form stops anyone who does not match. Leave all unticked to accept any qualification.'))+'</p><div class="dq">'+rows+'</div></div>');
   }
   function demoPanel(){
     if(!DEMO)return '';
     var hasDemo=apps.some(function(a){return a.demo});
-    return '<div class="panel" style="margin-bottom:1rem"><h3 class="h3">'+esc(t('Demonstration data'))+'</h3><p class="hint">'+esc(t('For presentations only. Adds made-up applicants so you can show screening, the tests and the ranking. They are marked as samples and can be removed in one tap.'))+'</p>'+
-      '<div class="actions"><button class="btn ghost sm" type="button" data-act="load-sample">'+esc(t('Load sample applicants'))+'</button>'+(hasDemo?'<button class="btn ghost sm" type="button" data-act="remove-sample">'+esc(t('Remove sample applicants'))+'</button>':'')+'</div></div>';
+    var nDemo=apps.filter(function(a){return a.demo}).length;
+    return fold('demo',t('Demonstration data'),nDemo?t('{n} sample applicants',{n:nDemo}):t('No sample applicants'),'<p class="hint">'+esc(t('For presentations only. Adds made-up applicants so you can show screening, the tests and the ranking. They are marked as samples and can be removed in one tap.'))+'</p>'+
+      '<div class="actions"><button class="btn ghost sm" type="button" data-act="load-sample">'+esc(t('Load sample applicants'))+'</button>'+(hasDemo?'<button class="btn ghost sm" type="button" data-act="remove-sample">'+esc(t('Remove sample applicants'))+'</button>':'')+'</div>');
   }
 
   /* ----- stage 3: assessment ----- */
