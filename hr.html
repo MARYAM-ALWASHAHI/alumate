@@ -66,7 +66,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     'Applicants to import':'المتقدمون المراد استيرادهم','Import':'استيراد','Load sample applicants':'تحميل متقدمين تجريبيين','Remove sample applicants':'حذف المتقدمين التجريبيين',
     'IQ test (0 to 100)':'اختبار الذكاء (من 0 إلى 100)','IQ test score':'درجة اختبار الذكاء','{l} score':'درجة {l}','Save scores':'حفظ الدرجات',
     'Personality is the average of the five traits.':'درجة الشخصية هي متوسط الصفات الخمس.',
-    'Code':'الرمز','In progress':'قيد الأداء','Reopen test':'إعادة فتح الاختبار','IQ test {a} · Personality {p}':'اختبار الذكاء {a} · الشخصية {p}','took {m} min':'استغرق {m} دقيقة',
+    'Code':'الرمز','Mobile':'الجوال','In progress':'قيد الأداء','Reopen test':'إعادة فتح الاختبار','IQ test {a} · Personality {p}':'اختبار الذكاء {a} · الشخصية {p}','took {m} min':'استغرق {m} دقيقة',
     'Invited':'المدعوون','Completed':'أكملوا','Pending':'قيد الإنجاز','Completion':'نسبة الإكمال','Messages to send':'رسائل بانتظار الإرسال',
     'ALUMATE prepares each personalised SMS with its access code. Copy them into your SMS service, then mark them as sent. {n} waiting.':'تجهّز ألوميت رسالة نصية لكل متقدم مع رمز الدخول الخاص به. انسخها إلى خدمة الرسائل النصية ثم علّمها كمُرسلة. بالانتظار: {n}.',
     'Copy numbers and messages':'نسخ الأرقام والرسائل','Mark all as sent':'تعليم الكل كمُرسل','and {n} more':'و{n} أخرى',
@@ -382,7 +382,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     var rows=pool.map(function(a){
       var st=STAT[a.status],line;
       if(a.status==='invited'){
-        line='<small class="num">'+esc(t('Code'))+' <b dir="ltr" style="font-family:var(--f-mono)">'+esc(a.code)+'</b>'+winLine(a)+(a.started?' · '+esc(t('In progress'))+' · <button class="linkbtn" type="button" data-act="reset-test" data-id="'+a.id+'">'+esc(t('Reopen test'))+'</button>':'')+'</small>';
+        line='<small class="num">'+esc(t('Mobile'))+' <span dir="ltr" style="font-family:var(--f-mono);font-weight:700">'+esc(a.phone)+'</span> · '+esc(t('Code'))+' <span dir="ltr" style="font-family:var(--f-mono);font-weight:700">'+esc(a.code)+'</span>'+winLine(a)+(a.started?' · '+esc(t('In progress'))+' · <button class="linkbtn" type="button" data-act="reset-test" data-id="'+a.id+'">'+esc(t('Reopen test'))+'</button>':'')+'</small>';
       }else line=chips(a,true)+(a.elapsed?'<small class="num">'+esc(t('took {m} min',{m:Math.round(a.elapsed/6)/10}))+'</small>':'');
       return '<li class="row r2 nock'+(a.id===A.lastId?' mine':'')+'"><div class="who"><b>'+esc(a.name)+'</b><small>'+esc(D[a.disc].tag)+' · '+esc(tu(a.uni))+' · '+qm(a)+'</small>'+line+'</div><span class="gp"><i>'+esc(t('GPA'))+' </i>'+a.gpa.toFixed(2)+'</span><span class="pill '+st[1]+'">'+esc(t(a.status==='invited'?'Pending':'Completed'))+'</span></li>';
     }).join('');
