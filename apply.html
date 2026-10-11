@@ -6,9 +6,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 <script src="config.js"></script>
-<script src="kh.js?v=3"></script>
+<script src="kh.js?v=4"></script>
 </head><body>
 <div id="app">
   <header class="top"><div class="wrap bar">
@@ -65,7 +65,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     'Duration':'المدة','Apply by':'آخر موعد للتقديم','To be announced':'سيُعلن لاحقاً',
     'Register for this discipline':'سجّل في هذا التخصص',
     'Studied something else?':'درست تخصصاً آخر؟',
-    'We are only accepting the five disciplines above this time.':'نقبل هذه المرة التخصصات الخمسة أعلاه فقط.',
+    'We are only accepting the disciplines above this time.':'نقبل هذه المرة التخصصات أعلاه فقط.',
     'My major isn’t listed':'تخصصي غير مذكور',
     'Registration':'التسجيل','Change':'تغيير',
     'Full name':'الاسم الكامل','e.g. Noora Al Kindi':'مثال: نورة بنت سعيد الكندي',
@@ -95,7 +95,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     'Decision':'القرار',
     'Register someone else':'تسجيل متقدم آخر',
     'Not open to your major yet':'التسجيل غير متاح لتخصصك حالياً',
-    'This intake only accepts the five disciplines listed. Please check back for the next intake.':'يقبل هذا الموسم التخصصات الخمسة المذكورة فقط. نرجو مراجعة الموقع في الموسم القادم.',
+    'This intake only accepts the disciplines listed. Please check back for the next intake.':'يقبل هذا الموسم التخصصات المذكورة فقط. نرجو مراجعة الموقع في الموسم القادم.',
     'Back to disciplines':'العودة إلى التخصصات',
     /* My application */
     'Track your application':'تتبّع طلبك',
@@ -266,7 +266,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
       '<div class="seg" role="group" aria-label="'+esc(t('Intake'))+'">'+['w26','s27'].map(function(s){return '<button type="button" data-season="'+s+'" aria-pressed="'+(S.season===s)+'">'+esc(t(SEASONS[s]))+'</button>'}).join('')+'</div>'+
       (inf?'<span class="ap '+(closed?'closed':'open')+'">'+esc(ny&&inf.opens?t('Opens on {x}',{x:KH.fmtDate(inf.opens)}):t(closed?'Applications closed':'Applications open'))+'</span>':'')+'</div>'+
       '<div id="cards">'+cardsHTML()+'</div>'+
-      '<div class="closed"><div><b>'+esc(t('Studied something else?'))+'</b><p class="muted">'+esc(t('We are only accepting the five disciplines above this time.'))+'</p></div><button class="btn ghost sm" type="button" id="other">'+esc(t('My major isn’t listed'))+'</button></div>');
+      '<div class="closed"><div><b>'+esc(t('Studied something else?'))+'</b><p class="muted">'+esc(t('We are only accepting the disciplines above this time.'))+'</p></div><button class="btn ghost sm" type="button" id="other">'+esc(t('My major isn’t listed'))+'</button></div>');
     var q=$('#q');q.value=S.q;
     q.addEventListener('input',function(){S.q=q.value;$('#cards').innerHTML=cardsHTML()});
   }
@@ -411,7 +411,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     $('#trk').addEventListener('click',function(){goView('track')});
   }
   function showClosed(){
-    panel('<div class="done"><h2 class="h2">'+esc(t('Not open to your major yet'))+'</h2><p>'+esc(t('This intake only accepts the five disciplines listed. Please check back for the next intake.'))+'</p><div class="actions"><button class="btn ghost" id="backc">'+esc(t('Back to disciplines'))+'</button></div></div>');
+    panel('<div class="done"><h2 class="h2">'+esc(t('Not open to your major yet'))+'</h2><p>'+esc(t('This intake only accepts the disciplines listed. Please check back for the next intake.'))+'</p><div class="actions"><button class="btn ghost" id="backc">'+esc(t('Back to disciplines'))+'</button></div></div>');
     $('#backc').addEventListener('click',function(){goReg(0,false)});
   }
 
