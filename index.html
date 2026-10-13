@@ -1,15 +1,1196 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ألوميت · ALUMATE</title>
-<meta name="theme-color" content="#0B2D4A">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ALUMATE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+
+/* Layout: navy masthead with portal switch; light-grey work surface with white panels; HR uses a left rail that becomes a tab strip on phones. Single committed light theme (corporate, print-like). */
+:root{
+  --navy:#0B2D4A; --navy-2:#14406A; --navy-3:#0F3657; --navy-soft:#E6ECF2;
+  --teal:#00A8A8; --teal-ink:#00787A; --teal-soft:#E0F4F4;
+  --silver:#C0C6CE; --silver-2:#E3E7EC;
+  --bg:#F4F6F8; --card:#FFFFFF; --ink:#14212E; --muted:#5A6978; --line:#DFE4EA; --line-2:#EEF1F4;
+  --ok:#1F8A5B; --ok-soft:#E3F3EA; --warn:#A86A12; --warn-soft:#FBF1DE; --bad:#B93A33; --bad-soft:#F8E4E2; --info:#2F6690; --info-soft:#E4EEF6;
+  --f:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --fm:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  --r:10px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--f);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.mono{font-family:var(--fm);font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-ink)}
+
+/* Masthead */
+.top{background:var(--navy);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;border-bottom:3px solid var(--teal)}
+.top-in{max-width:1240px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;color:#fff}
+.brand svg{width:34px;height:34px;flex:none}
+.brand b{display:block;font-size:17px;font-weight:800;letter-spacing:.14em}
+.brand small{display:block;font-size:10.5px;color:var(--silver);letter-spacing:.08em;text-transform:uppercase}
+.portals{display:flex;gap:4px;margin-left:auto;overflow-x:auto;max-width:100%;scrollbar-width:none}
+.portals::-webkit-scrollbar{display:none}
+.portals button{background:transparent;border:1px solid transparent;color:#D5DEE7;padding:7px 12px;border-radius:7px;font-size:13px;font-weight:600;white-space:nowrap}
+.portals button:hover{background:var(--navy-2);color:#fff}
+.portals button.on{background:#fff;color:var(--navy)}
+.demo-tag{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);background:var(--silver);padding:3px 8px;border-radius:999px;font-weight:700;white-space:nowrap}
+@media (max-width:760px){.portals{margin-left:0;order:3;width:100%}.demo-tag{margin-left:auto}}
+
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:24px 48px}
+
+/* Generic */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 1px 2px rgba(11,45,74,.04),0 4px 14px rgba(11,45,74,.04)}
+button.card,.portal-card,.track-card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+button.card:hover,.portal-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(11,45,74,.10)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:18px;height:2px;background:var(--teal);display:inline-block}
+.btn{box-shadow:0 1px 2px rgba(11,45,74,.12)}
+.btn.teal:not(.ghost){box-shadow:0 4px 12px rgba(0,120,122,.22)}
+.pad{padding:18px}
+.sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.sec-h h2{font-size:18px;font-weight:700;color:var(--navy)}
+.sec-h h3{font-size:15px;font-weight:700;color:var(--navy)}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;padding:9px 16px;font-weight:600;font-size:13.5px;border:1px solid var(--navy);background:var(--navy);color:#fff}
+.btn:hover{background:var(--navy-2)}
+.btn.teal{background:var(--teal-ink);border-color:var(--teal-ink)}
+.btn.teal:hover{background:#006566}
+.btn.ghost{background:#fff;color:var(--navy);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--navy)}
+.btn.sm{padding:6px 11px;font-size:12.5px}
+.btn.danger{background:#fff;color:var(--bad);border-color:#E9C3C0}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap;line-height:1.6}
+.p-ok{background:var(--ok-soft);color:var(--ok)}
+.p-warn{background:var(--warn-soft);color:var(--warn)}
+.p-bad{background:var(--bad-soft);color:var(--bad)}
+.p-info{background:var(--info-soft);color:var(--info)}
+.p-teal{background:var(--teal-soft);color:var(--teal-ink)}
+.p-navy{background:var(--navy);color:#fff}
+.p-neu{background:var(--line-2);color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:10px 12px;background:#F8FAFB;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr.click{cursor:pointer}
+tr.click:hover td{background:#F7FAFC}
+.who b{display:block;font-weight:600}
+.who span{font-size:12px;color:var(--muted)}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--navy-soft);color:var(--navy);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.avatar.lg{width:56px;height:56px;font-size:19px;background:var(--navy);color:#fff}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field label{font-size:12px;font-weight:600;color:var(--navy)}
+.field .hint{font-size:11.5px;color:var(--muted)}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],input[type=time],select,textarea{font:inherit;font-size:13.5px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:#fff;color:var(--ink);width:100%}
+select{padding-right:28px}
+textarea{min-height:76px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--teal)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.seg button{border:0;background:#fff;padding:8px 14px;font-size:13px;font-weight:600;color:var(--muted);border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--navy);color:#fff}
+.err{color:var(--bad);font-size:12.5px;font-weight:600}
+.note{font-size:12.5px;color:var(--muted);background:var(--line-2);border-radius:8px;padding:10px 12px}
+
+/* Home */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:stretch;margin-bottom:28px}
+@media (max-width:900px){.hero{grid-template-columns:1fr}}
+.hero-l{background:radial-gradient(120% 90% at 100% 100%,rgba(0,168,168,.28) 0%,rgba(0,168,168,0) 55%),linear-gradient(140deg,#0B2D4A 0%,#0E3858 60%,#0B3E52 100%);color:#fff;border-radius:16px;padding:38px 32px;position:relative;overflow:hidden;box-shadow:0 14px 34px rgba(11,45,74,.22)}
+.hero-l::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 56px),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 56px);-webkit-mask-image:linear-gradient(120deg,#000 10%,transparent 75%);mask-image:linear-gradient(120deg,#000 10%,transparent 75%);pointer-events:none}
+.hero-l>*{position:relative}
+.hero-stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14)}
+.hero-stats b{display:block;font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}
+.hero-stats span{font-size:12px;color:#9FB3C6}
+.hero-l .eyebrow{color:#7FD6D6}
+.hero-l h1{font-size:clamp(34px,6vw,54px);font-weight:800;letter-spacing:.12em;margin:10px 0 6px}
+.hero-l .tag{font-size:clamp(17px,2.4vw,22px);font-weight:500;color:#DCE6EF}
+.hero-l p.lead{color:#B9C7D5;max-width:52ch;margin:16px 0 24px}
+.hero-l .btn.ghost{background:transparent;color:#fff;border-color:#4A6A88}
+.hero-l .btn.ghost:hover{border-color:#fff}
+.hero-l .btn.teal{background:var(--teal);border-color:var(--teal);color:var(--navy)}
+.hero-l .btn.teal:hover{background:#13BDBD}
+.hero-art{position:absolute;right:-30px;bottom:-24px;width:300px;opacity:.16;pointer-events:none}
+.glance{padding:20px}
+.glance h3{font-size:14px;color:var(--navy);margin-bottom:12px}
+.kpi-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi-mini div{border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.kpi-mini b{font-size:24px;font-weight:800;color:var(--navy);display:block;font-variant-numeric:tabular-nums}
+.kpi-mini span{font-size:12px;color:var(--muted)}
+.stagebar{display:flex;height:10px;border-radius:5px;overflow:hidden;margin:16px 0 8px;background:var(--line-2)}
+.stagebar i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.chal{display:grid;grid-template-columns:1fr 26px 1fr;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.chal:last-child{border-bottom:0}
+.chal .c1{font-weight:600;color:var(--bad)}
+.chal .c2{font-weight:600;color:var(--ok)}
+.chal svg{width:20px;color:var(--silver)}
+@media (max-width:600px){.chal{grid-template-columns:1fr}.chal svg{transform:rotate(90deg)}}
+.track-card{padding:18px;display:flex;flex-direction:column;gap:10px;border-top-width:4px}
+.track-card .tic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center}
+.kpi{transition:transform .18s ease,box-shadow .18s ease}
+.kpi .ic{width:46px;height:46px;border-radius:12px}
+.track-card .code{font-family:var(--fm);font-size:11px;color:var(--teal-ink);font-weight:600}
+.track-card h3{font-size:16px;color:var(--navy)}
+.track-card ul{margin:0;padding-left:18px;color:var(--muted);font-size:13px;display:flex;flex-direction:column;gap:3px}
+.journey{display:grid;grid-template-columns:repeat(7,1fr);gap:0;counter-reset:j}
+.journey div{position:relative;padding:14px 10px 0 0}
+.journey div::before{content:"";position:absolute;top:22px;left:18px;right:0;height:2px;background:var(--silver)}
+.journey div:last-child::before{display:none}
+.journey .n{position:relative;z-index:1;width:18px;height:18px;border-radius:50%;background:var(--teal);color:var(--navy);font-size:10px;font-weight:800;display:grid;place-items:center;border:3px solid var(--bg);box-sizing:content-box}
+.journey b{display:block;margin-top:10px;font-size:13px;color:var(--navy)}
+.journey span{font-size:12px;color:var(--muted)}
+@media (max-width:820px){.journey{grid-template-columns:1fr}.journey div{padding:8px 0 8px 34px}.journey div::before{top:30px;left:10px;bottom:-14px;right:auto;width:2px;height:auto}.journey .n{position:absolute;left:0;top:10px}.journey b{margin-top:0}}
+.portal-card{padding:18px;display:flex;flex-direction:column;gap:8px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.portal-card:hover{border-color:var(--navy)}
+.portal-card .ic{width:40px;height:40px;border-radius:9px;background:var(--navy-soft);color:var(--navy);display:grid;place-items:center}
+.portal-card h3{font-size:15px;color:var(--navy)}
+.portal-card p{font-size:12.5px;color:var(--muted)}
+.portal-card .tg{font-size:11.5px;font-weight:600;color:var(--teal-ink)}
+.foot{margin-top:36px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+.welcome{margin-bottom:0;padding:44px 34px}
+.welcome .hero-art{width:340px;right:-20px;bottom:-40px;opacity:.14}
+.roles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:1040px){.roles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.roles{grid-template-columns:1fr}}
+.role-card{display:flex;flex-direction:column;gap:8px;padding:22px;background:#fff;border:1px solid var(--line);border-top:4px solid var(--navy);border-radius:12px;box-shadow:0 1px 2px rgba(11,45,74,.04),0 4px 14px rgba(11,45,74,.04);transition:transform .18s ease,box-shadow .18s ease}
+.role-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(11,45,74,.10)}
+.role-card:first-child{border-top-color:var(--teal)}
+.role-card .ic{width:48px;height:48px;border-radius:12px;background:var(--navy);color:#fff;display:grid;place-items:center}
+.role-card .who-l{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-ink);margin-top:8px}
+.role-card h3{font-size:17px;color:var(--navy)}
+.role-card p{font-size:13px;color:var(--muted);min-height:3.2em}
+.role-card .how{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);border-top:1px solid var(--line-2);padding-top:12px;margin-top:auto}
+.role-card .how svg{color:var(--navy)}
+.role-card .btn{width:100%;justify-content:center;margin-top:6px}
+/* Portal header */
+.phead{display:flex;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap;position:relative;overflow:hidden;color:#fff;border-radius:16px;padding:22px 24px;background:radial-gradient(90% 140% at 100% 0%,rgba(0,168,168,.30) 0%,rgba(0,168,168,0) 60%),linear-gradient(135deg,#0B2D4A 0%,#11406A 100%);box-shadow:0 10px 26px rgba(11,45,74,.18)}
+.phead::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 48px);-webkit-mask-image:linear-gradient(90deg,transparent 30%,#000 100%);mask-image:linear-gradient(90deg,transparent 30%,#000 100%);pointer-events:none}
+.phead>*{position:relative}
+.phead .ic{width:48px;height:48px;border-radius:12px;background:var(--teal);color:var(--navy);display:grid;place-items:center;flex:none}
+.phead h1{font-size:23px;color:#fff;font-weight:800}
+.phead p{color:#A9BED1;font-size:13px}
+.phead .field label{color:#C9D6E2}
+.phead .muted,.phead b{color:#DCE6EF!important}
+.phead select{border-color:transparent}
+.phead .spacer{min-width:10px}
+
+/* Apply */
+.steps{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.steps span{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--muted);padding:6px 12px 6px 6px;border-radius:999px;background:#fff;border:1px solid var(--line)}
+.steps span i{width:20px;height:20px;border-radius:50%;background:var(--line-2);display:grid;place-items:center;font-style:normal;font-size:11px}
+.steps span.on{color:var(--navy);border-color:var(--navy)}
+.steps span.on i{background:var(--navy);color:#fff}
+.steps span.done i{background:var(--teal);color:var(--navy)}
+.tsel{text-align:left;padding:16px;border:1.5px solid var(--line);border-radius:var(--r);background:#fff;display:flex;flex-direction:column;gap:6px}
+.tsel:hover{border-color:var(--navy)}
+.tsel.on{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-soft)}
+.tsel b{color:var(--navy);font-size:15px}
+.tsel span{font-size:12.5px;color:var(--muted)}
+.tsel em{font-style:normal;font-size:11.5px;font-weight:600;color:var(--teal-ink)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.apply-layout{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start}
+@media (max-width:900px){.apply-layout{grid-template-columns:1fr}}
+.pri-box{padding:16px}
+.pri-box .big{font-size:20px;font-weight:800;margin:6px 0}
+.check-line{display:flex;gap:8px;font-size:12.5px;align-items:flex-start;margin-top:6px}
+.check-line svg{flex:none;width:16px;margin-top:2px}
+.file-in{border:1.5px dashed var(--silver);border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px;background:#FAFBFC;font-size:13px}
+.file-in input{font-size:12px;max-width:100%}
+.done-box{text-align:center;padding:36px 20px}
+.done-box .ref{font-family:var(--fm);font-size:22px;color:var(--navy);font-weight:600;margin:8px 0}
+
+/* Trainee */
+.t-hero{padding:20px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+@media (max-width:760px){.t-hero{grid-template-columns:auto 1fr}.t-hero .ingot-box{grid-column:1/-1}}
+.t-hero h2{font-size:20px;color:var(--navy)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted);margin-top:6px}
+.meta b{color:var(--ink);font-weight:600}
+.ingot-box{width:300px;max-width:100%}
+.ingot-box svg{width:100%;height:auto;display:block}
+.ingot-box p{font-size:12px;color:var(--muted);text-align:center;margin-top:4px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2.5px solid transparent;padding:10px 14px;font-weight:600;color:var(--muted);white-space:nowrap;font-size:13.5px}
+.tabs button.on{color:var(--navy);border-bottom-color:var(--teal)}
+.tabs button .pill{margin-left:6px}
+.chk{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line-2)}
+.chk:last-child{border-bottom:0}
+.chk .ico{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:none}
+.chk .ico.ok{background:var(--ok-soft);color:var(--ok)}
+.chk .ico.pend{background:var(--warn-soft);color:var(--warn)}
+.chk .ico.na{background:var(--line-2);color:var(--muted)}
+.chk .ico svg{width:14px}
+.chk .tx{flex:1;min-width:0}
+.chk .tx b{display:block;font-size:13.5px;font-weight:600}
+.chk .tx span{font-size:12px;color:var(--muted)}
+.sms{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#FAFBFC}
+.sms .h{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:4px;gap:8px}
+.sms p{font-size:13px}
+.cert{border:2px solid var(--navy);border-radius:6px;padding:26px 22px;text-align:center;background:#fff;position:relative;outline:1px solid var(--silver);outline-offset:-8px}
+.cert .eyebrow{color:var(--muted)}
+.cert h3{font-size:22px;color:var(--navy);margin:10px 0 4px}
+.cert .nm{font-size:20px;font-weight:700;color:var(--teal-ink);margin:10px 0}
+.cert .sig{display:flex;justify-content:space-around;margin-top:22px;font-size:11.5px;color:var(--muted);gap:10px}
+.cert .sig div{border-top:1px solid var(--silver);padding-top:5px;min-width:110px}
+.locked{display:flex;gap:12px;align-items:flex-start;padding:16px;border:1px dashed var(--silver);border-radius:10px;background:#FAFBFC}
+.stars{display:flex;gap:4px}
+.stars button{background:none;border:0;padding:2px;color:var(--silver)}
+.stars button.on{color:#D9A21B}
+.stars svg{width:24px}
+.sess{display:flex;flex-wrap:wrap;gap:8px}
+.sess span{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:12.5px;font-weight:600;background:#fff}
+.sess span small{font-weight:500;color:var(--muted);font-size:11.5px}
+.sess span.miss{color:var(--muted);background:var(--line-2);border-style:dashed}
+
+/* Charts */
+.hb{display:grid;grid-template-columns:minmax(90px,170px) 1fr 34px;gap:10px;align-items:center;font-size:12.5px;padding:4px 0}
+.hb .l{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.hb .t{height:10px;background:var(--line-2);border-radius:5px;overflow:hidden}
+.hb .t i{display:block;height:100%;background:var(--navy);border-radius:5px}
+.hb.teal .t i{background:var(--teal)}
+.hb b{text-align:right;font-variant-numeric:tabular-nums}
+.cols{display:flex;align-items:flex-end;gap:8px;height:150px;padding-top:18px;border-bottom:1px solid var(--line)}
+.cols div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:4px;min-width:0}
+.cols div i{display:block;width:100%;max-width:34px;background:var(--teal);border-radius:4px 4px 0 0}
+.cols div b{font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--navy)}
+.cols-l{display:flex;gap:8px;margin-top:6px}
+.cols-l span{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+.lc svg{width:100%;height:auto;display:block}
+
+/* HR */
+.hr{display:grid;grid-template-columns:210px 1fr;gap:20px;align-items:start}
+.rail{position:sticky;top:90px;display:flex;flex-direction:column;gap:2px;padding:8px}
+.rail button{display:flex;align-items:center;gap:10px;background:none;border:0;text-align:left;padding:9px 12px;border-radius:8px;font-weight:600;color:var(--muted);font-size:13.5px}
+.rail button svg{width:17px;flex:none}
+.rail button:hover{background:var(--line-2);color:var(--navy)}
+.rail button.on{background:var(--navy);color:#fff}
+.rail button .pill{margin-left:auto}
+@media (max-width:900px){.hr{grid-template-columns:1fr}.rail{position:static;flex-direction:row;overflow-x:auto;padding:6px}.rail button{white-space:nowrap}}
+.kpi{padding:16px 18px;display:flex;gap:14px;align-items:center}
+.kpi .ic{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;flex:none}
+.kpi .ic svg{width:21px}
+.kpi b{font-size:28px;font-weight:800;line-height:1.1;color:var(--navy);font-variant-numeric:tabular-nums;display:block}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.alert{display:flex;gap:12px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line-2);font-size:13px}
+.alert:last-child{border-bottom:0}
+.alert .sev{width:4px;align-self:stretch;border-radius:2px;flex:none}
+.alert .tx{flex:1;min-width:0}
+.alert .tx b{font-weight:600}
+.alert .tx span{display:block;font-size:12px;color:var(--muted)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.filters select,.filters input{width:auto;min-width:140px;padding:7px 10px;font-size:13px}
+.filters input{min-width:200px;flex:1}
+.cap-card{padding:16px;display:flex;flex-direction:column;gap:10px}
+.cap-card h4{font-size:14px;color:var(--navy)}
+.cap-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center}
+.cap-nums b{display:block;font-size:20px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.cap-nums span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.seats{display:flex;gap:3px;flex-wrap:wrap}
+.seats i{width:14px;height:14px;border-radius:3px;background:var(--navy)}
+.seats i.free{background:#fff;border:1.5px solid var(--teal)}
+.cap-card.full{border-color:#E9C3C0}
+.mx td.c{text-align:center}
+.mx .st{width:24px;height:24px;border-radius:6px;display:inline-grid;place-items:center;border:0}
+.mx .st svg{width:13px}
+.mx .st.ok{background:var(--ok-soft);color:var(--ok)}
+.mx .st.pend{background:var(--warn-soft);color:var(--warn)}
+.mx .st.na{background:transparent;color:var(--silver)}
+.mx button.st:hover{outline:1.5px solid var(--navy)}
+
+/* Drawer & modal */
+.scrim{position:fixed;inset:0;background:rgba(11,45,74,.42);z-index:40}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--bg);z-index:41;overflow-y:auto;box-shadow:-10px 0 30px rgba(11,45,74,.18);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer-h{background:var(--navy);color:#fff;padding:18px 20px;padding-top:calc(18px + env(safe-area-inset-top,0px));display:flex;gap:14px;align-items:center;position:sticky;top:0;z-index:2}
+.drawer-h h3{font-size:17px}
+.drawer-h p{font-size:12px;color:var(--silver)}
+.drawer-h .x{margin-left:auto;background:var(--navy-2);border:0;color:#fff;width:34px;height:34px;border-radius:8px;display:grid;place-items:center;flex:none}
+.drawer-b{padding:18px 20px;display:flex;flex-direction:column;gap:16px}
+.kv{width:100%;font-size:13px}
+.kv th{width:42%;text-transform:none;letter-spacing:0;font-size:12.5px;color:#fff;background:var(--navy-3);font-weight:600;border-bottom:1px solid var(--navy-2);white-space:normal}
+.kv td{background:#fff}
+.log{display:flex;flex-direction:column;gap:0}
+.log div{display:grid;grid-template-columns:96px 1fr;gap:10px;font-size:12.5px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.log div:last-child{border-bottom:0}
+.log span{color:var(--muted)}
+.modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px}
+.modal-b{background:#fff;border-radius:12px;max-width:520px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 20px 50px rgba(11,45,74,.3)}
+.modal-h{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.modal-h h3{font-size:16px;color:var(--navy)}
+.modal-c{padding:18px;display:flex;flex-direction:column;gap:12px}
+.modal-f{padding:14px 18px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.phone{background:var(--line-2);border-radius:14px;padding:14px}
+.bubble{background:#fff;border-radius:14px 14px 14px 4px;padding:11px 13px;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.bubble+.bubble{margin-top:8px}
+.bubble[dir=rtl]{border-radius:14px 14px 4px 14px;font-family:'IBM Plex Sans Arabic',var(--f)}
+.email-pv{border:1px solid var(--line);border-radius:8px;font-size:13px}
+.email-pv .eh{padding:10px 12px;border-bottom:1px solid var(--line);background:#F8FAFB;font-size:12px;color:var(--muted)}
+.email-pv .eh b{color:var(--ink)}
+.email-pv .eb{padding:12px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:11px 18px;border-radius:9px;font-weight:600;font-size:13px;z-index:60;box-shadow:0 8px 24px rgba(11,45,74,.3);display:flex;align-items:center;gap:8px;max-width:calc(100% - 32px)}
+.toast svg{width:16px;color:var(--teal)}
+
+/* Supervisor */
+.sup{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.sup{grid-template-columns:1fr}}
+.tlist{display:flex;flex-direction:column}
+.tlist button{display:flex;gap:11px;align-items:center;background:#fff;border:0;border-bottom:1px solid var(--line-2);padding:12px 14px;text-align:left}
+.tlist button:last-child{border-bottom:0}
+.tlist button:hover{background:#F7FAFC}
+.tlist button.on{background:var(--teal-soft);box-shadow:inset 3px 0 0 var(--teal)}
+.tlist .who{flex:1;min-width:0}
+.ev-form{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff}
+.ev-top{background:var(--navy);color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ev-top h3{font-size:15px}
+.ev-top span{font-size:12px;color:var(--silver)}
+.ev-sec{padding:14px 16px;border-bottom:1px solid var(--line)}
+.ev-sec h4{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--navy);margin-bottom:10px}
+.ev-det{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px 16px;font-size:13px}
+.ev-det span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.att{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.att button{border:1.5px solid var(--line);background:#fff;border-radius:8px;padding:10px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.att button b{font-size:13px}
+.att button span{font-size:12px;color:var(--muted)}
+.att button.on{border-color:var(--navy);background:var(--navy-soft)}
+.comp{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line-2);font-size:13px}
+.comp:last-of-type{border-bottom:0}
+.comp .i{font-family:var(--fm);font-size:12px;color:var(--muted)}
+.sc{display:flex;gap:3px}
+.sc button{width:34px;height:30px;border:1px solid var(--line);background:#fff;border-radius:6px;font-weight:700;font-size:12.5px;color:var(--muted)}
+.sc button.on{background:var(--teal);border-color:var(--teal);color:var(--navy)}
+@media (max-width:560px){.comp{grid-template-columns:22px 1fr}.sc{grid-column:2}}
+.sc-key{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:6px}
+.ev-res{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:14px 16px;background:#F8FAFB}
+.ev-res div{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.ev-res b{font-size:22px;font-weight:800;color:var(--navy);display:block;font-variant-numeric:tabular-nums}
+.ev-res span{font-size:12px;color:var(--muted)}
+.plan{display:flex;flex-direction:column}
+.plan label{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:13px}
+.plan label:last-child{border-bottom:0}
+.plan input{width:16px;height:16px;accent-color:var(--teal-ink)}
+.plan .dn{text-decoration:line-through;color:var(--muted)}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+/* Sign-in */
+.login{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:20px;align-items:start;max-width:940px;margin:0 auto}
+@media (max-width:760px){.login{grid-template-columns:1fr}}
+.login-c{padding:26px}
+.login-c .lk{width:44px;height:44px;border-radius:12px;background:var(--navy-soft);color:var(--navy);display:grid;place-items:center;margin-bottom:12px}
+.login-c h2{font-size:19px;color:var(--navy)}
+.login-c form{display:flex;flex-direction:column;gap:14px;margin-top:18px}
+.login-c .btn{justify-content:center}
+.otp{font-family:var(--fm);font-size:22px;letter-spacing:.5em;text-align:center}
+.demo-acc{margin-top:20px;padding-top:16px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:6px}
+.demo-acc p{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.demo-acc button{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#F8FAFB;border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:12.5px;text-align:left}
+.demo-acc button:hover{border-color:var(--navy)}
+.demo-acc button span{color:var(--muted);font-family:var(--fm);font-size:11.5px}
+.sec-list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.sec-list div{display:flex;gap:12px;align-items:flex-start;font-size:13px}
+.sec-list svg{width:18px;flex:none;color:var(--teal-ink);margin-top:1px}
+.sec-list b{display:block;color:var(--navy)}
+.sec-list span{color:var(--muted);font-size:12.5px}
+.role-tbl td,.role-tbl th{font-size:12px;padding:8px 10px}
+.who-chip{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);padding:8px 10px;border-radius:12px}
+.who-chip .who b{color:#fff!important;font-size:13px}
+.who-chip .who span{color:#A9BED1;font-size:11.5px}
+.who-chip .btn{background:#fff;color:var(--navy);border-color:#fff}
+@media (prefers-reduced-motion:no-preference){.drawer{animation:slin .22s ease-out}.modal-b{animation:pop .18s ease-out}@keyframes slin{from{transform:translateX(30px);opacity:.6}}@keyframes pop{from{transform:scale(.97);opacity:.6}}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="top-in" id="top"></div></header>
+<main class="wrap" id="app"></main>
+<div id="layer"></div>
+<div id="toast" class="toast" hidden></div>
+
 <script>
-(function () {
-  var q = new URLSearchParams(location.search), p = q.get('p');
-  if (['apply', 'test', 'hr'].indexOf(p) < 0) p = 'apply';
-  q.delete('p');
-  var rest = q.toString();
-  location.replace(p + '.html' + (rest ? '?' + rest : ''));
-})();
+/* ============ Icons ============ */
+const I={
+ check:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5"/></svg>',
+ clock:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 4.8V8l2.2 1.4"/></svg>',
+ dash:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 8h7"/></svg>',
+ x:'<svg viewBox="0 0 16 16" width="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>',
+ arrow:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></svg>',
+ users:'<svg viewBox="0 0 24 24" width="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14c2.4.2 4 1.7 4.5 4.3"/></svg>',
+ user:'<svg viewBox="0 0 24 24" width="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg>',
+ form:'<svg viewBox="0 0 24 24" width="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 8h6M9 12h6M9 16h3.5"/></svg>',
+ cap:'<svg viewBox="0 0 24 24" width="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9.5L12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5V16c1.6 1.5 3.4 2.2 5.5 2.2s3.9-.7 5.5-2.2v-4.5"/><path d="M21.5 9.5v5"/></svg>',
+ guide:'<svg viewBox="0 0 24 24" width="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7.5" r="2.8"/><path d="M3 18c.5-3 2.4-4.8 5-4.8 1.2 0 2.3.4 3.1 1.1"/><path d="M14 15.5l2.2 2.2L21 13"/></svg>',
+ chart:'<svg viewBox="0 0 24 24" width="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg>',
+ gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M4.2 7.5l2 1.2M17.8 15.3l2 1.2M4.2 16.5l2-1.2M17.8 8.7l2-1.2"/></svg>',
+ flag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>',
+ gauge:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 17a8 8 0 1116 0"/><path d="M12 17l4-5"/></svg>',
+ home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6.5 8 6.5V20H4z"/></svg>',
+ list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>',
+ med:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg>',
+ grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>',
+ badge:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.6"/><path d="M8.5 17c.6-1.8 1.9-2.8 3.5-2.8s2.9 1 3.5 2.8"/></svg>',
+ archive:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="4.5" rx="1"/><path d="M5 8.5V20h14V8.5M10 12.5h4"/></svg>',
+ star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8z"/></svg>',
+ msg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+ lock:'<svg viewBox="0 0 24 24" width="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/></svg>'
+};
+const LOGO=`<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 33 9 25h22l4 8z" fill="#C0C6CE"/><path d="M8 23.5 12 15.5h16l4 8z" fill="#00A8A8"/><path d="M11 14 14.5 7h11L29 14z" fill="#FFFFFF"/></svg>`;
+
+/* ============ Seeded sample data ============ */
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const R=rng(20261013);
+const pick=a=>a[Math.floor(R()*a.length)];
+const ri=(a,b)=>a+Math.floor(R()*(b-a+1));
+const D=(y,m,d)=>new Date(y,m-1,d);
+const TODAY=D(2026,10,13);
+const addDays=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fmt=d=>d?`${String(d.getDate()).padStart(2,'0')} ${MON[d.getMonth()]} ${d.getFullYear()}`:'—';
+const mlabel=d=>`${MON[d.getMonth()]} ${d.getFullYear()}`;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const initials=n=>n.split(' ').filter(w=>w&&w!=='Al').slice(0,2).map(w=>w[0]).join('');
+const mask=c=>'••••'+String(c).slice(-4);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+const DEPTS=[
+ {n:'Carbon',m:['Chemical Engineering','Mechanical Engineering'],s:[['Khalid Al Balushi','E-20417'],['Huda Al Hinai','E-21883']]},
+ {n:'Reduction',m:['Chemical Engineering','Electrical Engineering'],s:[['Saif Al Maamari','E-19325'],['Amal Al Saadi','E-22140']]},
+ {n:'Central Maintenance',m:['Mechanical Engineering','Electrical Engineering'],s:[['Hamed Al Shidi','E-18702'],['Yousuf Al Kalbani','E-20566']]},
+ {n:'Casthouse',m:['Mechanical Engineering','Industrial Engineering'],s:[['Nasser Al Harthy','E-19911'],['Muna Al Jabri','E-23007']]},
+ {n:'Port',m:['Logistics Management','Marine Engineering'],s:[['Talal Al Mukhaini','E-21290'],['Salim Al Riyami','E-18844']]},
+ {n:'Power Plant',m:['Electrical Engineering','Mechanical Engineering'],s:[['Majid Al Farsi','E-17630'],['Aisha Al Hosni','E-22518']]},
+ {n:'IT',m:['Computer Science','Information Technology'],s:[['Omar Al Wahaibi','E-20981'],['Noor Al Ghafri','E-23315']]},
+ {n:'HR',m:['Human Resource Management','Business Administration'],s:[['Maryam Al Rawahi','E-19054'],['Badr Al Badi','E-21772']]},
+ {n:'EHS',m:['Occupational Health & Safety','Environmental Science'],s:[['Hilal Al Shukaili','E-18490'],['Zainab Al Mandhari','E-22861']]},
+ {n:'Communications',m:['Mass Communication','Marketing'],s:[['Shaikha Al Muqbali','E-21436'],['Faisal Al Amri','E-20179']]},
+ {n:'PI / Business Improvement',m:['Industrial Engineering','Business Administration'],s:[['Sultan Al Mazrouei','E-19768'],['Rahma Al Kindi','E-22694']]},
+ {n:'Supply Chain',m:['Supply Chain Management','Logistics Management'],s:[['Ali Al Hashmi','E-20333'],['Laila Al Busaidi','E-23120']]}
+];
+const deptOf=n=>DEPTS.find(d=>d.n===n);
+const OPS=['Carbon','Reduction','Central Maintenance','Casthouse','Port','Power Plant','EHS'];
+const ALL_MAJORS=[...new Set(DEPTS.flatMap(d=>d.m))];
+const UNIS=['Sultan Qaboos University','Sohar University','UTAS – Sohar','UTAS – Muscat','National University of S&T','GUtech','University of Nizwa','Dhofar University','Majan University College','A\'Sharqiyah University'];
+const FM=['Ahmed','Mohammed','Khalid','Said','Salim','Hamed','Yousuf','Ali','Nasser','Faisal','Hamood','Saif','Talal','Majid','Omar','Hilal','Badr','Sultan','Azzan','Rashid'];
+const FF=['Fatma','Aisha','Maryam','Shaikha','Noor','Huda','Asma','Zainab','Rahma','Amal','Muna','Badriya','Laila','Sara','Thuraya','Hajer','Iman','Ruqaya'];
+const FATHER=['Said','Salim','Hamed','Abdullah','Rashid','Saif','Khamis','Juma','Ali','Mohammed','Nasser','Sulaiman'];
+const FAM=['Al Balushi','Al Hinai','Al Maamari','Al Shidi','Al Amri','Al Kalbani','Al Saadi','Al Harthy','Al Mukhaini','Al Jabri','Al Riyami','Al Farsi','Al Mazrouei','Al Hosni','Al Wahaibi','Al Ghafri','Al Badi','Al Shukaili','Al Mandhari','Al Muqbali','Al Ajmi','Al Naabi'];
+const COMP=['Understanding of basic workplace safety protocols','Knowledge of company policies and procedures','Understanding of task-specific instructions','Ability to follow instructions accurately','Communication skills, both verbal and written','Problem-solving abilities','Time management skills to prioritize tasks efficiently','Openness to feedback and willingness to improve'];
+const SCALE=['Poor','Needs Improvement','Acceptable','Good','Excellent'];
+const TIERS=[{l:'0–3 absences',p:100},{l:'4–6 absences',p:70},{l:'7–10 absences',p:40},{l:'More than 10',p:0}];
+const STIPEND={Summer:200,Winter:200,Referral:200,Eidaad:400};
+const TRACK={
+ Summer:{name:'Summer Internship',code:'SUM',test:true,len:'2 months',color:'#00A8A8'},
+ Winter:{name:'Winter Internship',code:'WIN',test:true,len:'2 months',color:'#2F6690'},
+ Referral:{name:'Family Referral',code:'REF',test:true,len:'2 months',color:'#8A6BB8'},
+ Eidaad:{name:'Eidaad Programme',code:'EID',test:false,len:'10 months',color:'#0B2D4A'}
+};
+const STAGES=['Applied','Under Review','Assessment','Interview','Selected','Medical','Pre-Training','Training','Completed'];
+const PIPE=['Applied','Under Review','Assessment','Interview','Selected','Medical'];
+const PRE=[['medical','Medical Check-up'],['siti','SITI Induction'],['agreement','Agreement Signature'],['docs','Required Documents'],['card','Access / ID Card'],['email','Company Email'],['bank','Bank Details'],['ppe','PPE Issued'],['laptop','Laptop Issued']];
+const POST=[['ppe','Hand Over PPE'],['card','Access Card Hand Over'],['laptop','Return Laptop'],['feedback','Trainee Feedback'],['cert','Issue Certificate']];
+const SESSIONS=[['SITI Safety Induction','Every intake'],['Effective Communication',D(2026,6,24)],['Time Management',D(2026,7,15)],['Presentation Skills',D(2026,8,19)],['Problem Solving Basics',D(2026,9,23)],['Professional Email Writing',D(2026,10,21)],['Teamwork on Site',D(2026,11,18)]];
+const OPS_PLAN=['Site orientation and safety walk-through','Shadow the shift engineer on area rounds','Assist with the equipment inspection checklist','Log one process reading per shift for a week','Prepare a short improvement proposal','Present the proposal to the section'];
+const OFF_PLAN=['Department orientation and system access','Learn the main reports and workflows','Support a live project task','Draft a process map for one routine task','Prepare a mini-project','Present the mini-project to the team'];
+const HRS=['Maryam Al Rawahi','Badr Al Badi'];
+
+let SEQ=100040;
+const ALL=[];
+let LOAD={}; DEPTS.forEach(d=>LOAD[d.n]=0);
+
+function emailBase(name){const p=name.split(' ');return (p[0][0]+'.'+p.slice(2).join('').replace(/^Al/,'al')).toLowerCase()}
+function mk(o){
+  const g=R()<.45?'F':'M';
+  const name=`${pick(g==='F'?FF:FM)} ${pick(FATHER)} ${pick(FAM)}`;
+  const r={id:'SA-'+(SEQ++),name,g,civil:String(ri(10000000,39999999)),phone:'9'+ri(1000000,9999999),
+    uni:pick(UNIS),major:o.major||pick(ALL_MAJORS),gpa:(2.5+R()*1.45).toFixed(2),graduated:false,gradYear:pick([2026,2027,2027,2028]),
+    reqGrad:R()<.6,declaredBefore:R()<.15,histFound:false,track:o.track,intake:o.intake,stage:o.stage,dept:o.dept||null,sup:null,
+    start:o.start||null,end:o.end||null,applied:o.applied,accepted:o.accepted||null,iq:null,pers:null,interview:null,ref:null,
+    pre:{},evals:[],sessions:[],plan:[],post:{},log:[],bank:pick(['Bank Muscat','Bank Dhofar','National Bank of Oman','Sohar International','Bank Nizwa','Oman Arab Bank']),
+    acct:String(ri(1000,9999)),ppeSize:null,medDate:null,medTime:null,medSms:false,medResult:null,feedback:null,reason:null};
+  r.pemail=emailBase(name)+'@gmail.com';
+  if(o.graduate){r.graduated=true;r.gradYear=2025;r.reqGrad=false}
+  if(o.track==='Referral'){const d=pick(DEPTS),s=pick(d.s);r.ref={empId:s[1].replace('E-','E-3'),empName:`${pick(FM)} ${pick(FATHER)} ${r.name.split(' ').slice(2).join(' ')}`,rel:pick(['Son / Daughter','Brother / Sister','Nephew / Niece'])}}
+  ALL.push(r);return r;
+}
+function trainedBefore(r){return r.declaredBefore||r.histFound}
+function priority(r){
+  if(r.track==='Eidaad')return null;
+  const a=r.reqGrad, b=!trainedBefore(r);
+  return a&&b?'High':(a||b)?'Medium':'Standard';
+}
+function score(r){return r.iq==null?null:Math.round(r.iq*.6+r.pers*.4)}
+function assign(r,ignoreCap){
+  const soft=6;
+  let opts=DEPTS.filter(d=>d.m.includes(r.major)&&(ignoreCap||LOAD[d.n]<soft));
+  if(!opts.length)opts=DEPTS.filter(d=>ignoreCap||LOAD[d.n]<soft);
+  opts.sort((a,b)=>LOAD[a.n]-LOAD[b.n]);
+  const d=opts[0]; r.dept=d.n; if(!ignoreCap)LOAD[d.n]++;
+  r.major=d.m.includes(r.major)?r.major:pick(d.m);
+}
+function setSup(r){if(r.dept){const s=pick(deptOf(r.dept).s);r.sup={name:s[0],id:s[1]}}}
+function setPre(r,p){
+  const ops=OPS.includes(r.dept);
+  PRE.forEach(([k])=>{
+    if(k==='ppe'&&!ops){r.pre[k]='na';return}
+    if(k==='laptop'&&ops){r.pre[k]='na';return}
+    if(k==='medical'){r.pre[k]='done';return}
+    r.pre[k]=R()<p?'done':'pending';
+  });
+  if(ops)r.ppeSize={coverall:pick(['M','L','XL']),shoes:ri(39,45)};
+  r.cemail=emailBase(r.name)+'@trainee.sohar-alu.om';
+}
+function monthsOf(start,last){const out=[];let d=new Date(start.getFullYear(),start.getMonth(),1);while(d<=last){out.push(new Date(d));d=new Date(d.getFullYear(),d.getMonth()+1,1)}return out}
+function mkEval(r,month,q,idx){
+  const sc=COMP.map(()=>clamp(Math.round(q+(R()-.5)*1.6+idx*.25),0,4));
+  const att=R()<.78?0:R()<.75?1:2;
+  return {month:mlabel(month),att,scores:sc,final:Math.round(sc.reduce((a,b)=>a+b,0)/32*100),comment:'',by:r.sup?r.sup.name:'',rec:null};
+}
+function fillEvals(r,uptoDate,q){
+  const last=uptoDate<r.end?uptoDate:r.end;
+  monthsOf(r.start,last).forEach((m,i)=>r.evals.push(mkEval(r,m,q,i)));
+}
+function setSessions(r){SESSIONS.forEach(([n,d],i)=>{if(i===0){r.sessions.push({n,d:r.start,done:r.start<=TODAY});return}
+  if(d>=r.start&&d<=r.end)r.sessions.push({n,d,done:d<=TODAY&&R()<.88})})}
+function setPlan(r){
+  const base=OPS.includes(r.dept)?OPS_PLAN:OFF_PLAN;
+  const prog=r.stage==='Completed'?1:r.stage==='Training'?clamp((TODAY-r.start)/(r.end-r.start),0,1):0;
+  r.plan=base.map((t,i)=>({t,done:i<Math.round(prog*base.length)}));
+}
+function lg(r,d,who,what){r.log.push({d,who,what})}
+function baseLog(r){
+  lg(r,r.applied,'Applicant','Application submitted ('+TRACK[r.track].name+')');
+  const si=STAGES.indexOf(r.stage);
+  if(r.stage!=='Applied')lg(r,addDays(r.applied,3),pick(HRS),'Documents reviewed · moved to '+(TRACK[r.track].test?'Assessment':'Interview'));
+  if(r.iq!=null)lg(r,addDays(r.applied,10),'System','Online IQ & personality assessment completed · score '+score(r));
+  if(r.interview!=null)lg(r,addDays(r.applied,14),r.dept+' department','Interview completed · rating '+r.interview+'/100');
+  if(r.accepted)lg(r,r.accepted,pick(HRS),'Selected and nominated to '+r.dept);
+  if(si>=6||r.stage==='Completed')lg(r,addDays(r.accepted,6),'Medical Centre','Medical check-up · Fit');
+  if(r.stage==='Training'||r.stage==='Completed')lg(r,r.start,'System','Training started · Supervisor '+r.sup.name);
+  if(r.stage==='Completed')lg(r,r.end,'System','Training completed');
+}
+
+/* Eidaad 2026 — one selected per department after interview */
+DEPTS.forEach(d=>{const r=mk({track:'Eidaad',intake:'Eidaad 2026',stage:'Training',major:pick(d.m),start:D(2026,6,1),end:D(2027,3,31),applied:D(2026,4,8),accepted:D(2026,5,12),graduate:true});
+  r.dept=d.n;LOAD[d.n]++;r.interview=ri(80,95);setSup(r);setPre(r,1);fillEvals(r,D(2026,8,31),ri(2,3));if(R()<.6)r.evals.push(mkEval(r,D(2026,9,1),3,3));setSessions(r);setPlan(r)});
+for(let i=0;i<7;i++){const d=pick(DEPTS);const r=mk({track:'Eidaad',intake:'Eidaad 2026',stage:'Not Selected',major:pick(d.m),applied:D(2026,4,9),graduate:true});r.dept=d.n;r.interview=ri(56,78);r.reason='Interview — another candidate selected'}
+/* Summer 2026 — completed */
+for(let i=0;i<38;i++){const r=mk({track:'Summer',intake:'Summer 2026',stage:'Completed',start:D(2026,6,14),end:D(2026,8,13),applied:D(2026,4,ri(1,25)),accepted:D(2026,5,ri(10,28))});
+  assign(r,true);setSup(r);r.iq=ri(68,97);r.pers=ri(62,95);setPre(r,1);fillEvals(r,D(2026,7,31),ri(2,3));setSessions(r);setPlan(r);
+  const back=R()>.09;r.post={ppe:OPS.includes(r.dept)?(back?'done':'pending'):'na',card:back?'done':'pending',laptop:OPS.includes(r.dept)?'na':'done',feedback:R()<.75?'done':'pending',cert:back?'done':'pending'};
+  if(r.post.feedback==='done')r.feedback={rating:ri(3,5),text:''};}
+for(let i=0;i<6;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'Completed',start:D(2026,6,14),end:D(2026,8,13),applied:D(2026,4,ri(1,25)),accepted:D(2026,5,ri(10,28))});
+  assign(r,true);setSup(r);r.iq=ri(66,94);r.pers=ri(60,92);setPre(r,1);fillEvals(r,D(2026,7,31),ri(2,3));setSessions(r);setPlan(r);
+  r.post={ppe:OPS.includes(r.dept)?'done':'na',card:'done',laptop:OPS.includes(r.dept)?'na':'done',feedback:'done',cert:'done'};r.feedback={rating:ri(4,5),text:''};}
+/* Referral 2026 — current */
+for(let i=0;i<6;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'Training',start:D(2026,9,13),end:D(2026,11,12),applied:D(2026,7,ri(1,20)),accepted:D(2026,8,ri(10,25))});
+  assign(r);setSup(r);r.iq=ri(70,94);r.pers=ri(62,92);setPre(r,1);setSessions(r);setPlan(r)}
+for(let i=0;i<4;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'Pre-Training',start:D(2026,10,20),end:D(2026,12,19),applied:D(2026,8,ri(1,20)),accepted:D(2026,9,ri(15,28))});
+  assign(r);setSup(r);r.iq=ri(70,94);r.pers=ri(62,92);setPre(r,.5)}
+[['Medical',2],['Assessment',4],['Under Review',3],['Applied',3],['Not Selected',2]].forEach(([st,n])=>{for(let i=0;i<n;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:st,applied:D(2026,st==='Applied'?10:9,ri(1,11))});
+  if(['Medical','Assessment','Not Selected'].includes(st)){r.iq=ri(st==='Not Selected'?48:64,st==='Not Selected'?62:95);r.pers=ri(55,92)}
+  if(st==='Medical'){assign(r,true);r.accepted=D(2026,10,ri(2,8))}
+  if(st==='Not Selected')r.reason='Assessment score below cut-off'}});
+/* Winter 2026 */
+for(let i=0;i<8;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Training',start:D(2026,10,4),end:D(2026,12,3),applied:D(2026,8,ri(1,25)),accepted:D(2026,9,ri(5,20))});
+  assign(r);setSup(r);r.iq=ri(72,97);r.pers=ri(64,94);setPre(r,1);setSessions(r);setPlan(r)}
+for(let i=0;i<16;i++){const st=i<6?D(2026,10,18):D(2026,11,1);const r=mk({track:'Winter',intake:'Winter 2026',stage:'Pre-Training',start:st,end:addDays(st,60),applied:D(2026,8,ri(5,30)),accepted:D(2026,i<6?9:10,i<6?ri(20,29):ri(1,8))});
+  assign(r);setSup(r);r.iq=ri(70,96);r.pers=ri(62,94);setPre(r,i<6?.72:.4)}
+const MED_DATES=[[D(2026,10,15),'08:30'],[D(2026,10,15),'09:15'],[D(2026,10,18),'08:30'],null,null];
+for(let i=0;i<5;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Medical',applied:D(2026,9,ri(1,20)),accepted:D(2026,10,ri(4,9))});
+  assign(r,true);r.iq=ri(70,95);r.pers=ri(62,94);if(MED_DATES[i]){r.medDate=MED_DATES[i][0];r.medTime=MED_DATES[i][1];r.medSms=i<2}}
+for(let i=0;i<3;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Selected',applied:D(2026,9,ri(1,20)),accepted:D(2026,10,ri(9,12))});assign(r,true);r.iq=ri(74,95);r.pers=ri(62,94)}
+for(let i=0;i<10;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Assessment',applied:D(2026,9,ri(10,30))});r.iq=ri(52,97);r.pers=ri(50,95)}
+for(let i=0;i<7;i++){mk({track:'Winter',intake:'Winter 2026',stage:'Under Review',applied:D(2026,10,ri(1,9))})}
+for(let i=0;i<9;i++){mk({track:'Winter',intake:'Winter 2026',stage:'Applied',applied:D(2026,10,ri(6,12))})}
+for(let i=0;i<6;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Not Selected',applied:D(2026,9,ri(1,20))});r.iq=ri(40,60);r.pers=ri(45,70);r.reason='Assessment score below cut-off'}
+
+/* Past interns (history) */
+const PAST=[];
+[[2022,26],[2023,31],[2024,37],[2025,43]].forEach(([y,n])=>{for(let i=0;i<n;i++){const g=R()<.45;const d=pick(DEPTS);const sc=ri(54,96);
+  PAST.push({year:y,name:`${pick(g?FF:FM)} ${pick(FATHER)} ${pick(FAM)}`,civil:String(ri(10000000,39999999)),uni:pick(UNIS),dept:d.n,track:pick(['Summer','Summer','Winter','Referral','Eidaad']),score:sc,rec:sc>=86&&R()<.65})}});
+/* Link a few current applicants to history by Civil ID */
+ALL.filter(r=>r.intake==='Winter 2026'&&['Applied','Under Review','Assessment'].includes(r.stage)).slice(0,4).forEach((r,i)=>{const p=PAST[ri(60,130)];r.civil=p.civil;r.histFound=true;r.declaredBefore=i%2===0});
+
+/* Capacity: set after allocation, some departments full */
+const EXTRA=[2,0,1,0,1,2,1,2,0,1,1,0];
+DEPTS.forEach((d,i)=>{d.cap=Math.max(LOAD[d.n],2)+EXTRA[i];d.req=ri(1,3)});
+ALL.forEach(r=>{if(!r.log.length)baseLog(r)});
+
+/* ============ State ============ */
+const S={view:'home',hrTab:'overview',drawer:null,modal:null,
+  f:{track:'all',pri:'all',stage:'pipeline',q:''},tf:{mode:'active',inc:false},hf:{year:'all',dept:'all',q:''},
+  apply:{step:0,track:null,f:{},done:null,err:''},
+  tId:null,tTab:null,fb:{rating:0,text:''},
+  supId:'E-20417',supSel:null,ev:null,
+  auth:{t:null,s:null,h:false},after:null,
+  lg:{t:{sent:false,id:null,code:'',err:'',pre:''},s:{err:'',fails:0,pre:'',pp:''},h:{step:1,err:'',fails:0,code:'',pre:'',pp:''}}};
+const SUP_PASS='Sohar@2026',HR_USER='hr.training',HR_PASS='HR@2026';
+const byId=id=>ALL.find(r=>r.id===id);
+const isActive=r=>r.stage==='Training'||r.stage==='Pre-Training';
+const current=d=>ALL.filter(r=>r.dept===d&&isActive(r)).length;
+const LAST_CLOSED=D(2026,9,30);
+function dueMonths(r){if(r.stage!=='Training')return[];const done=new Set(r.evals.map(e=>e.month));const last=r.end<LAST_CLOSED?r.end:LAST_CLOSED;return monthsOf(r.start,last).map(mlabel).filter(m=>!done.has(m))}
+function preDone(r){const it=PRE.filter(([k])=>r.pre[k]&&r.pre[k]!=='na');return[it.filter(([k])=>r.pre[k]==='done').length,it.length]}
+function incomplete(r){const [a,b]=preDone(r);return a<b}
+
+/* ============ Small UI builders ============ */
+const pill=(t,k)=>`<span class="pill p-${k}">${esc(t)}</span>`;
+const STAGE_K={'Applied':'neu','Under Review':'info','Assessment':'info','Interview':'info','Selected':'teal','Medical':'warn','Pre-Training':'teal','Training':'ok','Completed':'navy','Not Selected':'bad'};
+const stagePill=s=>pill(s,STAGE_K[s]||'neu');
+function priPill(p){if(!p)return '<span class="muted">—</span>';return p==='High'?`<span class="pill p-teal" title="Needs training to graduate and never trained here"><span class="dot"></span>High</span>`:p==='Medium'?pill('Medium','info'):pill('Standard','neu')}
+const trackTag=t=>`<span class="pill" style="background:${TRACK[t].color}1A;color:${t==='Eidaad'?'#0B2D4A':TRACK[t].color}">${TRACK[t].name}</span>`;
+const stIcon=v=>v==='done'?`<span class="ico ok">${I.check}</span>`:v==='na'?`<span class="ico na">${I.dash}</span>`:`<span class="ico pend">${I.clock}</span>`;
+function hbars(items,cls=''){const max=Math.max(1,...items.map(i=>i[1]));return items.map(([l,v])=>`<div class="hb ${cls}"><span class="l" title="${esc(l)}">${esc(l)}</span><span class="t"><i style="width:${v/max*100}%"></i></span><b>${v}</b></div>`).join('')}
+function cols(items){const max=Math.max(1,...items.map(i=>i[1]));return `<div class="cols">${items.map(([l,v])=>`<div><b>${v||''}</b><i style="height:${v/max*100}%"></i></div>`).join('')}</div><div class="cols-l">${items.map(([l])=>`<span>${l}</span>`).join('')}</div>`}
+function lineChart(evals){
+  if(!evals.length)return `<div class="empty">No monthly evaluations yet. The first one is due at the end of the first month.</div>`;
+  const W=340,H=150,L=34,Rt=14,T=14,B=26,n=evals.length;
+  const x=i=>n===1?(L+W-Rt)/2:L+i*(W-L-Rt)/(n-1), y=v=>T+(100-v)/100*(H-T-B);
+  const grid=[0,25,50,75,100].map(v=>`<line x1="${L}" x2="${W-Rt}" y1="${y(v)}" y2="${y(v)}" stroke="#E7EBEF"/><text x="${L-6}" y="${y(v)+3.5}" text-anchor="end" font-size="9.5" fill="#5A6978">${v}</text>`).join('');
+  const pts=evals.map((e,i)=>[x(i),y(e.final)]);
+  const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const area=n>1?`<path d="${path} L${pts[n-1][0]} ${y(0)} L${pts[0][0]} ${y(0)} Z" fill="#00A8A8" fill-opacity=".12"/>`:'';
+  return `<div class="lc"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Monthly evaluation scores">${grid}${area}<path d="${path}" fill="none" stroke="#00787A" stroke-width="2.2"/>${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${i===n-1?4.5:3.2}" fill="${i===n-1?'#0B2D4A':'#fff'}" stroke="#0B2D4A" stroke-width="1.6"/><text x="${p[0]}" y="${p[1]-9}" text-anchor="middle" font-size="10" font-weight="700" fill="#0B2D4A">${evals[i].final}%</text><text x="${p[0]}" y="${H-8}" text-anchor="middle" font-size="9.5" fill="#5A6978">${evals[i].month.slice(0,3)}</text>`).join('')}</svg></div>`;
+}
+function ingot(pct){
+  const w=Math.round(272*pct/100)+14;
+  return `<svg viewBox="0 0 300 70" role="img" aria-label="Journey ${pct}% complete"><defs><clipPath id="ingclip"><path d="M10 58 26 12H274L290 58Z"/></clipPath><linearGradient id="ingfill" x1="0" x2="1"><stop offset="0" stop-color="#C0C6CE"/><stop offset=".55" stop-color="#5FC9C9"/><stop offset="1" stop-color="#00A8A8"/></linearGradient><linearGradient id="ingsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+  <path d="M10 58 26 12H274L290 58Z" fill="#EEF1F4"/><rect clip-path="url(#ingclip)" x="0" y="0" width="${w}" height="70" fill="url(#ingfill)"/><path d="M10 58 26 12H274L290 58Z" fill="url(#ingsh)"/><path d="M10 58 26 12H274L290 58Z" fill="none" stroke="#0B2D4A" stroke-width="1.5"/><text x="150" y="42" text-anchor="middle" font-size="18" font-weight="800" fill="#0B2D4A" font-family="Inter,system-ui,sans-serif">${pct}%</text></svg>`;
+}
+function journeyPct(r){
+  if(r.stage==='Completed'){const p=POST.filter(([k])=>r.post[k]&&r.post[k]!=='na');return Math.round(80+20*p.filter(([k])=>r.post[k]==='done').length/p.length)}
+  const [a,b]=preDone(r);let pct=30+20*a/b;
+  if(r.stage==='Training')pct=50+30*clamp((TODAY-r.start)/(r.end-r.start),0,1);
+  return Math.round(pct);
+}
+
+/* ============ Top bar ============ */
+function renderTop(){
+  const P=[['home','Home'],['apply','Apply'],['trainee','Trainee Portal'],['supervisor','Supervisor Portal'],['hr','HR Portal']];
+  document.getElementById('top').innerHTML=`<button class="brand" data-act="go" data-v="home" aria-label="ALUMATE home">${LOGO}<span><b>ALUMATE</b><small>Sohar Aluminium · Trainees</small></span></button>
+  <nav class="portals" aria-label="Portals">${P.map(([v,l])=>`<button data-act="go" data-v="${v}" class="${S.view===v?'on':''}">${l}</button>`).join('')}</nav><span class="demo-tag">Concept · sample data</span>`;
+}
+
+/* ============ Home ============ */
+function vHome(){
+  const P=[
+   ['apply',I.form,'Applicants','Apply for Training','Registration for the Summer, Winter, Family Referral and Eidaad programmes.','Open registration','Apply now',null],
+   ['trainee',I.cap,'Trainees','Trainee Portal','Pre-training checklist, monthly evaluations, sessions and certificate.','Civil ID + SMS code','Sign in',S.auth.t?byId(S.auth.t).name:null],
+   ['supervisor',I.guide,'Supervisors','Supervisor Portal','Monthly evaluations and department plans for assigned trainees.','Employee ID + password','Sign in',S.auth.s?(supList().find(x=>x.id===S.auth.s)||{}).name:null],
+   ['hr',I.chart,'HR Training','HR Portal','Applicants, selection, medical, capacity, procedures and records.','Password + verification code','Sign in',S.auth.h?HRS[0]:null]];
+  return `
+  <section class="hero-l welcome">
+    <svg class="hero-art" viewBox="0 0 40 40" aria-hidden="true"><path d="M5 33 9 25h22l4 8z" fill="#C0C6CE"/><path d="M8 23.5 12 15.5h16l4 8z" fill="#00A8A8"/><path d="M11 14 14.5 7h11L29 14z" fill="#fff"/></svg>
+    <span class="eyebrow">Sohar Aluminium · Human Resources</span>
+    <h1>ALUMATE</h1>
+    <p class="tag">Your talent. Your next chapter.</p>
+    <p class="lead">The trainee management system for registration, selection, onboarding, monthly evaluation and completion.</p>
+  </section>
+  <div class="sec-h" style="margin-top:30px"><div><span class="eyebrow">Select your portal</span><h2>Sign in to continue</h2></div></div>
+  <div class="roles">${P.map(([v,ic,who,t,p,how,cta,signed])=>`<div class="role-card"><div class="row"><span class="ic">${ic}</span><span class="spacer"></span>${signed?pill('Signed in','ok'):''}</div>
+    <span class="who-l">${who}</span><h3>${t}</h3><p>${p}</p>
+    <div class="how">${v==='apply'?I.form.replace('width="22"','width="15"'):I.lock.replace('width="22"','width="15"')}<span>${signed?esc(signed):how}</span></div>
+    <button class="btn ${v==='apply'?'teal':''}" data-act="go" data-v="${v}">${signed?'Open portal':cta}</button></div>`).join('')}</div>
+  <div class="foot"><span>© Sohar Aluminium · ALUMATE Trainee Management System</span><span>Concept prototype · all records are sample data</span></div>`;
+}
+/* ============ Apply ============ */
+const AP_STEPS=['Track','Personal','Academic','Documents','Review'];
+function apPri(){const f=S.apply.f;if(S.apply.track==='Eidaad')return null;if(f.reqGrad==null||f.before==null)return '—';const a=f.reqGrad==='Yes',b=f.before==='No';return a&&b?'High':(a||b)?'Medium':'Standard'}
+function yn(k,label){const v=S.apply.f[k];return `<div class="field"><label>${label}</label><div class="seg" role="group" aria-label="${esc(label)}"><button type="button" class="${v==='Yes'?'on':''}" data-act="ap-set" data-k="${k}" data-v="Yes">Yes</button><button type="button" class="${v==='No'?'on':''}" data-act="ap-set" data-k="${k}" data-v="No">No</button></div></div>`}
+function inp(k,label,type='text',hint=''){return `<div class="field"><label for="ap-${k}">${label}</label><input id="ap-${k}" data-ap="${k}" type="${type}" value="${esc(S.apply.f[k]||'')}">${hint?`<span class="hint">${hint}</span>`:''}</div>`}
+function sel(k,label,opts){return `<div class="field"><label for="ap-${k}">${label}</label><select id="ap-${k}" data-ap="${k}"><option value="">Select…</option>${opts.map(o=>`<option ${S.apply.f[k]===o?'selected':''}>${esc(o)}</option>`).join('')}</select></div>`}
+function vApply(){
+  const A=S.apply;
+  if(A.done){const r=byId(A.done);return `${portalHead(I.form,'Apply','Registration for Sohar Aluminium training programmes')}
+    <div class="card done-box"><span class="pill p-ok" style="font-size:13px">${I.check.replace('<svg','<svg width="14"')} Application received</span>
+    <p class="ref">${r.id}</p><p class="muted" style="max-width:52ch;margin:0 auto">Thank you, ${esc(r.name.split(' ')[0])}. ${r.track==='Eidaad'?'HR will confirm your registration against the BDO list. Your department interview date will arrive by SMS.':'The link to your online IQ and personality assessment will arrive by SMS and email within 2 working days.'}</p>
+    <div class="row" style="justify-content:center;margin-top:20px"><button class="btn" data-act="go-hr-app" data-id="${r.id}">See it in the HR Portal</button><button class="btn ghost" data-act="ap-new">New application</button></div></div>`}
+  const step=A.step;
+  const stepper=`<div class="steps">${AP_STEPS.map((s,i)=>`<span class="${i===step?'on':i<step?'done':''}"><i>${i<step?'✓':i+1}</i>${s}</span>`).join('')}</div>`;
+  let body='';
+  if(step===0){
+    body=`<div class="sec-h"><h3>Choose your training track</h3></div><div class="grid g2">${Object.entries(TRACK).map(([k,t])=>`<button class="tsel ${A.track===k?'on':''}" data-act="ap-track" data-v="${k}"><em>${t.code} · ${t.len}</em><b>${t.name}</b><span>${k==='Summer'||k==='Winter'?'Open registration for university and college students. Includes an online assessment.':k==='Referral'?'For relatives of Sohar Aluminium employees. Includes the online assessment.':'Private link for the BDO cohort. Department interview, no test.'}</span></button>`).join('')}</div>`;
+  } else if(step===1){
+    body=`<div class="sec-h"><h3>Personal information</h3></div><div class="form-grid">${inp('name','Full name (as on Civil ID)')}${inp('civil','Civil ID number','text','Used to match previous training records automatically')}${inp('phone','Mobile number','tel')}${inp('email','Personal email','email')}${sel('gender','Gender',['Male','Female'])}${inp('wilayat','Wilayat')}</div>`;
+    if(A.track==='Referral')body+=`<div class="sec-h" style="margin-top:22px"><h3>Referring employee</h3></div><div class="form-grid">${inp('empId','Employee ID')}${inp('empName','Employee name')}${sel('rel','Relationship',['Son / Daughter','Brother / Sister','Nephew / Niece','Spouse','Other'])}</div>`;
+    if(A.track==='Eidaad')body+=`<div class="note" style="margin-top:16px">${I.check.replace('<svg','<svg width="13" style="color:var(--ok);vertical-align:-2px"')} Private Eidaad link verified · Cohort <b>Eidaad 2027</b>. HR will match your name with the BDO list.</div>`;
+  } else if(step===2){
+    body=`<div class="sec-h"><h3>Academic information</h3></div><div class="form-grid">${sel('uni','University / College',UNIS)}${sel('major','Major',ALL_MAJORS)}${inp('gpa','GPA (out of 4.0)','number')}</div>
+    <div class="form-grid" style="margin-top:16px">${yn('grad','Have you graduated?')}${A.f.grad==='No'?sel('gradYear','Expected graduation year',['2026','2027','2028','2029']):A.f.grad==='Yes'?sel('gradYear','Graduation year',['2026','2025','2024','2023']):''}</div>
+    ${A.track!=='Eidaad'?`<div class="sec-h" style="margin-top:22px"><h3>Priority questions</h3></div><div class="form-grid">${yn('reqGrad','Is this training required for your graduation?')}${yn('before','Have you trained at Sohar Aluminium before?')}</div>`:''}`;
+  } else if(step===3){
+    body=`<div class="sec-h"><h3>Documents</h3></div><div class="grid g2">${[['cv','CV'],['tr','Transcript'],['uniLetter','University training letter'],['idcopy','Civil ID copy']].filter(([k])=>k!=='uniLetter'||A.f.reqGrad==='Yes').map(([k,l])=>`<div class="field"><label for="ap-f-${k}">${l}</label><label class="file-in">${I.form.replace('width="22"','width="20"')}<span>${A.f['file_'+k]?`<b>${esc(A.f['file_'+k])}</b>`:'PDF or image, up to 5 MB'}</span><input id="ap-f-${k}" type="file" data-file="${k}" accept=".pdf,image/*" style="position:absolute;opacity:0;width:1px"></label></div>`).join('')}</div>
+    <p class="note" style="margin-top:14px">Documents and your Civil ID are visible only to authorised HR staff.</p>`;
+  } else {
+    const f=A.f;const rows=[['Track',TRACK[A.track].name],['Full name',f.name],['Civil ID',f.civil],['Mobile',f.phone],['Email',f.email],['University',f.uni],['Major',f.major],['GPA',f.gpa],['Graduated',f.grad==='Yes'?'Yes ('+f.gradYear+')':'No · expected '+(f.gradYear||'—')]];
+    if(A.track!=='Eidaad')rows.push(['Required for graduation',f.reqGrad],['Trained here before',f.before]);
+    if(A.track==='Referral')rows.push(['Referring employee',(f.empName||'')+' · '+(f.empId||'')]);
+    body=`<div class="sec-h"><h3>Review and submit</h3></div><div class="tbl-wrap"><table class="kv">${rows.map(r=>`<tr><th>${r[0]}</th><td>${esc(r[1]||'—')}</td></tr>`).join('')}</table></div>`;
+  }
+  const p=apPri();
+  const side=`<div class="stack">${A.track?`<div class="card pri-box"><span class="eyebrow">${A.track==='Eidaad'?'Selection route':'Priority preview'}</span>
+    ${A.track==='Eidaad'?`<div class="big" style="color:var(--navy)">Interview</div><p class="muted" style="font-size:12.5px">Each department interviews its shortlist and chooses one trainee.</p>`:
+    `<div class="big" style="color:${p==='High'?'var(--teal-ink)':p==='Medium'?'var(--info)':'var(--muted)'}">${p}</div>
+    <div class="check-line">${A.f.reqGrad==='Yes'?I.check.replace('<svg','<svg style="color:var(--ok)"'):I.dash.replace('<svg','<svg style="color:var(--silver)"')}<span>Training is required for graduation</span></div>
+    <div class="check-line">${A.f.before==='No'?I.check.replace('<svg','<svg style="color:var(--ok)"'):I.dash.replace('<svg','<svg style="color:var(--silver)"')}<span>Has not trained at Sohar Aluminium before</span></div>
+    <p class="muted" style="font-size:11.5px;margin-top:10px">Previous training is also checked against ALUMATE history by Civil ID. Priority orders the list; selection still follows test scores and seats.</p>`}</div>`:''}
+    <div class="card pri-box"><span class="eyebrow">Next steps</span><p style="font-size:12.5px;margin-top:6px" class="muted">${A.track==='Eidaad'?'Registration → HR confirms with BDO → department interview → medical → onboarding':'Registration → online test → HR ranking → medical → onboarding'}</p></div></div>`;
+  const nav=`<div class="row" style="margin-top:22px">${step>0?'<button class="btn ghost" data-act="ap-back">Back</button>':''}<span class="spacer"></span>${A.err?`<span class="err">${esc(A.err)}</span>`:''}${step>0&&step<4?'<button class="btn ghost sm" data-act="ap-sample">Fill sample data</button>':''}${step<4?`<button class="btn" data-act="ap-next" ${step===0&&!A.track?'disabled':''}>Continue</button>`:'<button class="btn teal" data-act="ap-submit">Submit application</button>'}</div>`;
+  return `${portalHead(I.form,'Apply','Registration for Sohar Aluminium training programmes')}${stepper}<div class="apply-layout"><div class="card pad">${body}${nav}</div>${side}</div>`;
+}
+function apValidate(){const A=S.apply,f=A.f;
+  if(A.step===1){if(!f.name||!f.civil||!f.phone||!f.email)return 'Fill in name, Civil ID, mobile and email to continue.';if(!/^\d{8}$/.test(f.civil))return 'Civil ID should be 8 digits.';if(A.track==='Referral'&&(!f.empId||!f.empName))return 'Add the referring employee\'s ID and name.'}
+  if(A.step===2){if(!f.uni||!f.major||!f.gpa||!f.grad)return 'Fill in university, major, GPA and graduation status.';if(A.track!=='Eidaad'&&(!f.reqGrad||!f.before))return 'Answer both priority questions.'}
+  if(A.step===3){if(!f.file_cv||!f.file_tr)return 'Attach your CV and transcript.'}
+  return '';}
+function apSample(){const f=S.apply.f;Object.assign(f,{name:f.name||'Fatma Salim Al Shidi',civil:f.civil||'21458736',phone:f.phone||'92415870',email:f.email||'f.alshidi@gmail.com',gender:f.gender||'Female',wilayat:f.wilayat||'Sohar',empId:f.empId||'E-31882',empName:f.empName||'Salim Khamis Al Shidi',rel:f.rel||'Son / Daughter',uni:f.uni||'Sohar University',major:f.major||'Chemical Engineering',gpa:f.gpa||'3.41',grad:f.grad||'No',gradYear:f.gradYear||'2027',reqGrad:f.reqGrad||'Yes',before:f.before||'No',file_cv:f.file_cv||'CV_Fatma_AlShidi.pdf',file_tr:f.file_tr||'Transcript_Fall2026.pdf',file_uniLetter:f.file_uniLetter||'SU_Training_Letter.pdf'})}
+function apSubmit(){const A=S.apply,f=A.f;
+  const r=mk({track:A.track,intake:A.track==='Eidaad'?'Eidaad 2027':A.track==='Referral'?'Referral 2026':'Winter 2026',stage:'Applied',major:f.major,applied:TODAY,graduate:f.grad==='Yes'});
+  SEQ; r.name=f.name;r.civil=f.civil;r.phone=f.phone;r.pemail=f.email;r.uni=f.uni;r.gpa=Number(f.gpa).toFixed(2);r.graduated=f.grad==='Yes';r.gradYear=Number(f.gradYear)||r.gradYear;
+  r.reqGrad=f.reqGrad==='Yes';r.declaredBefore=f.before==='Yes';const hit=PAST.find(p=>p.civil===f.civil);if(hit)r.histFound=true;
+  if(A.track==='Referral')r.ref={empId:f.empId,empName:f.empName,rel:f.rel||'—'};
+  r.log=[];lg(r,TODAY,'Applicant','Application submitted ('+TRACK[r.track].name+')');
+  ALL.splice(ALL.indexOf(r),1);ALL.unshift(r);A.done=r.id;toast('Application '+r.id+' submitted');}
+
+/* ============ Trainee portal ============ */
+function portalHead(ic,t,sub,extra=''){return `<div class="phead"><span class="ic">${ic}</span><div><h1>${t}</h1><p>${sub}</p></div><span class="spacer"></span>${extra}</div>`}
+/* ============ Sign-in screens ============ */
+function whoChip(name,sub,k){return `<div class="who-chip"><span class="avatar" style="background:var(--teal);color:var(--navy)">${initials(name)}</span><span class="who"><b>${esc(name)}</b><span>${esc(sub)}</span></span><button class="btn sm" data-act="logout" data-v="${k}">Sign out</button></div>`}
+const shield='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>';
+function secNotes(title,items){return `<div class="card pad"><span class="eyebrow">How access is protected</span><h3 style="font-size:15px;color:var(--navy);margin-top:6px">${title}</h3><div class="sec-list">${items.map(([b,s])=>`<div>${shield}<p><b>${b}</b><span>${s}</span></p></div>`).join('')}</div></div>`}
+function roleTable(){const rows=[['Applicant','Public form','Own application only'],['Trainee','Civil ID + SMS code','Own journey only'],['Supervisor','Employee ID + password','Own assigned trainees'],['HR','Password + email code','All trainees and reports']];
+  return `<div class="card pad"><span class="eyebrow">Who sees what</span><div class="tbl-wrap" style="margin-top:10px"><table class="role-tbl"><tr><th>Role</th><th>Sign-in</th><th>Can see</th></tr>${rows.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table></div></div>`}
+function loginTrainee(){
+  const L=S.lg.t;const r=L.id?byId(L.id):null;
+  const demo=[ALL.find(x=>x.track==='Eidaad'&&x.stage==='Training'&&x.dept==='Carbon'),ALL.find(x=>x.stage==='Pre-Training'&&x.track==='Winter'),ALL.find(x=>x.stage==='Completed'&&x.post.cert==='done')];
+  const inner=!L.sent?`<span class="lk">${I.cap}</span><h2>Sign in to your journey</h2><p class="muted" style="font-size:13px;margin-top:4px">For accepted trainees. We send a one-time code to the mobile number on your application.</p>
+    <form id="lf-t1"><div class="field"><label for="lg-civil">Civil ID or SA number</label><input id="lg-civil" type="text" inputmode="numeric" autocomplete="username" value="${esc(L.pre)}" placeholder="e.g. 21458736"></div>${L.err?`<span class="err">${esc(L.err)}</span>`:''}<button class="btn" type="submit">Send verification code</button></form>
+    <div class="demo-acc"><p>Demo accounts</p>${demo.map(d=>`<button data-act="demo-t" data-v="${d.civil}">${esc(d.name)} · ${d.stage}<span>${d.civil}</span></button>`).join('')}</div>`
+   :`<span class="lk">${I.msg.replace('<svg','<svg width="22"')}</span><h2>Enter your code</h2><p class="muted" style="font-size:13px;margin-top:4px">Sent by SMS to <b class="mono" style="color:var(--ink)">+968 ••••${r.phone.slice(-4)}</b>. Valid for 5 minutes.</p>
+    <div class="phone" style="margin-top:14px"><div class="bubble"><span class="muted" style="font-size:11px">SMS · demo preview</span><br>Your ALUMATE verification code is <b class="mono">${L.code}</b>. Do not share it with anyone.</div></div>
+    <form id="lf-t2"><div class="field"><label for="lg-code">4-digit code</label><input id="lg-code" class="otp" type="text" inputmode="numeric" maxlength="4" autocomplete="one-time-code"></div>${L.err?`<span class="err">${esc(L.err)}</span>`:''}<button class="btn teal" type="submit">Verify and sign in</button></form>
+    <button class="btn ghost sm" style="margin-top:12px" data-act="t-back">Use a different Civil ID</button>`;
+  return `${portalHead(I.cap,'Trainee Portal','Your journey. Your growth.')}<div class="login"><div class="card login-c">${inner}</div><div class="stack">${secNotes('Trainee access',[['No password to remember','A new one-time code is sent by SMS each time.'],['Opens after the medical check-up','Applicants still in selection cannot sign in yet.'],['Your record only','Trainees see their own checklist, evaluations and certificate.'],['Bank details masked','Only the last 4 digits are ever shown.']])}${roleTable()}</div></div>`;
+}
+function supList(){const out=[];DEPTS.forEach(d=>d.s.forEach(s=>{const n=ALL.filter(r=>r.sup&&r.sup.id===s[1]&&r.stage==='Training').length;if(n)out.push({name:s[0],id:s[1],dept:d.n,n})}));return out}
+function loginSup(){
+  const L=S.lg.s;const locked=L.fails>=5;const demo=supList().slice(0,3);
+  return `${portalHead(I.guide,'Supervisor Portal','Guide. Support. Develop.')}<div class="login"><div class="card login-c"><span class="lk">${I.guide}</span><h2>Supervisor sign-in</h2><p class="muted" style="font-size:13px;margin-top:4px">Use your Sohar Aluminium employee ID and network password.</p>
+    <form id="lf-s"><div class="field"><label for="lg-emp">Employee ID</label><input id="lg-emp" type="text" autocomplete="username" value="${esc(L.pre)}" placeholder="E-00000" ${locked?'disabled':''}></div>
+    <div class="field"><label for="lg-pass">Password</label><input id="lg-pass" type="password" autocomplete="current-password" value="${esc(L.pp)}" ${locked?'disabled':''}></div>
+    ${L.err?`<span class="err">${esc(L.err)}</span>`:''}<button class="btn" type="submit" ${locked?'disabled':''}>Sign in</button></form>
+    <div class="demo-acc"><p>Demo accounts · password ${SUP_PASS}</p>${demo.map(d=>`<button data-act="demo-s" data-v="${d.id}">${esc(d.name)} · ${esc(d.dept)}<span>${d.id}</span></button>`).join('')}</div></div>
+    <div class="stack">${secNotes('Supervisor access',[['Company account','Employee ID and network password, the same as other company systems.'],['Assigned trainees only','Each supervisor sees only the trainees HR assigned to them.'],['Locked after 5 failed attempts','The account unlocks after 15 minutes or through IT.'],['Signed evaluations','Each evaluation is stamped with the supervisor\'s name and ID.']])}${roleTable()}</div></div>`;
+}
+function loginHR(){
+  const L=S.lg.h;const locked=L.fails>=5;
+  const inner=L.step===1?`<span class="lk">${I.lock}</span><h2>HR staff sign-in</h2><p class="muted" style="font-size:13px;margin-top:4px">Restricted to the HR Training team.</p>
+    <form id="lf-h1"><div class="field"><label for="lg-user">Username</label><input id="lg-user" type="text" autocomplete="username" value="${esc(L.pre)}" ${locked?'disabled':''}></div>
+    <div class="field"><label for="lg-hpass">Password</label><input id="lg-hpass" type="password" autocomplete="current-password" value="${esc(L.pp)}" ${locked?'disabled':''}></div>
+    ${L.err?`<span class="err">${esc(L.err)}</span>`:''}<button class="btn" type="submit" ${locked?'disabled':''}>Continue</button></form>
+    <div class="demo-acc"><p>Demo account</p><button data-act="demo-h">${HRS[0]} · HR Training<span>${HR_USER} / ${HR_PASS}</span></button></div>`
+   :`<span class="lk">${shield.replace('<svg','<svg width="22"')}</span><h2>Two-step verification</h2><p class="muted" style="font-size:13px;margin-top:4px">Step 2 of 2. Enter the 6-digit code sent to your company email.</p>
+    <div class="email-pv" style="margin-top:14px"><div class="eh">From <b>ALUMATE Security</b> · demo preview</div><div class="eb">Your sign-in code is <b class="mono" style="font-size:16px">${L.code}</b>. It expires in 10 minutes.</div></div>
+    <form id="lf-h2"><div class="field"><label for="lg-hcode">Verification code</label><input id="lg-hcode" class="otp" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></div>${L.err?`<span class="err">${esc(L.err)}</span>`:''}<button class="btn teal" type="submit">Verify and open HR Portal</button></form>
+    <button class="btn ghost sm" style="margin-top:12px" data-act="h-back">Back</button>`;
+  return `${portalHead(I.chart,'HR Portal','Manage talent. Drive progress.')}<div class="login"><div class="card login-c">${inner}</div><div class="stack">${secNotes('HR access',[['Password plus a second code','Two-step verification for the portal that sees everything.'],['Every action is logged','Approvals, SMS, medical results and changes appear in each trainee\'s decision log.'],['Sensitive data masked','Civil ID and bank account show only the last 4 digits.'],['Locked after 5 failed attempts','Protects the account from guessing.']])}${roleTable()}</div></div>`;
+}
+function lgTSend(){const L=S.lg.t;const v=(document.getElementById('lg-civil').value||'').trim();L.pre=v;
+  const r=ALL.find(x=>x.civil===v||x.id.toUpperCase()===v.toUpperCase());
+  if(!v)L.err='Enter your Civil ID or SA number.';
+  else if(!r)L.err='No trainee found with this Civil ID or SA number.';
+  else if(PIPE.includes(r.stage))L.err='Your application is still in process. The Trainee Portal opens after your medical check-up.';
+  else if(r.stage==='Not Selected')L.err='This application is closed. Contact HR Training for details.';
+  else{L.err='';L.sent=true;L.id=r.id;L.code=String(1000+Math.floor(Math.random()*9000))}}
+function lgTVerify(){const L=S.lg.t;const v=(document.getElementById('lg-code').value||'').trim();
+  if(v===L.code){S.auth.t=L.id;S.tTab=null;S.fb={rating:0,text:''};S.lg.t={sent:false,id:null,code:'',err:'',pre:''};toast('Signed in')}else L.err='The code is incorrect. Check the SMS and try again.'}
+function lgS(){const L=S.lg.s;if(L.fails>=5)return;const id=(document.getElementById('lg-emp').value||'').trim().toUpperCase(),p=document.getElementById('lg-pass').value;L.pre=id;L.pp='';
+  const s=supList().find(x=>x.id===id);
+  if(s&&p===SUP_PASS){S.auth.s=s.id;S.supSel=null;S.ev=null;S.lg.s={err:'',fails:0,pre:'',pp:''};toast('Welcome, '+s.name.split(' ')[0])}
+  else{L.fails++;L.err=L.fails>=5?'Account locked for 15 minutes. Contact IT Service Desk.':`Employee ID or password is incorrect. ${5-L.fails} attempts left.`}}
+function lgH1(){const L=S.lg.h;if(L.fails>=5)return;const u=(document.getElementById('lg-user').value||'').trim().toLowerCase(),p=document.getElementById('lg-hpass').value;L.pre=u;L.pp='';
+  if(u===HR_USER&&p===HR_PASS){L.step=2;L.err='';L.code=String(100000+Math.floor(Math.random()*900000))}
+  else{L.fails++;L.err=L.fails>=5?'Account locked for 15 minutes. Contact IT Service Desk.':`Username or password is incorrect. ${5-L.fails} attempts left.`}}
+function lgH2(){const L=S.lg.h;const v=(document.getElementById('lg-hcode').value||'').trim();
+  if(v===L.code){S.auth.h=true;S.lg.h={step:1,err:'',fails:0,code:'',pre:'',pp:''};if(S.after){S.hrTab='applicants';S.drawer=S.after;S.after=null}toast('Signed in to HR Portal')}else L.err='The code is incorrect. Check your email and try again.'}
+
+function vTrainee(){
+  if(!S.auth.t)return loginTrainee();
+  S.tId=S.auth.t;
+  const r=byId(S.tId);
+  const picker=whoChip(r.name,r.id+' · '+TRACK[r.track].code,'t');
+  const pct=journeyPct(r);
+  const def=r.stage==='Pre-Training'?'pre':r.stage==='Training'?'during':'post';
+  const tab=S.tTab||def;
+  const [pa,pb]=preDone(r);
+  const daysTo=r.start?Math.round((r.start-TODAY)/864e5):0;
+  const status=r.stage==='Pre-Training'?`Starts in ${daysTo} day${daysTo===1?'':'s'}`:r.stage==='Training'?`Month ${monthsOf(r.start,TODAY).length} of ${monthsOf(r.start,r.end).length}`:'Training completed';
+  let content='';
+  if(tab==='pre'){
+    content=`<div class="grid g2"><div class="card">${PRE.map(([k,l])=>{const v=r.pre[k];let sub='';
+      if(k==='medical')sub=v==='done'?'Fit · cleared by the Medical Centre':'Appointment pending';
+      if(k==='siti')sub=v==='done'?'Completed on day one':'Scheduled for your first morning, 07:30';
+      if(k==='agreement')sub=v==='done'?'Signed electronically':'Sign the training agreement before day one';
+      if(k==='docs')sub=v==='done'?'CV, transcript, Civil ID copy received':'University letter still missing';
+      if(k==='card')sub=v==='done'?'Issued · photo on file':'Photo taken on day one at Security';
+      if(k==='email')sub=v==='done'?r.cemail:'Being created by IT';
+      if(k==='bank')sub=v==='done'?`${r.bank} · ${mask(r.acct)}`:'Add your bank account for the monthly allowance';
+      if(k==='ppe')sub=v==='na'?'Not needed for an office role':v==='done'?`Issued · coverall ${r.ppeSize.coverall}, safety shoes ${r.ppeSize.shoes}`:`Sizes recorded: coverall ${r.ppeSize.coverall}, shoes ${r.ppeSize.shoes}`;
+      if(k==='laptop')sub=v==='na'?'Not needed for a site role':v==='done'?'Issued by IT':'Collect from IT Service Desk';
+      return `<div class="chk">${stIcon(v)}<div class="tx"><b>${l}</b><span>${esc(sub)}</span></div>${v==='pending'?pill('Pending','warn'):v==='done'?pill('Done','ok'):''}</div>`}).join('')}</div>
+      <div class="stack"><div class="card pad"><span class="eyebrow">Day one</span><h3 style="font-size:16px;color:var(--navy);margin:6px 0 8px">${fmt(r.start)} · 07:00</h3><p class="muted" style="font-size:13px">Report to the Main Gate Security Office with your Civil ID. Your supervisor will meet you after the SITI induction.</p>
+      <div class="meta" style="margin-top:12px"><span>Supervisor <b>${esc(r.sup.name)}</b></span><span>ID <b>${r.sup.id}</b></span><span>Department <b>${esc(r.dept)}</b></span></div></div>
+      <div class="card pad"><span class="eyebrow">Messages</span><div class="stack" style="margin-top:10px;gap:10px">${msgs(r)}</div></div></div></div>`;
+  } else if(tab==='during'){
+    const last=r.evals[r.evals.length-1];const due=dueMonths(r);
+    content=`<div class="grid g2">
+      <div class="card pad"><div class="sec-h"><h3>Monthly evaluation</h3>${due.length?pill(due[0]+' due from supervisor','warn'):''}</div>${lineChart(r.evals)}
+        ${last?`<div class="tbl-wrap" style="margin-top:12px"><table><tr><th>Month</th><th>Attendance</th><th>Allowance</th><th>Score</th></tr>${r.evals.slice().reverse().map(e=>`<tr><td>${e.month}</td><td>${TIERS[e.att].l}</td><td class="num">${TIERS[e.att].p}% · ${(STIPEND[r.track]*TIERS[e.att].p/100).toFixed(0)} OMR</td><td><b class="num">${e.final}%</b></td></tr>`).join('')}</table></div>`:''}</div>
+      <div class="stack">
+        <div class="card pad"><div class="sec-h"><h3>Department plan</h3><span class="muted" style="font-size:12px">${r.plan.filter(p=>p.done).length}/${r.plan.length} done</span></div><div class="plan">${r.plan.map(p=>`<label>${p.done?`<span style="color:var(--ok)">${I.check.replace('<svg','<svg width="16"')}</span>`:`<span style="color:var(--silver)">${I.clock.replace('<svg','<svg width="16"')}</span>`}<span class="${p.done?'dn':''}">${esc(p.t)}</span></label>`).join('')}</div></div>
+        <div class="card pad"><div class="sec-h"><h3>Soft skill sessions</h3></div><div class="sess">${r.sessions.map(s=>`<span class="${s.d>TODAY?'':s.done?'':'miss'}">${esc(s.n)}<small>${typeof s.d==='string'?s.d:fmt(s.d)} · ${s.d>TODAY?'Upcoming':s.done?'Attended':'Missed'}</small></span>`).join('')||'<span class="muted">No sessions scheduled yet</span>'}</div></div>
+      </div></div>`;
+  } else {
+    const locked=r.stage!=='Completed';
+    const items=POST.filter(([k])=>!locked?r.post[k]!=='na':true);
+    const certReady=!locked&&r.post.cert==='done';
+    content=`<div class="grid g2"><div class="stack"><div class="card">${(locked?POST.filter(([k])=>!(k==='ppe'&&!OPS.includes(r.dept))&&!(k==='laptop'&&OPS.includes(r.dept))):items).map(([k,l])=>{const v=locked?'pending':r.post[k];return `<div class="chk">${locked?`<span class="ico na">${I.dash}</span>`:stIcon(v)}<div class="tx"><b>${l}</b><span>${locked?'Opens on '+fmt(r.end):v==='done'?'Completed':'Pending'}</span></div>${!locked?(v==='done'?pill('Done','ok'):pill('Pending','warn')):''}</div>`}).join('')}</div>
+      <div class="card pad"><div class="sec-h"><h3>Your feedback on the training</h3></div>${locked?`<p class="muted" style="font-size:13px">Available in your final week.</p>`:r.feedback?`<div class="stars">${[1,2,3,4,5].map(i=>`<span style="color:${i<=r.feedback.rating?'#D9A21B':'#C0C6CE'};width:22px;display:inline-block">${I.star}</span>`).join('')}</div><p class="muted" style="font-size:12.5px;margin-top:6px">Thank you. HR has received your feedback.</p>`:
+        `<div class="stars">${[1,2,3,4,5].map(i=>`<button data-act="fb-star" data-v="${i}" class="${i<=S.fb.rating?'on':''}" aria-label="${i} star">${I.star}</button>`).join('')}</div><div class="field" style="margin-top:10px"><label for="fb-text">What should we keep or change?</label><textarea id="fb-text">${esc(S.fb.text)}</textarea></div><button class="btn sm" style="margin-top:10px" data-act="fb-submit" ${S.fb.rating?'':'disabled'}>Send feedback</button>`}</div></div>
+      <div>${certReady?certificate(r):`<div class="locked">${I.lock}<div><b style="color:var(--navy)">Certificate</b><p class="muted" style="font-size:12.5px;margin-top:4px">${locked?'Issued automatically after the final evaluation, access card and PPE hand-over.':'Waiting for: '+POST.filter(([k])=>k!=='feedback'&&k!=='cert'&&r.post[k]==='pending').map(p=>p[1]).join(', ')}</p></div></div>`}</div></div>`;
+  }
+  return `${portalHead(I.cap,'Trainee Portal','Your journey. Your growth.',picker)}
+  <div class="card t-hero"><span class="avatar lg">${initials(r.name)}</span><div><div class="row" style="gap:8px">${trackTag(r.track)}${stagePill(r.stage)}</div><h2 style="margin-top:6px">${esc(r.name)}</h2>
+    <div class="meta"><span class="mono">${r.id}</span><span>Department <b>${esc(r.dept)}</b></span><span>Supervisor <b>${esc(r.sup.name)}</b></span><span>${fmt(r.start)} – ${fmt(r.end)}</span></div></div>
+    <div class="ingot-box">${ingot(pct)}<p>Journey progress · ${status}</p></div></div>
+  <div class="tabs" role="tablist" style="margin-top:18px">
+    <button data-act="t-tab" data-v="pre" class="${tab==='pre'?'on':''}">Pre-Training ${pill(pa+'/'+pb,pa===pb?'ok':'warn')}</button>
+    <button data-act="t-tab" data-v="during" class="${tab==='during'?'on':''}">During Training</button>
+    <button data-act="t-tab" data-v="post" class="${tab==='post'?'on':''}">Post Training</button></div>
+  ${content}`;
+}
+function msgs(r){
+  const out=[];
+  if(r.accepted)out.push([r.accepted,'SMS',`Dear ${r.name.split(' ')[0]}, congratulations. You have been selected for the ${TRACK[r.track].name} at Sohar Aluminium, ${r.dept} department.`]);
+  out.push([addDays(r.accepted||TODAY,3),'SMS',`Dear ${r.name.split(' ')[0]}, please attend your medical check-up at the Sohar Aluminium Medical Centre on ${fmt(addDays(r.accepted||TODAY,6))} at 08:30. Bring your Civil ID.`]);
+  if(r.start)out.push([addDays(r.start,-5),'Email',`Your first day is ${fmt(r.start)}. Report to the Main Gate Security Office at 07:00.`]);
+  return out.filter(m=>m[0]<=TODAY).reverse().map(m=>`<div class="sms"><div class="h"><span>${m[1]} · ALUMATE</span><span>${fmt(m[0])}</span></div><p>${esc(m[2])}</p></div>`).join('');
+}
+function certificate(r){const fin=r.evals.length?Math.round(r.evals.reduce((a,e)=>a+e.final,0)/r.evals.length):0;
+  return `<div class="cert"><div style="width:40px;margin:0 auto">${LOGO.replace('#FFFFFF','#0B2D4A')}</div><span class="eyebrow" style="display:block;margin-top:8px">Sohar Aluminium · ALUMATE</span><h3>Certificate of Training</h3><p class="muted" style="font-size:12.5px">This certifies that</p><p class="nm">${esc(r.name)}</p>
+  <p style="font-size:13px;max-width:44ch;margin:0 auto">completed the <b>${TRACK[r.track].name}</b> in the <b>${esc(r.dept)}</b> department from ${fmt(r.start)} to ${fmt(r.end)}, with an average evaluation of <b>${fin}%</b>.</p>
+  <div class="sig"><div>${esc(r.sup.name)}<br>Supervisor</div><div>HR Training Section</div></div><p class="mono muted" style="font-size:10.5px;margin-top:14px">${r.id} · ${r.end.getFullYear()}</p></div>`}
+
+/* ============ Supervisor portal ============ */
+function vSup(){
+  if(!S.auth.s)return loginSup();
+  const sups=supList();S.supId=S.auth.s;
+  const me=sups.find(s=>s.id===S.supId);
+  const mine=ALL.filter(r=>r.sup&&r.sup.id===me.id&&(r.stage==='Training'||r.stage==='Pre-Training'));
+  if(!S.supSel||!mine.find(r=>r.id===S.supSel)){const d=mine.find(r=>dueMonths(r).length);S.supSel=(d||mine[0]).id;S.ev=null}
+  const r=byId(S.supSel);
+  const picker=whoChip(me.name,me.id+' · '+me.dept,'s');
+  const due=dueMonths(r);const month=due[0];
+  if(!S.ev||S.ev.id!==r.id||S.ev.month!==month)S.ev={id:r.id,month,att:null,scores:Array(8).fill(null),comment:'',rec:null};
+  const E=S.ev;const filled=E.scores.filter(v=>v!=null).length;const fin=filled?Math.round(E.scores.reduce((a,b)=>a+(b||0),0)/32*100):0;
+  const pay=E.att==null?null:STIPEND[r.track]*TIERS[E.att].p/100;
+  const isFinal=month&&mlabel(r.end)===month;
+  let form;
+  if(r.stage!=='Training')form=`<div class="card empty">${esc(r.name.split(' ')[0])} starts on ${fmt(r.start)}. The first evaluation opens at the end of the first month.</div>`;
+  else if(!month)form=`<div class="card empty">All monthly evaluations are up to date. The October 2026 evaluation opens on 1 Nov 2026.</div>`;
+  else form=`<div class="ev-form"><div class="ev-top"><div><h3>${esc(r.dept)} · Trainee Evaluation Form</h3><span>Monthly evaluation · ${month}${due.length>1?` · ${due.length} months pending`:''}</span></div>${pill('Due','warn')}</div>
+    <div class="ev-sec"><h4>Trainee details</h4><div class="ev-det"><div><span>Full name</span>${esc(r.name)}</div><div><span>Department</span>${esc(r.dept)}</div><div><span>Direct leader</span>${esc(me.name)}</div><div><span>Direct leader ID</span><span class="mono" style="font-size:13px;text-transform:none;letter-spacing:0;color:var(--ink)">${me.id}</span></div><div><span>Period</span>${month}</div></div></div>
+    <div class="ev-sec"><h4>Attendance review</h4><div class="att">${TIERS.map((t,i)=>`<button data-act="ev-att" data-v="${i}" class="${E.att===i?'on':''}"><b>${t.l}</b><span>${t.p}% of allowance</span></button>`).join('')}</div></div>
+    <div class="ev-sec"><h4>Performance review</h4><div class="sc-key">${SCALE.map((s,i)=>`<span><b>${i}</b> ${s}</span>`).join('')}</div>
+      ${COMP.map((c,i)=>`<div class="comp"><span class="i">${i+1}</span><span>${c}</span><div class="sc" role="group" aria-label="${esc(c)}">${[0,1,2,3,4].map(v=>`<button data-act="ev-sc" data-i="${i}" data-v="${v}" class="${E.scores[i]===v?'on':''}" title="${SCALE[v]}">${v}</button>`).join('')}</div></div>`).join('')}</div>
+    <div class="ev-res"><div><b>${filled?fin+'%':'—'}</b><span>Final score · ${filled}/8 rated</span></div><div><b>${pay==null?'—':pay.toFixed(0)+' OMR'}</b><span>Allowance this month (base ${STIPEND[r.track]} OMR)</span></div></div>
+    <div class="ev-sec"><div class="field"><label for="ev-c">Comments for the trainee and HR</label><textarea id="ev-c" placeholder="Strengths, areas to develop, notable work this month">${esc(E.comment)}</textarea></div>
+    ${isFinal?`<div class="field" style="margin-top:12px"><label>Recommend for future hiring?</label><div class="seg"><button data-act="ev-rec" data-v="Yes" class="${E.rec==='Yes'?'on':''}">Yes</button><button data-act="ev-rec" data-v="No" class="${E.rec==='No'?'on':''}">No</button></div></div>`:''}</div>
+    <div class="ev-sec row" style="border-bottom:0"><span class="muted" style="font-size:12px">Sent to HR instantly. The allowance figure goes to payroll.</span><span class="spacer"></span><button class="btn teal" data-act="ev-submit" ${E.att!=null&&filled===8?'':'disabled'}>Submit evaluation</button></div></div>`;
+  return `${portalHead(I.guide,'Supervisor Portal','Guide. Support. Develop.',picker)}
+  <div class="sup"><div class="card" style="overflow:hidden"><div class="pad" style="padding-bottom:10px"><span class="eyebrow">${esc(me.dept)}</span><h3 style="font-size:15px;color:var(--navy)">My trainees</h3></div><div class="tlist">${mine.map(t=>{const d=dueMonths(t);const le=t.evals[t.evals.length-1];return `<button data-act="sup-pick" data-id="${t.id}" class="${t.id===r.id?'on':''}"><span class="avatar">${initials(t.name)}</span><span class="who"><b>${esc(t.name)}</b><span>${TRACK[t.track].name}${le?' · last '+le.final+'%':''}</span></span>${t.stage==='Pre-Training'?pill('Starts '+fmt(t.start).slice(0,6),'teal'):d.length?pill(d.length+' due','warn'):pill('Up to date','ok')}</button>`}).join('')}</div></div>
+  <div class="stack">
+    <div class="card pad"><div class="row"><span class="avatar lg">${initials(r.name)}</span><div><div class="row" style="gap:8px">${trackTag(r.track)}${stagePill(r.stage)}</div><h3 style="font-size:17px;color:var(--navy);margin-top:4px">${esc(r.name)}</h3><div class="meta"><span class="mono">${r.id}</span><span>${esc(r.uni)}</span><span>${esc(r.major)}</span><span>${fmt(r.start)} – ${fmt(r.end)}</span></div></div></div></div>
+    ${form}
+    <div class="grid g2"><div class="card pad"><div class="sec-h"><h3>Evaluation trend</h3></div>${lineChart(r.evals)}</div>
+    <div class="card pad"><div class="sec-h"><h3>Department plan</h3><span class="muted" style="font-size:12px">Tick tasks as they finish</span></div><div class="plan">${(r.plan.length?r.plan:(setPlan(r),r.plan)).map((p,i)=>`<label><input type="checkbox" data-plan="${i}" ${p.done?'checked':''}><span class="${p.done?'dn':''}">${esc(p.t)}</span></label>`).join('')}</div>
+    <div class="row" style="margin-top:10px"><input type="text" id="plan-new" placeholder="Add a task" style="flex:1;min-width:0"><button class="btn sm ghost" data-act="plan-add">Add</button></div></div></div>
+  </div></div>`;
+}
+
+/* ============ HR portal ============ */
+const HR_TABS=[['overview','Overview',I.home],['applicants','Applicants',I.list],['medical','Medical',I.med],['departments','Departments',I.grid],['trainees','Trainees',I.badge],['history','History',I.archive]];
+function vHR(){
+  if(!S.auth.h)return loginHR();
+  const counts={applicants:ALL.filter(r=>PIPE.includes(r.stage)).length,medical:ALL.filter(r=>r.stage==='Medical').length,trainees:ALL.filter(r=>isActive(r)&&incomplete(r)).length};
+  const rail=`<nav class="card rail" aria-label="HR sections">${HR_TABS.map(([k,l,ic])=>`<button data-act="hrtab" data-v="${k}" class="${S.hrTab===k?'on':''}">${ic}${l}${counts[k]?`<span class="pill ${S.hrTab===k?'p-teal':'p-neu'}">${counts[k]}</span>`:''}</button>`).join('')}</nav>`;
+  const body={overview:hrOverview,applicants:hrApplicants,medical:hrMedical,departments:hrDepts,trainees:hrTrainees,history:hrHistory}[S.hrTab]();
+  return `${portalHead(I.chart,'HR Portal','Manage talent. Drive progress.',whoChip(HRS[0],'HR Training · two-step verified','h'))}<div class="hr">${rail}<div class="stack" style="min-width:0">${body}</div></div>`;
+}
+function kpi(ic,v,l,bg,fg,act){return `<button class="card kpi" ${act?`data-act="${act[0]}" data-v="${act[1]}"`:''} style="text-align:left"><span class="ic" style="background:${bg};color:${fg}">${ic}</span><span><b>${v}</b><span>${l}</span></span></button>`}
+function hrOverview(){
+  const active=ALL.filter(r=>r.stage!=='Not Selected');
+  const tr=ALL.filter(r=>r.stage==='Training'),pre=ALL.filter(r=>r.stage==='Pre-Training'),pipe=ALL.filter(r=>PIPE.includes(r.stage));
+  const nextWeek=ALL.filter(r=>r.stage==='Pre-Training'&&r.start>=TODAY&&r.start<=addDays(TODAY,7));
+  const inc=ALL.filter(r=>isActive(r)&&incomplete(r));
+  const evDue=tr.filter(r=>dueMonths(r).length);
+  const cardsOut=ALL.filter(r=>r.stage==='Completed'&&(r.post.card==='pending'||r.post.ppe==='pending'));
+  const full=DEPTS.filter(d=>current(d.n)>=d.cap);
+  const medNo=ALL.filter(r=>r.stage==='Medical'&&!r.medSms);
+  const alerts=[
+    [inc.length,'bad',`${inc.length} trainees with incomplete procedures`,`${inc.filter(r=>r.stage==='Pre-Training').length} start soon · open the procedures checklist`,'trainees'],
+    [evDue.length,'warn',`${evDue.length} monthly evaluations due from supervisors`,'September 2026 evaluations not yet submitted','trainees'],
+    [medNo.length,'warn',`${medNo.length} medical appointments not yet sent`,'Set date and time, then send the SMS','medical'],
+    [cardsOut.length,'bad',`${cardsOut.length} completed trainees still hold an access card or PPE`,'Summer 2026 intake · follow up before certificates','trainees'],
+    [full.length,'info',`${full.length} departments at full capacity`,full.map(d=>d.n).join(', '),'departments']].filter(a=>a[0]);
+  const byDept=DEPTS.map(d=>[d.n,current(d.n)]).sort((a,b)=>b[1]-a[1]);
+  const uniC={};active.forEach(r=>uniC[r.uni]=(uniC[r.uni]||0)+1);const byUni=Object.entries(uniC).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const mon=MON.slice(0,10).map((m,i)=>[m,ALL.filter(r=>r.accepted&&r.accepted.getFullYear()===2026&&r.accepted.getMonth()===i).length]);
+  const completed=ALL.filter(r=>r.stage==='Completed');
+  return `
+  <div class="grid g4">
+    ${kpi(I.users,active.length,'Total trainees 2026','var(--navy-soft)','var(--navy)',['hrtab','applicants'])}
+    ${kpi(I.gear,pipe.length,'Under process','var(--info-soft)','var(--info)',['hrtab','applicants'])}
+    ${kpi(I.flag,pre.length,'Starting soon','var(--teal-soft)','var(--teal-ink)',['hrtab','trainees'])}
+    ${kpi(I.gauge,tr.length,'Currently training','var(--ok-soft)','var(--ok)',['hrtab','trainees'])}
+  </div>
+  <div class="grid g2">
+    <div class="card"><div class="pad" style="padding-bottom:6px"><div class="sec-h" style="margin:0"><h3>Needs attention</h3><span class="muted" style="font-size:12px">${alerts.length} items</span></div></div>
+      ${alerts.map(a=>`<div class="alert"><span class="sev" style="background:var(--${a[1]})"></span><div class="tx"><b>${a[2]}</b><span>${esc(a[3])}</span></div><button class="btn ghost sm" data-act="hrtab" data-v="${a[4]}">Open</button></div>`).join('')}</div>
+    <div class="card"><div class="pad" style="padding-bottom:6px"><div class="sec-h" style="margin:0"><h3>Starting next week</h3><span class="muted" style="font-size:12px">${fmt(TODAY)} – ${fmt(addDays(TODAY,7))}</span></div></div>
+      <div class="tbl-wrap" style="border:0;border-radius:0"><table><tr><th>Trainee</th><th>Department</th><th>Start</th><th>Procedures</th></tr>${nextWeek.map(r=>{const [a,b]=preDone(r);return `<tr class="click" data-act="open" data-id="${r.id}"><td class="who"><b>${esc(r.name)}</b><span>${TRACK[r.track].name}</span></td><td>${esc(r.dept)}</td><td class="num">${fmt(r.start).slice(0,6)}</td><td>${pill(a+'/'+b,a===b?'ok':'warn')}</td></tr>`}).join('')}</table></div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card pad"><div class="sec-h"><h3>Current trainees by department</h3><span class="muted" style="font-size:12px">Training + starting soon</span></div>${hbars(byDept)}</div>
+    <div class="stack">
+      <div class="card pad"><div class="sec-h"><h3>Trainees accepted per month</h3><span class="muted" style="font-size:12px">2026</span></div>${cols(mon)}</div>
+      <div class="card pad"><div class="sec-h"><h3>Trainees by university</h3><span class="muted" style="font-size:12px">Top 7 · 2026</span></div>${hbars(byUni,'teal')}</div>
+    </div>
+  </div>
+  <div class="card pad"><div class="sec-h"><h3>Completed their training</h3><span class="muted" style="font-size:12px">${completed.length} in 2026 · ${completed.filter(r=>r.post.cert==='done').length} certificates issued</span></div>
+    <div class="grid g4">${['Summer','Referral'].map(t=>{const c=completed.filter(r=>r.track===t);const avg=c.length?Math.round(c.reduce((a,r)=>a+r.evals.reduce((x,e)=>x+e.final,0)/r.evals.length,0)/c.length):0;return `<div style="border:1px solid var(--line);border-radius:8px;padding:12px"><span class="muted" style="font-size:12px">${TRACK[t].name} 2026</span><b style="display:block;font-size:22px;color:var(--navy)" class="num">${c.length}</b><span class="muted" style="font-size:12px">Average evaluation ${avg}%</span></div>`}).join('')}
+    <div style="border:1px solid var(--line);border-radius:8px;padding:12px"><span class="muted" style="font-size:12px">Feedback received</span><b style="display:block;font-size:22px;color:var(--navy)" class="num">${completed.filter(r=>r.feedback).length}</b><span class="muted" style="font-size:12px">Average rating ${(completed.filter(r=>r.feedback).reduce((a,r)=>a+r.feedback.rating,0)/Math.max(1,completed.filter(r=>r.feedback).length)).toFixed(1)} / 5</span></div>
+    <div style="border:1px solid var(--line);border-radius:8px;padding:12px"><span class="muted" style="font-size:12px">Recommended for hiring</span><b style="display:block;font-size:22px;color:var(--navy)" class="num">${PAST.filter(p=>p.rec).length}</b><span class="muted" style="font-size:12px">Talent list 2022–2025</span></div></div></div>`;
+}
+function hrApplicants(){
+  const F=S.f;
+  let list=ALL.filter(r=>F.stage==='pipeline'?PIPE.includes(r.stage):F.stage==='all'?true:r.stage===F.stage);
+  if(F.track!=='all')list=list.filter(r=>r.track===F.track);
+  if(F.pri!=='all')list=list.filter(r=>priority(r)===F.pri);
+  if(F.q){const q=F.q.toLowerCase();list=list.filter(r=>(r.name+' '+r.id+' '+r.uni+' '+r.major).toLowerCase().includes(q))}
+  const rank={High:0,Medium:1,Standard:2};
+  list.sort((a,b)=>(rank[priority(a)]??3)-(rank[priority(b)]??3)||(score(b)??-1)-(score(a)??-1));
+  return `<div class="card pad"><div class="sec-h"><div><h2>Applicants</h2><p class="muted" style="font-size:12.5px">Sorted by priority, then assessment score. Priority orders the list; HR makes the decision.</p></div></div>
+  <div class="filters"><input type="text" id="f-q" placeholder="Search name, SA number, university" value="${esc(F.q)}">
+  <select id="f-track" aria-label="Track"><option value="all">All tracks</option>${Object.entries(TRACK).map(([k,t])=>`<option value="${k}" ${F.track===k?'selected':''}>${t.name}</option>`).join('')}</select>
+  <select id="f-pri" aria-label="Priority"><option value="all">All priorities</option>${['High','Medium','Standard'].map(p=>`<option ${F.pri===p?'selected':''}>${p}</option>`).join('')}</select>
+  <select id="f-stage" aria-label="Stage"><option value="pipeline" ${F.stage==='pipeline'?'selected':''}>In process</option><option value="all" ${F.stage==='all'?'selected':''}>All stages</option>${[...STAGES,'Not Selected'].map(s=>`<option ${F.stage===s?'selected':''}>${s}</option>`).join('')}</select></div>
+  <div class="tbl-wrap"><table><tr><th>Applicant</th><th>Track</th><th>University · Major</th><th>Priority</th><th>Test / Interview</th><th>Stage</th><th>Applied</th></tr>
+  ${list.map(r=>`<tr class="click" data-act="open" data-id="${r.id}"><td class="who"><b>${esc(r.name)}</b><span class="mono">${r.id}${r.histFound?' · <span style="color:var(--warn)">in history</span>':''}</span></td><td>${trackTag(r.track)}</td><td class="who"><b style="font-weight:500">${esc(r.uni)}</b><span>${esc(r.major)}</span></td><td>${priPill(priority(r))}</td><td class="num">${score(r)!=null?`<b>${score(r)}</b> <span class="muted" style="font-size:11.5px">IQ ${r.iq} · P ${r.pers}</span>`:r.interview!=null?`<b>${r.interview}</b> <span class="muted" style="font-size:11.5px">interview</span>`:'<span class="muted">Pending</span>'}</td><td>${stagePill(r.stage)}</td><td class="num muted">${fmt(r.applied).slice(0,6)}</td></tr>`).join('')||`<tr><td colspan="7" class="empty">No applicants match these filters.</td></tr>`}
+  </table></div><p class="muted" style="font-size:12px;margin-top:8px">${list.length} shown · click a row to open the profile</p></div>`;
+}
+function hrMedical(){
+  const list=ALL.filter(r=>r.stage==='Medical');
+  return `<div class="card pad"><div class="sec-h"><div><h2>Medical check-up</h2><p class="muted" style="font-size:12.5px">At the Sohar Aluminium Medical Centre. Set the appointment, send the SMS, then record the result. Fit trainees move to Pre-Training.</p></div></div>
+  <div class="tbl-wrap"><table><tr><th>Trainee</th><th>Department</th><th>Date</th><th>Time</th><th>SMS</th><th>Result</th></tr>
+  ${list.map(r=>`<tr><td class="who"><b>${esc(r.name)}</b><span class="mono">${r.id} · ${TRACK[r.track].code}</span></td><td>${esc(r.dept||'—')}</td>
+  <td><input type="date" data-med="date" data-id="${r.id}" value="${r.medDate?iso(r.medDate):''}" min="2026-10-13" style="min-width:140px"></td>
+  <td><input type="time" data-med="time" data-id="${r.id}" value="${r.medTime||''}" style="min-width:100px"></td>
+  <td>${r.medSms?pill('Sent','ok'):`<button class="btn sm" data-act="med-sms" data-id="${r.id}" ${r.medDate&&r.medTime?'':'disabled'}>${I.msg.replace('<svg','<svg width="14"')} Send SMS</button>`}</td>
+  <td><div class="row" style="gap:6px"><button class="btn sm ghost" data-act="med-res" data-id="${r.id}" data-v="Fit" ${r.medSms?'':'disabled'}>Fit</button><button class="btn sm danger" data-act="med-res" data-id="${r.id}" data-v="Unfit" ${r.medSms?'':'disabled'}>Unfit</button></div></td></tr>`).join('')||`<tr><td colspan="6" class="empty">No trainees waiting for a medical check-up.</td></tr>`}
+  </table></div><p class="note" style="margin-top:12px">The system stores only Fit or Unfit. Medical details stay with the Medical Centre.</p></div>`;
+}
+const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+function hrDepts(){
+  const eid=DEPTS.map(d=>({d,sel:ALL.find(r=>r.track==='Eidaad'&&r.dept===d.n&&r.stage==='Training'),others:ALL.filter(r=>r.track==='Eidaad'&&r.dept===d.n&&r.stage==='Not Selected')}));
+  return `<div class="card pad"><div class="sec-h"><div><h2>Capacity control</h2><p class="muted" style="font-size:12.5px">Seats per department, counting trainees in training and starting soon.</p></div><div class="legend"><span><i style="background:var(--navy)"></i>Taken</span><span><i style="background:#fff;border:1.5px solid var(--teal)"></i>Available</span></div></div>
+  <div class="grid g3">${DEPTS.map(d=>{const c=current(d.n),a=Math.max(0,d.cap-c),full=a===0;return `<div class="card cap-card ${full?'full':''}"><div class="row"><h4>${esc(d.n)}</h4><span class="spacer"></span>${full?pill('Full capacity','bad'):pill(a+' available','ok')}</div>
+    <div class="cap-nums"><div><b>${d.cap}</b><span>Capacity</span></div><div><b>${c}</b><span>Current</span></div><div><b style="color:${full?'var(--bad)':'var(--ok)'}">${a}</b><span>Available</span></div></div>
+    <div class="seats">${Array.from({length:d.cap},(_,i)=>`<i class="${i<c?'':'free'}"></i>`).join('')}</div>
+    <div class="muted" style="font-size:12px">Winter request: <b style="color:var(--ink)">${d.req}</b> · nominated <b style="color:var(--ink)">${ALL.filter(r=>r.dept===d.n&&r.intake==='Winter 2026'&&['Selected','Medical','Pre-Training','Training'].includes(r.stage)).length}</b></div></div>`}).join('')}</div></div>
+  <div class="card pad"><div class="sec-h"><div><h2>Eidaad 2026 · department selection</h2><p class="muted" style="font-size:12.5px">HR emails each department its shortlist by specialisation. The department interviews and chooses one trainee.</p></div></div>
+  <div class="tbl-wrap"><table><tr><th>Department</th><th>Selected trainee</th><th>Interview</th><th>Other candidates</th><th></th></tr>${eid.map(e=>`<tr><td><b>${esc(e.d.n)}</b></td><td class="who">${e.sel?`<b>${esc(e.sel.name)}</b><span>${esc(e.sel.major)}</span>`:'—'}</td><td class="num">${e.sel?`<b>${e.sel.interview}</b>/100`:'—'}</td><td class="num">${e.others.length}</td><td><button class="btn sm ghost" data-act="email-short" data-v="${esc(e.d.n)}">${I.msg.replace('<svg','<svg width="14"')} Shortlist email</button></td></tr>`).join('')}</table></div></div>`;
+}
+function hrTrainees(){
+  const T=S.tf;
+  let list=ALL.filter(r=>T.mode==='active'?isActive(r):r.stage==='Completed');
+  if(T.mode==='active'&&T.inc)list=list.filter(r=>incomplete(r)||dueMonths(r).length);
+  list.sort((a,b)=>(a.stage===b.stage?0:a.stage==='Pre-Training'?-1:1)||a.start-b.start);
+  const cell=(r,k,sec)=>{const v=(sec==='post'?r.post:r.pre)[k];return `<td class="c"><button class="st ${v==='done'?'ok':v==='na'?'na':'pend'}" data-act="tog" data-id="${r.id}" data-k="${k}" data-sec="${sec}" ${v==='na'?'disabled':''} title="${v==='done'?'Done':v==='na'?'Not needed':'Pending · click to mark done'}">${v==='done'?I.check:v==='na'?I.dash:I.clock}</button></td>`};
+  const cols=T.mode==='active'?PRE:POST;
+  return `<div class="card pad"><div class="sec-h"><div><h2>Trainee procedures</h2><p class="muted" style="font-size:12.5px">Click a cell to mark an item done. Trainees see the same checklist in their portal.</p></div>
+  <div class="row"><div class="seg"><button data-act="tmode" data-v="active" class="${T.mode==='active'?'on':''}">Active</button><button data-act="tmode" data-v="completed" class="${T.mode==='completed'?'on':''}">Completed</button></div>
+  ${T.mode==='active'?`<label class="row" style="gap:6px;font-size:13px"><input type="checkbox" id="t-inc" ${T.inc?'checked':''} style="accent-color:var(--teal-ink)"> Needs attention only</label>`:''}</div></div>
+  <div class="tbl-wrap mx"><table><tr><th>Trainee</th><th>Dept · Supervisor</th><th>Start</th>${cols.map(c=>`<th style="text-align:center">${c[1].replace('Required ','').replace(' Check-up','').replace('Agreement Signature','Agreement').replace('Access / ID Card','Card').replace('Company ','').replace(' Details','').replace(' Issued','').replace('Hand Over ','').replace('Access Card Hand Over','Card').replace('Return ','').replace('Trainee ','').replace('Issue ','')}</th>`).join('')}<th>${T.mode==='active'?'Evaluation':'Avg score'}</th><th>Allowance</th></tr>
+  ${list.map(r=>{const d=dueMonths(r);const le=r.evals[r.evals.length-1];const avg=r.evals.length?Math.round(r.evals.reduce((a,e)=>a+e.final,0)/r.evals.length):null;
+    return `<tr><td class="who" style="cursor:pointer" data-act="open" data-id="${r.id}"><b>${esc(r.name)}</b><span class="mono">${r.id} · ${TRACK[r.track].code}</span></td><td class="who"><b style="font-weight:500">${esc(r.dept)}</b><span>${esc(r.sup.name)}</span></td><td class="num">${r.stage==='Pre-Training'?pill(fmt(r.start).slice(0,6),'teal'):`<span class="muted">${fmt(r.start).slice(0,6)}</span>`}</td>
+    ${cols.map(([k])=>cell(r,k,T.mode==='active'?'pre':'post')).join('')}
+    <td>${T.mode==='active'?(r.stage==='Pre-Training'?'<span class="muted">—</span>':d.length?pill(d[0].slice(0,3)+' due','warn'):le?pill(le.month.slice(0,3)+' · '+le.final+'%','ok'):'<span class="muted">First due '+mlabel(r.start).slice(0,3)+'</span>'):avg+'%'}</td>
+    <td class="num">${le?(STIPEND[r.track]*TIERS[le.att].p/100).toFixed(0)+' OMR':'<span class="muted">—</span>'}</td></tr>`}).join('')||`<tr><td colspan="14" class="empty">Nothing needs attention.</td></tr>`}</table></div>
+  <p class="muted" style="font-size:12px;margin-top:8px">${list.length} trainees · allowance shows the last evaluated month</p></div>`;
+}
+function hrHistory(){
+  const H=S.hf;
+  const cur=ALL.filter(r=>r.stage==='Completed').map(r=>({year:2026,name:r.name,civil:r.civil,uni:r.uni,dept:r.dept,track:r.track,score:Math.round(r.evals.reduce((a,e)=>a+e.final,0)/r.evals.length),rec:Math.round(r.evals.reduce((a,e)=>a+e.final,0)/r.evals.length)>=85}));
+  let list=[...cur,...PAST];
+  const years=[2026,2025,2024,2023,2022];
+  if(H.year!=='all')list=list.filter(p=>p.year===Number(H.year));
+  if(H.dept!=='all')list=list.filter(p=>p.dept===H.dept);
+  if(H.q){const q=H.q.toLowerCase();list=list.filter(p=>(p.name+' '+p.civil+' '+p.uni).toLowerCase().includes(q))}
+  list.sort((a,b)=>b.year-a.year||b.score-a.score);
+  const linked=ALL.filter(r=>r.histFound&&PIPE.includes(r.stage));
+  return `<div class="card pad"><div class="sec-h"><div><h2>Trainee history</h2><p class="muted" style="font-size:12.5px">Every trainee since 2022. New applications are matched to this list by Civil ID.</p></div></div>
+  <div class="grid g4" style="margin-bottom:14px">${years.map(y=>{const n=[...cur,...PAST].filter(p=>p.year===y).length;return `<button class="card" style="padding:12px;text-align:left;${H.year==y?'border-color:var(--navy)':''}" data-act="hyear" data-v="${y}"><span class="muted" style="font-size:12px">${y}</span><b style="display:block;font-size:20px;color:var(--navy)" class="num">${n}</b><span class="muted" style="font-size:11.5px">trainees</span></button>`}).join('')}</div>
+  ${linked.length?`<div class="note" style="margin-bottom:14px;background:var(--warn-soft);color:#6B4A10"><b>${linked.length} current applicants found in history.</b> ${linked.map(r=>`${esc(r.name)}${r.declaredBefore?'':' (declared "No")'}`).join(' · ')}. Their priority is adjusted automatically.</div>`:''}
+  <div class="filters"><input type="text" id="h-q" placeholder="Search name, Civil ID, university" value="${esc(H.q)}"><select id="h-year" aria-label="Year"><option value="all">All years</option>${years.map(y=>`<option ${H.year==y?'selected':''}>${y}</option>`).join('')}</select><select id="h-dept" aria-label="Department"><option value="all">All departments</option>${DEPTS.map(d=>`<option ${H.dept===d.n?'selected':''}>${esc(d.n)}</option>`).join('')}</select></div>
+  <div class="tbl-wrap"><table><tr><th>Year</th><th>Name</th><th>Civil ID</th><th>University</th><th>Department</th><th>Track</th><th>Final score</th><th>Recommended</th></tr>
+  ${list.slice(0,80).map(p=>`<tr><td class="num">${p.year}</td><td><b style="font-weight:600">${esc(p.name)}</b></td><td class="mono">${mask(p.civil)}</td><td>${esc(p.uni)}</td><td>${esc(p.dept)}</td><td>${TRACK[p.track].code}</td><td class="num"><b>${p.score}%</b></td><td>${p.rec?pill('For hiring','teal'):'<span class="muted">—</span>'}</td></tr>`).join('')||`<tr><td colspan="8" class="empty">No records match.</td></tr>`}</table></div>
+  <p class="muted" style="font-size:12px;margin-top:8px">${list.length} records${list.length>80?' · showing first 80':''}</p></div>`;
+}
+
+/* ============ Drawer, modal, toast ============ */
+function nextStage(r){const order=r.track==='Eidaad'?['Applied','Under Review','Interview','Selected','Medical','Pre-Training','Training','Completed']:['Applied','Under Review','Assessment','Selected','Medical','Pre-Training','Training','Completed'];const i=order.indexOf(r.stage);return i>=0&&i<order.length-1?order[i+1]:null}
+function drawer(){
+  const r=byId(S.drawer);if(!r)return '';
+  const p=priority(r);const le=r.evals[r.evals.length-1];
+  const kv=[['Trainee SA',`<span class="mono">${r.id}</span>`],['Name',esc(r.name)],['University / College',esc(r.uni)],['Major',esc(r.major)],['Graduation Year',r.graduated?r.gradYear+' (graduated)':r.gradYear+' (expected)'],['Training Type',TRACK[r.track].name],['Department',esc(r.dept||'Not assigned')],['Supervisor',r.sup?esc(r.sup.name)+' · '+r.sup.id:'—'],['Start Date',fmt(r.start)],['End Date',fmt(r.end)],['Status',stagePill(r.stage)],['Stipend Amount',STIPEND[r.track]+' OMR / month'+(le?` · last month ${(STIPEND[r.track]*TIERS[le.att].p/100).toFixed(0)} OMR`:'')],['Bank Account',r.pre.bank==='done'?mask(r.acct):'<span class="muted">Not provided</span>'],['Bank Name',r.pre.bank==='done'?esc(r.bank):'—'],['Required Documents',r.pre.docs==='done'?pill('Complete','ok'):pill('Pending','warn')],['Access / ID Card',r.pre.card==='done'?pill('Issued','ok'):pill('Pending','warn')]];
+  const ns=nextStage(r);
+  const canAct=PIPE.includes(r.stage)&&r.stage!=='Medical';
+  return `<div class="scrim" data-act="close"></div><aside class="drawer" role="dialog" aria-label="Trainee profile"><div class="drawer-h"><span class="avatar" style="background:var(--teal);color:var(--navy)">${initials(r.name)}</span><div><h3>${esc(r.name)}</h3><p>${TRACK[r.track].name} · ${esc(r.intake)}</p></div><button class="x" data-act="close" aria-label="Close">${I.x}</button></div>
+  <div class="drawer-b">
+    ${canAct?`<div class="card pad row"><div><span class="muted" style="font-size:12px">Current stage</span><div>${stagePill(r.stage)}</div></div><span class="spacer"></span>${ns?`<button class="btn teal sm" data-act="adv" data-id="${r.id}">Move to ${ns}</button>`:''}<button class="btn danger sm" data-act="rej" data-id="${r.id}">Not selected</button></div>`:''}
+    ${r.track!=='Eidaad'?`<div class="card pad"><div class="row"><span class="eyebrow">Priority</span><span class="spacer"></span>${priPill(p)}</div>
+      <div class="check-line">${r.reqGrad?I.check.replace('<svg','<svg style="color:var(--ok)"'):I.dash.replace('<svg','<svg style="color:var(--silver)"')}<span>Training required for graduation</span></div>
+      <div class="check-line">${!trainedBefore(r)?I.check.replace('<svg','<svg style="color:var(--ok)"'):I.dash.replace('<svg','<svg style="color:var(--silver)"')}<span>${r.histFound?`Trained here before · found in history by Civil ID${r.declaredBefore?'':' (applicant declared No)'}`:trainedBefore(r)?'Trained here before (declared)':'Has not trained at Sohar Aluminium before'}</span></div>
+      ${score(r)!=null?`<div class="row" style="margin-top:10px;gap:16px;font-size:13px"><span>Assessment <b class="num">${score(r)}</b></span><span class="muted">IQ ${r.iq} · Personality ${r.pers} · GPA ${r.gpa}</span></div>`:`<p class="muted" style="font-size:12.5px;margin-top:8px">GPA ${r.gpa} · assessment not taken yet</p>`}</div>`:`<div class="card pad"><span class="eyebrow">Eidaad selection</span><p style="font-size:13px;margin-top:6px">Interview with ${esc(r.dept)}: <b>${r.interview??'—'}/100</b>${r.reason?` · ${esc(r.reason)}`:''}</p></div>`}
+    ${r.ref?`<div class="card pad"><span class="eyebrow">Referral</span><p style="font-size:13px;margin-top:6px">Referred by <b>${esc(r.ref.empName)}</b> · <span class="mono">${esc(r.ref.empId)}</span> · ${esc(r.ref.rel)}</p></div>`:''}
+    <div><div class="sec-h"><h3>Trainee record</h3></div><div class="tbl-wrap"><table class="kv">${kv.map(k=>`<tr><th>${k[0]}</th><td>${k[1]}</td></tr>`).join('')}</table></div></div>
+    <div class="card pad"><div class="sec-h"><h3>Contact</h3></div><div class="meta" style="margin:0"><span>Civil ID <b class="mono">${mask(r.civil)}</b></span><span>Mobile <b class="mono">${r.phone}</b></span><span>Email <b>${esc(r.cemail||r.pemail)}</b></span></div></div>
+    ${r.evals.length?`<div class="card pad"><div class="sec-h"><h3>Monthly evaluations</h3></div>${lineChart(r.evals)}</div>`:''}
+    <div class="card pad"><div class="sec-h"><h3>Decision log</h3></div><div class="log">${r.log.slice().reverse().map(l=>`<div><span class="num">${fmt(l.d)}</span><p><b style="font-weight:600">${esc(l.who)}</b> · ${esc(l.what)}</p></div>`).join('')}</div></div>
+  </div></aside>`;
+}
+function modal(){
+  const M=S.modal;if(!M)return '';
+  let h='',c='',f='';
+  if(M.type==='sms'){const r=byId(M.id);h='Medical appointment SMS';
+    c=`<p class="muted" style="font-size:12.5px">To <b class="mono" style="color:var(--ink)">+968 ${r.phone}</b> · ${esc(r.name)}</p><div class="phone"><div class="bubble">Dear ${esc(r.name.split(' ')[0])}, you are invited to your medical check-up at the Sohar Aluminium Medical Centre on <b>${fmt(r.medDate)}</b> at <b>${r.medTime}</b>. Please bring your Civil ID.</div><div class="bubble" dir="rtl">عزيزي/عزيزتي ${esc(r.name.split(' ')[0])}، نرجو حضورك للفحص الطبي في المركز الطبي بصحار ألمنيوم بتاريخ <b>${fmt(r.medDate)}</b> الساعة <b>${r.medTime}</b>. يرجى إحضار البطاقة الشخصية.</div></div>`;
+    f=`<button class="btn ghost" data-act="close-m">Cancel</button><button class="btn teal" data-act="med-send" data-id="${r.id}">Send SMS</button>`}
+  if(M.type==='email'){const d=deptOf(M.dept);const cands=ALL.filter(r=>r.track==='Eidaad'&&r.dept===d.n);h='Eidaad shortlist email';
+    c=`<div class="email-pv"><div class="eh">To <b>${esc(d.s[0][0])}</b>, ${esc(d.n)} department<br>Subject <b>Eidaad 2026 · shortlist for interview (${cands.length} candidates)</b></div><div class="eb"><p>Dear ${esc(d.s[0][0].split(' ')[0])},</p><p style="margin-top:8px">Please find below the Eidaad candidates matching your department's specialisations. Kindly interview them and reply with the one trainee you select.</p>
+    <div class="tbl-wrap" style="margin-top:10px"><table><tr><th>Candidate</th><th>Major</th><th>University</th></tr>${cands.map(r=>`<tr><td>${esc(r.name)}</td><td>${esc(r.major)}</td><td>${esc(r.uni)}</td></tr>`).join('')}</table></div><p style="margin-top:10px">Regards,<br>HR Training Section</p></div></div>`;
+    f=`<button class="btn ghost" data-act="close-m">Close</button><button class="btn" data-act="email-send">Send email</button>`}
+  return `<div class="scrim" data-act="close-m" style="z-index:49"></div><div class="modal"><div class="modal-b" role="dialog" aria-label="${h}"><div class="modal-h"><h3>${h}</h3><span class="spacer"></span><button class="btn ghost sm" data-act="close-m" aria-label="Close">${I.x}</button></div><div class="modal-c">${c}</div><div class="modal-f">${f}</div></div></div>`;
+}
+let tT;function toast(t){const el=document.getElementById('toast');el.innerHTML=I.check+esc(t);el.hidden=false;clearTimeout(tT);tT=setTimeout(()=>el.hidden=true,2600)}
+
+/* ============ Render & events ============ */
+function render(keepScroll){
+  renderTop();
+  const y=window.scrollY;
+  document.getElementById('app').innerHTML={home:vHome,apply:vApply,trainee:vTrainee,supervisor:vSup,hr:vHR}[S.view]();
+  document.getElementById('layer').innerHTML=(S.drawer?drawer():'')+modal();
+  if(keepScroll)window.scrollTo(0,y);
+}
+function go(v){S.view=v;S.drawer=null;S.modal=null;render();window.scrollTo(0,0)}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-act]');if(!t||t.disabled)return;
+  const a=t.dataset.act,v=t.dataset.v,id=t.dataset.id,A=S.apply;
+  switch(a){
+    case 'go':go(v);break;
+    case 'go-hr-app':S.view='hr';S.hrTab='applicants';S.f={track:'all',pri:'all',stage:'pipeline',q:''};if(S.auth.h)S.drawer=id;else S.after=id;render();window.scrollTo(0,0);break;
+    case 'logout':if(v==='t')S.auth.t=null;if(v==='s'){S.auth.s=null;S.ev=null}if(v==='h'){S.auth.h=false;S.drawer=null}toast('Signed out');render();window.scrollTo(0,0);break;
+    case 'demo-t':S.lg.t.pre=v;S.lg.t.err='';render(true);break;
+    case 't-back':S.lg.t={sent:false,id:null,code:'',err:'',pre:S.lg.t.pre};render(true);break;
+    case 'demo-s':S.lg.s.pre=v;S.lg.s.pp=SUP_PASS;S.lg.s.err='';render(true);break;
+    case 'demo-h':S.lg.h.pre=HR_USER;S.lg.h.pp=HR_PASS;S.lg.h.err='';render(true);break;
+    case 'h-back':S.lg.h.step=1;S.lg.h.err='';render(true);break;
+    case 'hrtab':S.hrTab=v;S.drawer=null;render();window.scrollTo(0,0);break;
+    case 'open':S.drawer=id;render(true);break;
+    case 'close':S.drawer=null;render(true);break;
+    case 'close-m':S.modal=null;render(true);break;
+    case 'ap-track':A.track=v;A.err='';render(true);break;
+    case 'ap-set':A.f[t.dataset.k]=v;if(t.dataset.k==='grad')A.f.gradYear='';A.err='';render(true);break;
+    case 'ap-next':A.err=apValidate();if(!A.err){A.step++;window.scrollTo(0,0)}render(!A.err?false:true);break;
+    case 'ap-back':A.step--;A.err='';render();break;
+    case 'ap-sample':apSample();A.err='';render(true);break;
+    case 'ap-submit':apSubmit();render();window.scrollTo(0,0);break;
+    case 'ap-new':S.apply={step:0,track:null,f:{},done:null,err:''};render();break;
+    case 't-tab':S.tTab=v;render(true);break;
+    case 'fb-star':S.fb.rating=Number(v);render(true);break;
+    case 'fb-submit':{const r=byId(S.tId);r.feedback={rating:S.fb.rating,text:S.fb.text};r.post.feedback='done';lg(r,TODAY,'Trainee','Feedback submitted · '+S.fb.rating+'/5');S.fb={rating:0,text:''};toast('Feedback sent to HR');render(true);break}
+    case 'sup-pick':S.supSel=id;S.ev=null;render(true);break;
+    case 'ev-att':S.ev.att=Number(v);render(true);break;
+    case 'ev-sc':S.ev.scores[Number(t.dataset.i)]=Number(v);render(true);break;
+    case 'ev-rec':S.ev.rec=v;render(true);break;
+    case 'ev-submit':{const r=byId(S.ev.id),E=S.ev;const fin=Math.round(E.scores.reduce((x,y)=>x+y,0)/32*100);
+      const sorted=r.evals.concat([{month:E.month,att:E.att,scores:E.scores.slice(),final:fin,comment:E.comment,by:r.sup.name,rec:E.rec}]);
+      sorted.sort((x,y)=>new Date('1 '+x.month)-new Date('1 '+y.month));r.evals=sorted;
+      lg(r,TODAY,r.sup.name,`${E.month} evaluation submitted · ${fin}% · allowance ${TIERS[E.att].p}%`);toast(`${E.month} evaluation sent to HR · ${fin}%`);S.ev=null;render(true);break}
+    case 'plan-add':{const el=document.getElementById('plan-new');const val=el&&el.value.trim();if(val){byId(S.supSel).plan.push({t:val,done:false});render(true)}break}
+    case 'adv':{const r=byId(id);const ns=nextStage(r);if(!ns)break;
+      if(ns==='Assessment'&&r.iq==null){r.iq=ri(55,96);r.pers=ri(52,94)}
+      if(ns==='Selected'){if(!r.dept)assign(r,true);r.accepted=TODAY}
+      r.stage=ns;lg(r,TODAY,HRS[0],'Moved to '+ns+(ns==='Selected'?' · nominated to '+r.dept:''));toast(r.name.split(' ')[0]+' moved to '+ns);render(true);break}
+    case 'rej':{const r=byId(id);r.stage='Not Selected';r.reason='Not selected by HR';lg(r,TODAY,HRS[0],'Marked not selected');toast(r.name.split(' ')[0]+' marked not selected');render(true);break}
+    case 'med-sms':S.modal={type:'sms',id};render(true);break;
+    case 'med-send':{const r=byId(id);r.medSms=true;lg(r,TODAY,HRS[0],`Medical SMS sent · ${fmt(r.medDate)} ${r.medTime}`);S.modal=null;toast('SMS sent to +968 '+r.phone);render(true);break}
+    case 'med-res':{const r=byId(id);if(v==='Fit'){r.stage='Pre-Training';r.start=D(2026,11,1);r.end=D(2026,12,31);setSup(r);setPre(r,0);LOAD[r.dept]++;lg(r,TODAY,'Medical Centre','Medical check-up · Fit · moved to Pre-Training');toast(r.name.split(' ')[0]+' is fit · moved to Pre-Training')}
+      else{r.stage='Not Selected';r.reason='Medical';lg(r,TODAY,'Medical Centre','Medical check-up · Unfit');toast(r.name.split(' ')[0]+' recorded as unfit')}render(true);break}
+    case 'email-short':S.modal={type:'email',dept:v};render(true);break;
+    case 'email-send':S.modal=null;toast('Shortlist emailed to the department');render(true);break;
+    case 'tmode':S.tf.mode=v;render(true);break;
+    case 'tog':{const r=byId(id);const obj=t.dataset.sec==='post'?r.post:r.pre;const k=t.dataset.k;obj[k]=obj[k]==='done'?'pending':'done';
+      if(t.dataset.sec==='post'&&['ppe','card','laptop'].every(x=>r.post[x]!=='pending'))r.post.cert='done';
+      lg(r,TODAY,HRS[0],(PRE.concat(POST).find(p=>p[0]===k)||[k,k])[1]+' · '+obj[k]);render(true);break}
+    case 'hyear':S.hf.year=S.hf.year==v?'all':v;render(true);break;
+  }
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.ap){S.apply.f[t.dataset.ap]=t.value;return}
+  if(t.id==='ev-c'&&S.ev){S.ev.comment=t.value;return}
+  if(t.id==='fb-text'){S.fb.text=t.value;return}
+  if(t.id==='f-q'||t.id==='h-q'){const pos=t.selectionStart;if(t.id==='f-q')S.f.q=t.value;else S.hf.q=t.value;render(true);const n=document.getElementById(t.id);if(n){n.focus();n.setSelectionRange(pos,pos)}}
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.dataset.ap){S.apply.f[t.dataset.ap]=t.value;return}
+  if(t.dataset.file){S.apply.f['file_'+t.dataset.file]=t.files[0]?t.files[0].name:'';render(true);return}
+  if(t.id==='tsel'){S.tId=t.value;S.tTab=null;S.fb={rating:0,text:''};render(true);return}
+  if(t.id==='supsel'){S.supId=t.value;S.supSel=null;S.ev=null;render(true);return}
+  if(t.id==='f-track'){S.f.track=t.value;render(true)}
+  if(t.id==='f-pri'){S.f.pri=t.value;render(true)}
+  if(t.id==='f-stage'){S.f.stage=t.value;render(true)}
+  if(t.id==='h-year'){S.hf.year=t.value;render(true)}
+  if(t.id==='h-dept'){S.hf.dept=t.value;render(true)}
+  if(t.id==='t-inc'){S.tf.inc=t.checked;render(true)}
+  if(t.dataset.plan!=null){const r=byId(S.supSel);r.plan[Number(t.dataset.plan)].done=t.checked;render(true)}
+  if(t.dataset.med){const r=byId(t.dataset.id);if(t.dataset.med==='date')r.medDate=t.value?new Date(t.value+'T00:00'):null;else r.medTime=t.value;render(true)}
+});
+document.addEventListener('submit',e=>{e.preventDefault();const f={'lf-t1':lgTSend,'lf-t2':lgTVerify,'lf-s':lgS,'lf-h1':lgH1,'lf-h2':lgH2}[e.target.id];if(f){f();render(true);const n=document.querySelector('#lg-code,#lg-hcode');if(n)n.focus()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(S.drawer||S.modal)){S.modal?S.modal=null:S.drawer=null;render(true)}
+  if(e.key==='Enter'&&e.target.id==='plan-new'){e.preventDefault();document.querySelector('[data-act="plan-add"]').click()}});
+render();
 </script>
-<noscript><meta http-equiv="refresh" content="0; url=apply.html"></noscript>
-</head><body style="font-family:system-ui,sans-serif;margin:2rem"><a href="apply.html">ALUMATE</a></body></html>
+
+</body>
+</html>
