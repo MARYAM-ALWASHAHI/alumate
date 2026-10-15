@@ -772,6 +772,7 @@ var BASE=location.href.replace(/[?#].*$/,'').replace(/[^\/]*$/,''),FORCE_LANG=(n
     if(!$('#lgo').disabled)$('#lgo').textContent=t('Open console');
     if(!$('#v-adm').hidden)render();
   });
+  setLive(LIVE.mode,LIVE.txt);
   $('#pw').focus();
 })();
 </script>
