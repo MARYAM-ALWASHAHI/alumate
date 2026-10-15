@@ -969,7 +969,7 @@ function siteFoot(){
   return `<footer class="ft"><div>${brand(false,'')}<p>${t('The trainee programme of Sohar Aluminium: from application to certificate in one place.')}</p></div>
   <div><h4>${t('Programmes')}</h4><ul>${Object.keys(TRACK).map(k=>`<li><button data-act="ap-start" data-v="${k}">${trk(k)}</button></li>`).join('')}</ul></div>
   <div><h4>${t('Quick links')}</h4><ul><li><button data-act="scroll" data-v="how">${t('How it works')}</button></li><li><button data-act="scroll" data-v="faq">${t('FAQ')}</button></li><li><button data-act="go" data-v="apply">${t('Apply for training')}</button></li><li><button data-act="go" data-v="signin">${t('Sign in')}</button></li></ul></div>
-  <div><h4>${t('Contact')}</h4><ul><li>${t('HR Training · Sohar Aluminium')}</li><li><a href="mailto:hr.training@sohar-alu.om" dir="ltr">hr.training@sohar-alu.om</a></li><li>${t('Sunday to Thursday, 7:00 to 16:00')}</li></ul></div>
+  <div><h4>${t('Contact')}</h4><ul><li>${t('HR Training · Sohar Aluminium')}</li><li>${t('Sunday to Thursday, 7:00 to 16:00')}</li></ul></div>
   <div class="ft-b"><span>© 2026 Sohar Aluminium · ALUMATE · ${t('Demo version with sample data')}</span><nav><button data-act="doc" data-v="privacy">${t('Privacy')}</button><button data-act="doc" data-v="terms">${t('Terms of use')}</button></nav></div></footer>`;
 }
 
