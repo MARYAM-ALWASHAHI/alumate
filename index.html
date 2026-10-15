@@ -493,13 +493,6 @@ html[dir=rtl] .toast{transform:translateX(50%)}
   .a4 *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
-/* Arabic: arrows follow the reading direction */
-html[dir=rtl] svg.fl{transform:scaleX(-1)}
-/* Phones: keep the top bar on one line, KPIs two per row */
-.nav .lang,.nav .btn{flex:none}
-@media (max-width:440px){.nav .brand .wm{display:none}.nav .lang button{padding:0 8px}}
-@media (max-width:600px){.g4{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.kpi{padding:14px}.kpi b{font-size:22px;line-height:28px}.kpi-h{font-size:12px;gap:8px}.kpi-i{width:30px;height:30px}.kpi .tr{font-size:11px}}
-@media (max-width:900px){.auth-v{gap:28px}.auth-v h2{font-size:24px;line-height:32px}}
 </style>
 </head>
 <body>
@@ -727,7 +720,7 @@ ALL.forEach(r=>{if(!r.log.length)baseLog(r)});
 
 
 /* ============ Icons (1.8px stroke set) ============ */
-const sv=(p,f)=>`<svg ${f?`class="${f}" `:''}viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const sv=(p,f)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
 const I={
  home:sv('<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'),
  users:sv('<circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.4 6-5.4s5.4 2 6 5.4"/><circle cx="17.5" cy="9" r="2.4"/><path d="M16.8 14.2c2.4.3 3.9 2 4.4 4.6"/>'),
@@ -748,9 +741,9 @@ const I={
  check:sv('<path d="M5 12.5 10 17l9-10"/>'),
  clock:sv('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'),
  x:sv('<path d="M6 6l12 12M18 6 6 18"/>'),
- arrow:sv('<path d="M5 12h14M13 6l6 6-6 6"/>','fl'),
- back:sv('<path d="M19 12H5M11 18l-6-6 6-6"/>','fl'),
- chev:sv('<path d="m9 6 6 6-6 6"/>','fl'),
+ arrow:sv('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+ back:sv('<path d="M19 12H5M11 18l-6-6 6-6"/>'),
+ chev:sv('<path d="m9 6 6 6-6 6"/>'),
  out:sv('<path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11"/>'),
  menu:sv('<path d="M4 6h16M4 12h16M4 18h16"/>'),
  shield:sv('<path d="M12 3 19 6v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z"/><path d="m9 12 2 2 4-4"/>'),

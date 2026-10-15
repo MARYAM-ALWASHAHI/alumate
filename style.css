@@ -542,8 +542,6 @@ html[dir="rtl"] .band::before{background:linear-gradient(270deg,rgba(5,23,42,.92
 .split .r h2{font:700 1.7rem/1.2 var(--f-display)}
 .split .r form{margin-top:1rem}
 @media(max-width:760px){.split{grid-template-columns:1fr}.split .l{padding:1.4rem}.split .l h2{padding-top:1rem}.split .l p{margin-bottom:2.5rem}}
-/* on phones the text sits over the buildings, so keep the shade strong all the way down */
-@media(max-width:760px){.split .l::before{background:linear-gradient(180deg,rgba(5,23,42,.92) 0%,rgba(5,23,42,.74) 60%,rgba(5,23,42,.5) 100%)}.split .l p{text-shadow:0 1px 3px rgba(5,23,42,.6)}}
 
 /* My application: dashboard look */
 .hstep{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));list-style:none;margin:1.4rem 0 1.5rem;padding:0}
