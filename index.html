@@ -1037,7 +1037,7 @@ function vSignin(){
     form=`<form id="f-s"><div class="field"><label for="g-emp">${t('Employee ID')}</label><div class="inp-ic">${I.badge}<input class="inp" id="g-emp" autocomplete="username" value="${esc(Q.v)}" placeholder="E-00000" ${lock?'disabled':''}></div></div>
       <div class="field"><label for="g-pw">${t('Password')}</label><div class="inp-ic">${I.lock}<input class="inp" id="g-pw" type="password" autocomplete="current-password" value="${esc(Q.p)}" ${lock?'disabled':''}></div></div>
       ${Q.err?`<div class="msg-err">${I.alert}${esc(Q.err)}</div>`:''}<button class="btn btn-p btn-w" type="submit" ${lock?'disabled':''}>${t('Sign in')}</button></form>
-      <div class="demo"><p>${t('Demo accounts')} · ${SUP_PASS}</p>${supList().slice(0,3).map(d=>`<button data-act="demo-s" data-v="${d.id}">${esc(d.name)} · ${dn(d.dept)}<span class="mono">${d.id}</span></button>`).join('')}</div>`}
+      <div class="demo"><p>${t('Demo accounts')} · ${SUP_PASS}</p>${supList().map(d=>[d,ALL.some(r=>r.sup&&r.sup.id===d.id&&dueMonths(r).length)]).sort((x,y)=>y[1]-x[1]).slice(0,3).map(([d])=>d).map(d=>`<button data-act="demo-s" data-v="${d.id}">${esc(d.name)} · ${dn(d.dept)}<span class="mono">${d.id}</span></button>`).join('')}</div>`}
   if(k==='h'){const H=L.h,lock=H.fails>=5;
     form=H.step===1?`<form id="f-h1"><div class="field"><label for="g-u">${t('Username')}</label><div class="inp-ic">${I.user}<input class="inp" id="g-u" autocomplete="username" value="${esc(H.v)}" ${lock?'disabled':''}></div></div>
       <div class="field"><label for="g-hp">${t('Password')}</label><div class="inp-ic">${I.lock}<input class="inp" id="g-hp" type="password" autocomplete="current-password" value="${esc(H.p)}" ${lock?'disabled':''}></div></div>
