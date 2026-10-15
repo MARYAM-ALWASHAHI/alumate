@@ -493,6 +493,42 @@ html[dir=rtl] .toast{transform:translateX(50%)}
   .a4 *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
+/* Home: numbers band */
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:40px}
+.nums .card{padding:22px 20px;text-align:center}
+.nums b{display:block;font-size:30px;line-height:38px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.nums span{font-size:13px;color:var(--muted)}
+@media (max-width:800px){.nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Home: FAQ */
+.faq{display:flex;flex-direction:column;gap:10px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-xs)}
+.faq summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;padding:16px 20px;font-weight:600;color:var(--navy)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";margin-inline-start:auto;font-size:20px;line-height:1;color:var(--teal-ink)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{padding:0 20px 18px;color:var(--ink-2)}
+/* Site footer */
+.ft{margin-top:48px;padding-top:32px;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:28px}
+.ft h4{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:10px}
+.ft p{font-size:13px;color:var(--muted);margin-top:10px;max-width:34ch}
+.ft ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.ft li{font-size:13px;color:var(--ink-2)}
+.ft li button,.ft li a{background:none;border:0;padding:0;font-size:13px;color:var(--ink-2);text-decoration:none;text-align:start}
+.ft li button:hover,.ft li a:hover{color:var(--teal-ink)}
+.ft-b{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:18px;margin-top:4px;border-top:1px solid var(--line-2);font-size:12.5px;color:var(--muted)}
+.ft-b nav{display:flex;gap:16px}
+.ft-b button{background:none;border:0;padding:0;font-size:12.5px;color:var(--muted)}.ft-b button:hover{color:var(--teal-ink)}
+@media (max-width:860px){.ft{grid-template-columns:repeat(2,minmax(0,1fr))}.ft>div:first-child{grid-column:1/-1}}
+/* Notifications panel */
+.ntf-w{position:relative}
+.ntf{position:absolute;top:calc(100% + 8px);inset-inline-end:0;width:min(360px,calc(100vw - 32px));background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-lg);z-index:40;overflow:hidden}
+.ntf-h{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+.ntf-h b{color:var(--navy)}
+.ntf button.al{width:100%;background:#fff;border:0;border-top:1px solid var(--line-2);text-align:start;padding:12px 16px}
+.ntf button.al:first-of-type{border-top:0}
+.ntf button.al:hover{background:#F8FAFC}
+.ntf .empty{padding:28px 16px}
+@media (max-width:600px){.ntf{position:fixed;top:72px;inset-inline:16px;width:auto}}
 </style>
 </head>
 <body>
@@ -813,7 +849,7 @@ const fms=m=>S.lang==='ar'?MON_AR[MON.indexOf(m.slice(0,3))]:m.slice(0,3);
 
 /* ============ State ============ */
 const LAST_CLOSED=D(2026,9,30);
-const S={lang:'en',view:'home',portal:null,side:false,
+const S={lang:'en',view:'home',portal:null,side:false,notif:false,
   page:{h:'overview',t:'dashboard',s:'trainees'},
   auth:{t:null,s:null,h:false},lt:'t',
   lg:{t:{sent:false,id:null,code:'',err:'',v:''},s:{err:'',fails:0,v:'',p:''},h:{step:1,err:'',fails:0,code:'',v:'',p:''}},
@@ -844,7 +880,7 @@ const dn=n=>t(n);
 const avatar=(n,c)=>`<span class="av ${c||''}">${initials(n)}</span>`;
 const who=(n,sub)=>`<div class="who">${avatar(n)}<div style="min-width:0"><b>${esc(n)}</b>${sub?`<small>${sub}</small>`:''}</div></div>`;
 const idxCls=v=>v>=88?'i-good':v>=80?'i-mid':'i-low';
-function kpi(icon,cls,label,val,trend,act){return `<${act?'button':'div'} class="card kpi" ${act?`data-act="${act[0]}" data-v="${act[1]}"`:''}><div class="kpi-h"><span class="kpi-i ${cls}">${I[icon]}</span>${esc(label)}</div><b>${val}</b>${trend?`<span class="tr">${trend}</span>`:''}</${act?'button':'div'}>`}
+function kpi(icon,cls,label,val,trend,act){return `<${act?'button':'div'} class="card kpi" ${act?`data-act="${act[0]}" data-v="${act[1]}"`:''}><div class="kpi-h"><span class="kpi-i ${cls}">${I[icon]}</span>${esc(label)}</div><b><bdi dir="ltr">${val}</bdi></b>${trend?`<span class="tr">${trend}</span>`:''}</${act?'button':'div'}>`}
 function hbars(items,cls){const max=Math.max(1,...items.map(i=>i[1]));return items.map(([l,v])=>`<div class="hb ${cls||''}"><span class="l" title="${esc(l)}">${esc(l)}</span><span class="t"><i style="width:${v/max*100}%"></i></span><b>${v}</b></div>`).join('')}
 function vbars(items){const max=Math.max(1,...items.map(i=>i[1]));return `<div class="vb">${items.map(([,v])=>`<div><b>${v||''}</b><i style="height:${Math.max(v?4:0,v/max*100)}%"></i></div>`).join('')}</div><div class="vbl">${items.map(([l])=>`<span>${l}</span>`).join('')}</div>`}
 function donut(pct,size,label,sub,color){const r=(size-16)/2,c=2*Math.PI*r,o=c*(1-Math.min(1,pct/100));
@@ -866,7 +902,7 @@ let tT;function toast(s){const el=document.getElementById('toast');el.innerHTML=
 function langSw(){return `<div class="lang" role="group" aria-label="Language"><button data-act="lang" data-v="en" class="${S.lang==='en'?'on':''}">EN</button><button data-act="lang" data-v="ar" class="${S.lang==='ar'?'on':''}">العربية</button></div>`}
 function pubNav(){
   return `<header class="nav"><div class="nav-in"><button class="brand" data-act="go" data-v="home" aria-label="ALUMATE">${markSVG('')}${wordmark()}</button>
-  <nav class="nav-l">${[['home','Home'],['paths','Programmes'],['how','How it works'],['apply','Apply']].map(([k,l])=>`<button data-act="${k==='home'||k==='apply'?'go':'scroll'}" data-v="${k}" class="${S.view===k?'on':''}">${t(l)}</button>`).join('')}</nav>
+  <nav class="nav-l">${[['home','Home'],['paths','Programmes'],['how','How it works'],['faq','FAQ'],['apply','Apply']].map(([k,l])=>`<button data-act="${k==='home'||k==='apply'?'go':'scroll'}" data-v="${k}" class="${S.view===k?'on':''}">${t(l)}</button>`).join('')}</nav>
   <span class="sp"></span>${langSw()}<button class="btn btn-p btn-sm" data-act="go" data-v="signin">${t('Sign in')}</button></div></header>`;
 }
 
@@ -890,7 +926,30 @@ function vHome(){
   <div class="card cp"><div class="jr">${[['Apply','Online form'],['Assessment','Test or interview'],['Selection','By HR criteria'],['Medical','At the company clinic'],['Training','Monthly evaluation'],['Certificate','On completion']].map((s,i)=>`<div class="${i<1?'dn':''}"><i>${i+1}</i><b>${t(s[0])}</b><span class="cap">${t(s[1])}</span></div>`).join('')}</div></div>
 
   <div class="band">${[['trend','Real opportunities','for real growth'],['users','Support at every step','from day one to graduation'],['shield','A stronger workforce','for Oman']].map(([i,a,b])=>`<div>${I[i]}<p><b>${t(a)}</b><span>${t(b)}</span></p></div>`).join('')}</div>
-  <footer class="foot"><span>© 2026 Sohar Aluminium · ALUMATE</span><span>${t('Demo version with sample data')}</span></footer></main>`;
+  ${homeNums()}
+  <div class="sec-t" id="sec-faq"><div><h2 class="h2">${t('Frequently asked questions')}</h2><p class="muted">${t('Everything you need to know before you apply.')}</p></div></div>
+  <div class="faq">${faqItems().map(([q,a],i)=>`<details ${i?'':'open'}><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>
+  ${siteFoot()}</main>`;
+}
+
+function homeNums(){
+  const since=PAST.length+ALL.filter(r=>['Pre-Training','Training','Completed'].includes(r.stage)).length;
+  return `<div class="nums">${[[since,'Trainees since 2022'],[DEPTS.length,'Host departments'],[UNIS.length,'Partner universities'],[mean(PAST.map(p=>p.score)).toFixed(1)+' / 4','Average trainee rating']].map(([n,l])=>`<div class="card"><b><bdi dir="ltr">${n}</bdi></b><span>${t(l)}</span></div>`).join('')}</div>`;
+}
+function faqItems(){
+  return [['Who can apply?','University and college students, and recent graduates. Family Referral is for relatives of Sohar Aluminium employees, and Eidaad is for the BDO cohort.'],
+   ['How long is the training?','Summer, Winter and Family Referral placements last two months. The Eidaad Programme lasts ten months.'],
+   ['Is there a monthly allowance?',tt('Yes. {a} OMR a month for Summer, Winter and Referral, and {b} OMR for Eidaad. The amount depends on attendance and the monthly evaluation.',{a:STIPEND.Summer,b:STIPEND.Eidaad})],
+   ['Which documents do I need?','Your CV, transcript and a copy of your Civil ID. If the training is required for your graduation, add the training letter from your university.'],
+   ['How are trainees selected?','Applicants take a short online assessment. HR gives priority to students who need the training to graduate and to first-time trainees. Eidaad candidates are interviewed by the department.'],
+   ['How will I know my result?','Every update reaches you by SMS and email. Once you pass the medical check-up, you can sign in to the Trainee Portal with your Civil ID.']].map(([q,a])=>[t(q),t(a)]);
+}
+function siteFoot(){
+  return `<footer class="ft"><div>${brand(false,'')}<p>${t('The trainee programme of Sohar Aluminium: from application to certificate in one place.')}</p></div>
+  <div><h4>${t('Programmes')}</h4><ul>${Object.keys(TRACK).map(k=>`<li><button data-act="ap-start" data-v="${k}">${trk(k)}</button></li>`).join('')}</ul></div>
+  <div><h4>${t('Quick links')}</h4><ul><li><button data-act="scroll" data-v="how">${t('How it works')}</button></li><li><button data-act="scroll" data-v="faq">${t('FAQ')}</button></li><li><button data-act="go" data-v="apply">${t('Apply for training')}</button></li><li><button data-act="go" data-v="signin">${t('Sign in')}</button></li></ul></div>
+  <div><h4>${t('Contact')}</h4><ul><li>${t('HR Training · Sohar Aluminium')}</li><li><a href="mailto:hr.training@sohar-alu.om" dir="ltr">hr.training@sohar-alu.om</a></li><li>${t('Sunday to Thursday, 7:00 to 15:00')}</li></ul></div>
+  <div class="ft-b"><span>© 2026 Sohar Aluminium · ALUMATE · ${t('Demo version with sample data')}</span><nav><button data-act="doc" data-v="privacy">${t('Privacy')}</button><button data-act="doc" data-v="terms">${t('Terms of use')}</button></nav></div></footer>`;
 }
 
 /* ============ Apply (stepped) ============ */
@@ -927,7 +986,7 @@ function vApply(){
   <div class="split"><div class="card cp">${body}
     ${A.err?`<div class="msg-err" style="margin-top:20px">${I.alert}${esc(A.err)}</div>`:''}
     <div class="row" style="margin-top:28px">${st>0?`<button class="btn btn-s" data-act="ap-back">${I.back} ${t('Back')}</button>`:''}<span class="sp"></span>${st>0&&st<4?`<button class="btn btn-g btn-sm" data-act="ap-sample">${t('Fill sample data')}</button>`:''}${st<4?`<button class="btn btn-n" data-act="ap-next" ${st===0&&!A.track?'disabled':''}>${t('Continue')} ${I.arrow}</button>`:`<button class="btn btn-p" data-act="ap-submit">${t('Submit application')}</button>`}</div></div>
-  <div class="col">${side}<div class="card cp"><span class="cap">${t('Next steps')}</span><p class="small" style="margin-top:6px">${t(A.track==='Eidaad'?'Registration · HR confirms with BDO · interview · medical · onboarding':'Registration · online assessment · HR ranking · medical · onboarding')}</p></div></div></div></main>`;
+  <div class="col">${side}<div class="card cp"><span class="cap">${t('Next steps')}</span><p class="small" style="margin-top:6px">${t(A.track==='Eidaad'?'Registration · HR confirms with BDO · interview · medical · onboarding':'Registration · online assessment · HR ranking · medical · onboarding')}</p></div></div></div>${siteFoot()}</main>`;
 }
 function apValidate(){const A=S.apply,f=A.f;
   if(A.step===1){if(!f.name||!f.civil||!f.phone||!f.email)return t('Enter your name, Civil ID, mobile number and email.');if(!/^\d{8}$/.test(f.civil))return t('Civil ID must be 8 digits.');if(A.track==='Referral'&&(!f.empId||!f.empName))return t('Enter the referring employee ID and name.')}
@@ -1001,11 +1060,32 @@ function shell(k,content){
   ${S.side?'<div class="scrim" data-act="side"></div>':''}
   <div class="main"><header class="topb"><button class="icon-btn menu-btn" data-act="side" aria-label="${t('Menu')}">${I.menu}</button>
     ${k==='h'?`<div class="inp-ic">${I.search}<input class="inp" id="top-q" placeholder="${t('Search trainees, SA number, university')}" value="${esc(S.f.q)}"></div>`:`<div class="sp"></div>`}
-    <span class="sp"></span>${langSw()}<button class="icon-btn" aria-label="${t('Notifications')}" data-act="bell">${I.bell}<span class="dot"></span></button>
+    <span class="sp"></span>${langSw()}${(()=>{const N=notifs(k);return `<div class="ntf-w"><button class="icon-btn" aria-label="${t('Notifications')}" aria-expanded="${S.notif}" data-act="bell">${I.bell}${N.length?'<span class="dot"></span>':''}</button>${S.notif?`<div class="ntf" role="dialog" aria-label="${t('Notifications')}"><div class="ntf-h"><b>${t('Notifications')}</b>${N.length?pill(String(N.length),'teal'):''}</div>${N.map(n=>`<button class="al" data-act="${n.a}" data-v="${n.v||''}" ${n.id?`data-id="${n.id}"`:''}><span class="kpi-i ${n.c}">${I[n.i]}</span><span class="tx"><b>${n.t}</b>${n.s?`<small>${n.s}</small>`:''}</span></button>`).join('')||`<div class="empty">${I.check}<b>${t('You are all caught up')}</b></div>`}</div>`:''}</div>`})()}
     <div class="me">${avatar(nm,'t')}<div><b>${esc(nm)}</b><small>${role}</small></div></div></header>
   <main class="content">${content}</main></div></div>`;
 }
 const ph=(h,p,right)=>`<div class="ph"><div><h1>${h}</h1>${p?`<p>${p}</p>`:''}</div>${right?`<div class="row">${right}</div>`:''}</div>`;
+
+function notifs(k){
+  const out=[];const add=(n,i,c,txt,a,v,id,sub)=>{if(n)out.push({i,c,t:txt,a,v,id,s:sub})};
+  if(k==='h'){
+    const pendHR=ALL.reduce((a,r)=>a+r.evals.filter(e=>!e.sign.hr).length,0);
+    add(ALL.filter(r=>r.stage==='Applied').length,'users','ic-navy',tt('{n} new applications to review',{n:ALL.filter(r=>r.stage==='Applied').length}),'pg','applicants');
+    add(ALL.filter(r=>r.stage==='Training'&&dueMonths(r).length).length,'clip','ic-warn',tt('{n} monthly evaluations due',{n:ALL.filter(r=>r.stage==='Training'&&dueMonths(r).length).length}),'pg','evaluations');
+    add(pendHR,'edit','ic-info',tt('{n} evaluations waiting for your signature',{n:pendHR}),'pg','evaluations');
+    add(ALL.filter(r=>r.stage==='Medical'&&!r.medSms).length,'med','ic-warn',tt('{n} medical appointments not sent',{n:ALL.filter(r=>r.stage==='Medical'&&!r.medSms).length}),'pg','medical');
+    add(ALL.filter(r=>isActive(r)&&incomplete(r)).length,'alert','ic-bad',tt('{n} trainees with incomplete procedures',{n:ALL.filter(r=>isActive(r)&&incomplete(r)).length}),'pg','trainees');
+  }else if(k==='t'){
+    const r=byId(S.auth.t),ui=r.evals.findIndex(e=>!e.sign.trainee),nx=r.sessions.find(x=>typeof x.d!=='string'&&x.d>TODAY);
+    if(ui>=0)add(1,'edit','ic-teal',tt('{m} evaluation is ready',{m:fm(r.evals[ui].month)}),'pg','evaluations',null,t('Read it and add your signature.'));
+    if(r.stage==='Pre-Training'){const [a,b]=preDone(r);add(b-a,'clip','ic-warn',tt('{n} pre-training items still pending',{n:b-a}),'pg','journey',null,tt('Training starts on {d}',{d:fd(r.start)}))}
+    if(nx)add(1,'book','ic-info',tt('Upcoming session: {s}',{s:t(nx.n)}),'pg','sessions',null,fd(nx.d));
+    if(r.stage==='Completed'&&r.post.cert==='done')add(1,'award','ic-ok',t('Your certificate is ready'),'pg','certificate');
+  }else{
+    ALL.filter(r=>r.sup&&r.sup.id===S.auth.s&&dueMonths(r).length).forEach(r=>add(1,'clip','ic-warn',tt('Evaluate {n} for {m}',{n:esc(r.name.split(' ')[0]),m:fm(dueMonths(r)[0])}),'ev-start','',r.id,trk(r.track)));
+  }
+  return out;
+}
 
 /* ============ HR pages ============ */
 function vHR(){
@@ -1383,6 +1463,19 @@ AR={
 'Choose a completion status and a recommendation.':'اختر حالة الإتمام والتوصية.','Summary':'الملخص','days':'أيام','Waiting for your confirmation':'بانتظار تأكيدك','Signs on submit':'يوقّع عند الإرسال','Optional':'اختياري','Feedback included':'الملاحظات مضافة','Signs in the Trainee Portal':'يوقّع في بوابة المتدرب','HR / Professional & Organisational Development':'الموارد البشرية / التطوير المهني والمؤسسي','Signs after review':'يوقّع بعد المراجعة',
 'I confirm this evaluation is accurate and based on the trainee’s work this month.':'أؤكد أن هذا التقييم دقيق ومبني على عمل المتدرب هذا الشهر.','Confirm the declaration to sign.':'أكّد الإقرار للتوقيع.','Sign and submit':'توقيع وإرسال','{m} evaluation submitted':'تم إرسال تقييم {m}','Signed by HR':'وقّعته الموارد البشرية','Signed out':'تم تسجيل الخروج',
 'Sultan Qaboos University':'جامعة السلطان قابوس','Sohar University':'جامعة صحار','UTAS – Sohar':'جامعة التقنية والعلوم التطبيقية – صحار','UTAS – Muscat':'جامعة التقنية والعلوم التطبيقية – مسقط','National University of S&T':'الجامعة الوطنية للعلوم والتكنولوجيا','GUtech':'الجامعة الألمانية للتكنولوجيا','University of Nizwa':'جامعة نزوى','Dhofar University':'جامعة ظفار','Majan University College':'كلية مجان الجامعية','A\'Sharqiyah University':'جامعة الشرقية',
+'FAQ':'الأسئلة الشائعة','Frequently asked questions':'الأسئلة الشائعة','Everything you need to know before you apply.':'كل ما تحتاج معرفته قبل التقديم.',
+'Trainees since 2022':'متدرب منذ 2022','Host departments':'قسماً مستضيفاً','Partner universities':'جامعة وكلية','Average trainee rating':'متوسط تقييم المتدربين',
+'Who can apply?':'من يحق له التقديم؟','University and college students, and recent graduates. Family Referral is for relatives of Sohar Aluminium employees, and Eidaad is for the BDO cohort.':'طلبة الجامعات والكليات وحديثو التخرج. ترشيح الأقارب مخصص لأقارب موظفي صحار ألمنيوم، وبرنامج إعداد لدفعة BDO.',
+'How long is the training?':'كم مدة التدريب؟','Summer, Winter and Family Referral placements last two months. The Eidaad Programme lasts ten months.':'التدريب الصيفي والشتوي وترشيح الأقارب مدته شهران، وبرنامج إعداد مدته عشرة أشهر.',
+'Is there a monthly allowance?':'هل توجد علاوة شهرية؟','Yes. {a} OMR a month for Summer, Winter and Referral, and {b} OMR for Eidaad. The amount depends on attendance and the monthly evaluation.':'نعم. {a} ر.ع شهرياً للتدريب الصيفي والشتوي والترشيح، و{b} ر.ع لبرنامج إعداد. يعتمد المبلغ على الحضور والتقييم الشهري.',
+'Which documents do I need?':'ما المستندات المطلوبة؟','Your CV, transcript and a copy of your Civil ID. If the training is required for your graduation, add the training letter from your university.':'السيرة الذاتية وكشف الدرجات ونسخة البطاقة الشخصية. وإذا كان التدريب شرطاً لتخرجك، أضف رسالة التدريب من جامعتك.',
+'How are trainees selected?':'كيف يتم اختيار المتدربين؟','Applicants take a short online assessment. HR gives priority to students who need the training to graduate and to first-time trainees. Eidaad candidates are interviewed by the department.':'يؤدي المتقدمون اختباراً إلكترونياً قصيراً، وتعطي الموارد البشرية الأولوية لمن يحتاج التدريب للتخرج ولمن يتدرب لأول مرة. أما مرشحو إعداد فيقابلهم القسم.',
+'How will I know my result?':'كيف أعرف النتيجة؟','Every update reaches you by SMS and email. Once you pass the medical check-up, you can sign in to the Trainee Portal with your Civil ID.':'تصلك كل التحديثات عبر SMS والبريد الإلكتروني. وبعد اجتياز الفحص الطبي يمكنك الدخول إلى بوابة المتدرب برقمك المدني.',
+'The trainee programme of Sohar Aluminium: from application to certificate in one place.':'برنامج المتدربين في صحار ألمنيوم: من التقديم حتى الشهادة في مكان واحد.',
+'Quick links':'روابط سريعة','HR Training · Sohar Aluminium':'قسم التدريب · صحار ألمنيوم','Sunday to Thursday, 7:00 to 15:00':'من الأحد إلى الخميس، 7:00 إلى 15:00','Privacy':'الخصوصية','Terms of use':'شروط الاستخدام',
+'We use your details only to process your training application and placement.':'نستخدم بياناتك فقط لمعالجة طلب التدريب وترتيب تدريبك.','Your Civil ID is shown masked, and each role sees only the data it needs.':'يظهر رقمك المدني مخفياً جزئياً، وكل دور يرى البيانات التي يحتاجها فقط.','Records are kept by HR Training and are not shared outside Sohar Aluminium, except reports sent to your university or BDO.':'يحتفظ قسم التدريب بالسجلات ولا تُشارك خارج صحار ألمنيوم، باستثناء التقارير المرسلة إلى جامعتك أو BDO.',
+'This is a demonstration version with sample data. Please do not enter real personal information.':'هذه نسخة تجريبية ببيانات افتراضية، يرجى عدم إدخال بيانات شخصية حقيقية.','Information you give must be accurate. False information can end an application or a placement.':'يجب أن تكون المعلومات دقيقة، وقد تؤدي المعلومات غير الصحيحة إلى إلغاء الطلب أو التدريب.','Trainees follow Sohar Aluminium safety rules and site policies throughout the placement.':'يلتزم المتدربون بقواعد السلامة وسياسات الموقع في صحار ألمنيوم طوال فترة التدريب.',
+'You are all caught up':'لا توجد إشعارات جديدة','{n} new applications to review':'{n} طلبات جديدة للمراجعة','{n} evaluations waiting for your signature':'{n} تقييمات بانتظار توقيعك','Read it and add your signature.':'اطّلع عليه وأضف توقيعك.','{n} pre-training items still pending':'{n} بنود ما قبل التدريب لم تكتمل','Training starts on {d}':'يبدأ التدريب في {d}','Upcoming session: {s}':'ورشة قادمة: {s}','Your certificate is ready':'شهادتك جاهزة','Evaluate {n} for {m}':'قيّم {n} عن {m}',
 'Chemical Engineering':'الهندسة الكيميائية','Mechanical Engineering':'الهندسة الميكانيكية','Electrical Engineering':'الهندسة الكهربائية','Industrial Engineering':'الهندسة الصناعية','Marine Engineering':'الهندسة البحرية','Logistics Management':'إدارة اللوجستيات','Computer Science':'علوم الحاسوب','Information Technology':'تقنية المعلومات','Human Resource Management':'إدارة الموارد البشرية','Business Administration':'إدارة الأعمال','Occupational Health & Safety':'الصحة والسلامة المهنية','Environmental Science':'العلوم البيئية','Mass Communication':'الإعلام','Marketing':'التسويق','Supply Chain Management':'إدارة سلسلة الإمداد'
 };
 
@@ -1408,6 +1501,7 @@ function drawer(){
 /* ============ Modals ============ */
 function modal(){const M=S.modal;if(!M)return '';let h='',c='',f='';
   if(M.type==='sms'){const r=byId(M.id);h=t('Medical appointment SMS');c=`<p class="small muted">${t('To')} <b class="mono" style="color:var(--ink)">+968 ${r.phone}</b> · ${esc(r.name)}</p><div class="bub" dir="ltr">Dear ${esc(r.name.split(' ')[0])}, please attend your medical check-up at the Sohar Aluminium Medical Centre on <b>${fmt(r.medDate)}</b> at <b>${r.medTime}</b>. Bring your Civil ID.</div><div class="bub" dir="rtl">عزيزي/عزيزتي ${esc(r.name.split(' ')[0])}، نرجو حضورك للفحص الطبي في المركز الطبي بصحار ألمنيوم بتاريخ <b>${fd(r.medDate)}</b> الساعة <b>${r.medTime}</b>. يرجى إحضار البطاقة الشخصية.</div><p class="cap">${t('Demo only. No SMS is sent.')}</p>`;f=`<button class="btn btn-s" data-act="close-m">${t('Cancel')}</button><button class="btn btn-p" data-act="med-send" data-id="${r.id}">${I.send} ${t('Send SMS')}</button>`}
+  if(M.type==='doc'){const pr=M.v==='privacy';h=t(pr?'Privacy':'Terms of use');c=(pr?['We use your details only to process your training application and placement.','Your Civil ID is shown masked, and each role sees only the data it needs.','Records are kept by HR Training and are not shared outside Sohar Aluminium, except reports sent to your university or BDO.']:['This is a demonstration version with sample data. Please do not enter real personal information.','Information you give must be accurate. False information can end an application or a placement.','Trainees follow Sohar Aluminium safety rules and site policies throughout the placement.']).map(x=>`<p class="small">${t(x)}</p>`).join('');f=`<button class="btn btn-p" data-act="close-m">${t('Close')}</button>`}
   if(M.type==='ev'){const r=byId(M.id),e=r.evals[M.i];h=`${esc(r.name)} · ${fm(e.month)}`;c=`<div class="row"><span class="h2">${e.avg.toFixed(2)}</span><span class="muted">/ 4</span><span class="sp"></span>${pill(t(e.type),'navy')}</div>${evDetail(r,e)}`;f=`<button class="btn btn-s" data-act="close-m">${t('Close')}</button>${S.portal==='h'&&!e.sign.hr?`<button class="btn btn-p" data-act="ev-hr" data-id="${r.id}" data-v="${M.i}">${t('Sign as HR')}</button>`:''}`}
   return `<div class="scrim" data-act="close-m" style="z-index:65"></div><div class="modal"><div class="mb" role="dialog" aria-label="${esc(h)}" style="${M.type==='ev'?'max-width:640px':''}"><div class="mb-h"><h3 style="flex:1">${h}</h3><button class="icon-btn" data-act="close-m" aria-label="${t('Close')}">${I.x}</button></div><div class="mb-c">${c}</div><div class="mb-f">${f}</div></div></div>`}
 
@@ -1439,7 +1533,7 @@ function render(keep){
   document.getElementById('layer').innerHTML=(S.drawer?drawer():'')+modal()+(S.report?reportView():'');
   if(keep)window.scrollTo(0,y);
 }
-function go(v){if(v==='signin'&&S.auth[S.lt]){S.portal=S.lt;S.view='portal'}else S.view=v;S.drawer=null;S.modal=null;S.side=false;render();window.scrollTo(0,0)}
+function go(v){S.notif=false;if(v==='signin'&&S.auth[S.lt]){S.portal=S.lt;S.view='portal'}else S.view=v;S.drawer=null;S.modal=null;S.side=false;render();window.scrollTo(0,0)}
 function refocus(id){const n=document.getElementById(id);if(n&&n.focus){n.focus();try{const l=n.value.length;n.setSelectionRange(l,l)}catch(e){}}}
 const now=()=>{const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')};
 function touch(){if(S.ev){S.ev.saved=now();S.ev.err=''}}
@@ -1449,7 +1543,9 @@ function evSubmit(){const r=byId(S.ev.id),E=S.ev,c=evCalc(E),cc=c.cc;
   lg(r,TODAY,r.sup.name,`${E.month} evaluation signed and submitted · ${c.avg.toFixed(2)} / 4 · allowance ${cc.p}%`);S.ev=null;S.page.s='trainee';toast(tt('{m} evaluation submitted',{m:fm(E.month)}))}
 
 document.addEventListener('click',e=>{
+  if(S.notif&&!e.target.closest('.ntf,[data-act=bell]')){S.notif=false;render(true)}
   const el=e.target.closest('[data-act]');if(!el||el.disabled)return;
+  if(el.closest('.ntf'))S.notif=false;
   const a=el.dataset.act,v=el.dataset.v,id=el.dataset.id,A=S.apply,E=S.ev;
   switch(a){
     case 'go':go(v);break;
@@ -1473,7 +1569,8 @@ document.addEventListener('click',e=>{
     case 'go-hr-app':S.page.h='applicants';S.f={track:'all',pri:'all',stage:'pipeline',q:''};if(S.auth.h){S.portal='h';S.view='portal';S.drawer=id}else{S.after=id;S.lt='h';S.view='signin'}render();window.scrollTo(0,0);break;
     case 'pg':S.page[S.portal]=v;S.drawer=null;S.side=false;S.ev=null;render();window.scrollTo(0,0);break;
     case 'side':S.side=!S.side;render(true);break;
-    case 'bell':toast(t('No new notifications'));break;
+    case 'bell':S.notif=!S.notif;render(true);break;
+    case 'doc':S.modal={type:'doc',v};render(true);break;
     case 'logout':S.auth[S.portal]=S.portal==='h'?false:null;S.ev=null;S.drawer=null;S.side=false;S.view='home';S.portal=null;render();window.scrollTo(0,0);toast(t('Signed out'));break;
     case 'open':S.drawer=id;S.evOpen=null;render(true);break;
     case 'close':S.drawer=null;render(true);break;
@@ -1537,7 +1634,7 @@ document.addEventListener('change',e=>{const el=e.target,id=el.id;
   if(el.dataset.med){const r=byId(el.dataset.id);if(el.dataset.med==='date')r.medDate=el.value?new Date(el.value+'T00:00'):null;else r.medTime=el.value;render(true)}
 });
 document.addEventListener('submit',e=>{e.preventDefault();const f={'f-t1':lgT1,'f-t2':lgT2,'f-s':lgS,'f-h1':lgH1,'f-h2':lgH2}[e.target.id];if(f){f();render(true);refocus(S.lt==='t'?'g-code':'g-hc')}});
-document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(S.report)S.report=null;else if(S.modal)S.modal=null;else if(S.drawer)S.drawer=null;else if(S.side)S.side=false;else return;render(true)});
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(S.notif)S.notif=false;else if(S.report)S.report=null;else if(S.modal)S.modal=null;else if(S.drawer)S.drawer=null;else if(S.side)S.side=false;else return;render(true)});
 /* start in the language from ?lang=, the last choice (shared with the other pages) or the browser */
 S.lang=(()=>{const q=new URLSearchParams(location.search).get('lang');if(q==='ar'||q==='en')return q;
   try{const s=localStorage.getItem('kh-lang');if(s==='ar'||s==='en')return s}catch(err){}
