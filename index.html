@@ -529,12 +529,25 @@ html[dir=rtl] .toast{transform:translateX(50%)}
 .ntf button.al:hover{background:#F8FAFC}
 .ntf .empty{padding:28px 16px}
 @media (max-width:600px){.ntf{position:fixed;top:72px;inset-inline:16px;width:auto}}
-/* Symbol key shown above tables and lists that use icons */
-.key{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:12px 16px;margin-bottom:12px;font-size:12.5px;color:var(--ink-2)}
-.key>b{color:var(--navy)}
-.key span{display:inline-flex;align-items:center;gap:8px}
-.key .ci{width:22px;height:22px;flex:none}.key .ci svg{width:12px}
-.key .ix{min-width:30px;height:22px}
+/* Concept guide ("What do these mean?") under each portal page title */
+.gd{margin-bottom:16px}
+.gd summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:12px 16px;color:var(--navy);font-size:13.5px}
+.gd summary::-webkit-details-marker{display:none}
+.gd summary svg{width:18px;height:18px;color:var(--teal-ink);flex:none}
+.gd summary::after{content:"+";margin-inline-start:auto;font-size:18px;line-height:1;color:var(--teal-ink)}
+.gd[open] summary::after{content:"−"}
+.gd dl{margin:0;padding:4px 16px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:12px 28px;border-top:1px solid var(--line-2);padding-top:14px}
+.gd dl>div{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5}
+.gd dt{flex:none;min-width:30px;display:flex;justify-content:center}
+.gd dd{margin:0;color:var(--ink-2)}.gd dd b{color:var(--navy);font-weight:600}
+.gd .ci{width:24px;height:24px}.gd .ci svg{width:13px}.gd .ix{min-width:34px;height:24px}
+/* Applicants: where everyone is */
+.stg-s{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px}
+.stg-s button{flex:none;min-width:104px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;text-align:start;box-shadow:var(--sh-xs)}
+.stg-s button.on{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-50)}
+.stg-s small{display:block;font-size:11px;color:var(--muted)}
+.stg-s b{display:block;font-size:20px;line-height:26px;color:var(--navy);font-variant-numeric:tabular-nums}
+.stg-s span{font-size:12px;color:var(--ink-2);font-weight:600}
 </style>
 </head>
 <body>
@@ -714,9 +727,9 @@ const COLLEGE=m=>/Engineering/.test(m)?'College of Engineering':/Computer|Inform
 const PROJECTS={'Carbon':'Anode baking furnace temperature log analysis','Reduction':'Pot cell voltage monitoring dashboard','Central Maintenance':'Preventive maintenance checklist for overhead cranes','Casthouse':'Ingot surface defect tracking sheet','Port':'Vessel turnaround time study','Power Plant':'Cooling water pump efficiency review','IT':'Helpdesk ticket categorisation','EHS':'PPE compliance audit for the potlines','PI / Business Improvement':'5S implementation in the spare parts store','Supply Chain':'Slow-moving inventory analysis'};
 const ENV={'Carbon':'Site · day shift · PPE required','Reduction':'Site · potlines · full PPE','Central Maintenance':'Workshop and site · PPE required','Casthouse':'Site · hot metal area · full PPE','Port':'Port facility · PPE required','Power Plant':'Site · control room and plant','IT':'Office · Admin building','EHS':'Office and site visits','PI / Business Improvement':'Office and site visits','Supply Chain':'Office and warehouse'};
 const EID_UNIS=[...UNIS].sort(()=>R()-.5);
-DEPTS.filter(d=>EID_DEPTS.includes(d.n)).forEach((d,k)=>{const r=mk({track:'Eidaad',intake:'Eidaad 2026',stage:'Training',major:pick(d.m),start:D(2026,6,1),end:D(2027,3,31),applied:D(2026,4,8),accepted:D(2026,5,12),graduate:true});
+DEPTS.filter(d=>EID_DEPTS.includes(d.n)).forEach((d,k)=>{const r=mk({track:'Eidaad',intake:'Eidaad 2026',stage:'Training',major:pick(d.m),start:D(2026,9,1),end:D(2027,6,30),applied:D(2026,6,8),accepted:D(2026,7,12),graduate:true});
   r.dept=d.n;LOAD[d.n]++;r.uni=EID_UNIS[k];r.college=COLLEGE(r.major);r.project={t:PROJECTS[d.n],st:pick(['In progress','In progress','Planning'])};r.env=ENV[d.n];r.bdo='BDO-EID-26-'+String(k+1).padStart(2,'0');r.interview=ri(80,95);setSup(r);setPre(r,1);fillEvals(r,D(2026,8,31),ri(2,3));if(k%10<7){r.evals.push(mkEval(r,D(2026,9,1),3,3));const le=r.evals[r.evals.length-1];le.sign.trainee=false;le.sign.hr=false;le.traineeCmt=''}setSessions(r);setPlan(r)});
-for(let i=0;i<7;i++){const d=deptOf(pick(EID_DEPTS));const r=mk({track:'Eidaad',intake:'Eidaad 2026',stage:'Not Selected',major:pick(d.m),applied:D(2026,4,9),graduate:true});r.dept=d.n;r.interview=ri(56,78);r.reason='Interview — another candidate selected'}
+for(let i=0;i<7;i++){const d=deptOf(pick(EID_DEPTS));const r=mk({track:'Eidaad',intake:'Eidaad 2026',stage:'Not Selected',major:pick(d.m),applied:D(2026,6,9),graduate:true});r.dept=d.n;r.interview=ri(56,78);r.reason='Interview — another candidate selected'}
 /* Summer 2026 — completed */
 for(let i=0;i<38;i++){const r=mk({track:'Summer',intake:'Summer 2026',stage:'Completed',start:D(2026,6,14),end:D(2026,8,13),applied:D(2026,4,ri(1,25)),accepted:D(2026,5,ri(10,28))});
   assign(r,true);setSup(r);r.iq=ri(68,97);r.pers=ri(62,95);setPre(r,1);fillEvals(r,D(2026,7,31),ri(2,3));setSessions(r);setPlan(r);
@@ -727,7 +740,8 @@ for(let i=0;i<6;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'
   r.post={ppe:OPS.includes(r.dept)?'done':'na',card:'done',laptop:OPS.includes(r.dept)?'na':'done',feedback:'done',cert:'done'};r.feedback={rating:ri(4,5),text:''};}
 /* Referral 2026 — current */
 for(let i=0;i<6;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'Training',start:D(2026,9,13),end:D(2026,11,12),applied:D(2026,7,ri(1,20)),accepted:D(2026,8,ri(10,25))});
-  assign(r);setSup(r);r.iq=ri(70,94);r.pers=ri(62,92);setPre(r,1);setSessions(r);setPlan(r)}
+  assign(r);setSup(r);r.iq=ri(70,94);r.pers=ri(62,92);setPre(r,1);setSessions(r);setPlan(r);
+  if(i<5){const e=mkEval(r,D(2026,9,1),3,0),c=allowCalc(13,13-Math.min(1,i%3),0,e.avg);Object.assign(e,{sched:13,attended:13-Math.min(1,i%3),excused:0,idx:c.idx,attPct:c.att,att:c.ti});e.sign.trainee=i<3;e.sign.hr=i<2;r.evals.push(e)}}
 for(let i=0;i<4;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'Pre-Training',start:D(2026,10,20),end:D(2026,12,19),applied:D(2026,8,ri(1,20)),accepted:D(2026,9,ri(15,28))});
   assign(r);setSup(r);r.iq=ri(70,94);r.pers=ri(62,92);setPre(r,.5)}
 [['Medical',2],['Assessment',4],['Under Review',3],['Applied',3],['Not Selected',2]].forEach(([st,n])=>{for(let i=0;i<n;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:st,applied:D(2026,st==='Applied'?10:9,ri(1,11))});
@@ -855,7 +869,7 @@ const fms=m=>S.lang==='ar'?MON_AR[MON.indexOf(m.slice(0,3))]:m.slice(0,3);
 
 /* ============ State ============ */
 const LAST_CLOSED=D(2026,9,30);
-const S={lang:'en',view:'home',portal:null,side:false,notif:false,
+const S={lang:'en',view:'home',portal:null,side:false,notif:false,gd:{},_g:null,
   page:{h:'overview',t:'dashboard',s:'trainees'},
   auth:{t:null,s:null,h:false},lt:'t',
   lg:{t:{sent:false,id:null,code:'',err:'',v:''},s:{err:'',fails:0,v:'',p:''},h:{step:1,err:'',fails:0,code:'',v:'',p:''}},
@@ -873,7 +887,8 @@ function preDone(r){const it=PRE.filter(([k])=>r.pre[k]&&r.pre[k]!=='na');return
 const incomplete=r=>{const [a,b]=preDone(r);return a<b};
 const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
 function supList(){const out=[];DEPTS.forEach(d=>d.s.forEach(s=>{const n=ALL.filter(r=>r.sup&&r.sup.id===s[1]&&r.stage==='Training').length;if(n)out.push({name:s[0],id:s[1],dept:d.n,n})}));return out}
-const EID_MONTHS=monthsOf(D(2026,6,1),D(2027,3,1)).map(mlabel);
+const EID_START=D(2026,9,1),EID_END=D(2027,6,30);
+const EID_MONTHS=monthsOf(EID_START,D(2027,6,1)).map(mlabel);
 const eidList=()=>ALL.filter(r=>r.track==='Eidaad'&&r.stage==='Training');
 
 /* ============ Small builders ============ */
@@ -901,9 +916,6 @@ function lineChart(evals){
   const area=n>1?`<path d="${path} L${pts[n-1][0]} ${y(1)} L${pts[0][0]} ${y(1)}Z" fill="url(#lcg)"/>`:'';
   return `<div class="lc"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t('Average rating by month')}"><defs><linearGradient id="lcg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00A8A8" stop-opacity=".22"/><stop offset="1" stop-color="#00A8A8" stop-opacity="0"/></linearGradient></defs>${grid}${area}<path d="${path}" fill="none" stroke="#00A8A8" stroke-width="2.5" stroke-linejoin="round"/>${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${i===n-1?5:3.5}" fill="${i===n-1?'#0B2D4A':'#fff'}" stroke="#0B2D4A" stroke-width="2"/><text x="${p[0]}" y="${p[1]-10}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#0B2D4A">${evals[i].avg.toFixed(1)}</text><text x="${p[0]}" y="${H-8}" text-anchor="middle" font-size="10.5" fill="#6B7A8A">${fms(evals[i].month)}</text>`).join('')}</svg></div>`;
 }
-/* a small key that explains the symbols on a page: items are [symbol html, text] */
-const symKey=items=>`<div class="card key" role="note"><b>${t('Key')}</b>${items.map(([sym,txt])=>`<span>${sym}${txt}</span>`).join('')}</div>`;
-const KEY_DONE=[`<span class="ci ok">${I.check}</span>`,'Done'],KEY_PEND=[`<span class="ci pe">${I.clock}</span>`,'Pending'],KEY_NA=[`<span class="ci na">${ic('x')}</span>`,'Not needed for this trainee'];
 const stIco=v=>v==='done'?`<span class="ci ok">${I.check}</span>`:v==='na'?`<span class="ci na">${ic('x')}</span>`:`<span class="ci pe">${I.clock}</span>`;
 let tT;function toast(s){const el=document.getElementById('toast');el.innerHTML=I.check+esc(s);el.hidden=false;clearTimeout(tT);tT=setTimeout(()=>el.hidden=true,2800)}
 
@@ -1073,7 +1085,36 @@ function shell(k,content){
     <div class="me">${avatar(nm,'t')}<div><b>${esc(nm)}</b><small>${role}</small></div></div></header>
   <main class="content">${content}</main></div></div>`;
 }
-const ph=(h,p,right)=>`<div class="ph"><div><h1>${h}</h1>${p?`<p>${p}</p>`:''}</div>${right?`<div class="row">${right}</div>`:''}</div>`;
+const ph=(h,p,right)=>{const g=S._g;S._g=null;return `<div class="ph"><div><h1>${h}</h1>${p?`<p>${p}</p>`:''}</div>${right?`<div class="row">${right}</div>`:''}</div>${g?guide(g):''}`};
+/* Concept guide for each portal page: [symbol html or '', term, meaning] */
+function guide(k){
+  const G=GUIDES()[k];if(!G)return '';
+  return `<details class="card gd" data-gd="${k}" ${S.gd[k]===false?'':'open'}><summary>${I.book}<b>${t('What do these mean?')}</b></summary><dl>${G.map(([sym,term,def])=>`<div><dt>${sym||''}</dt><dd><b>${t(term)}</b>: ${t(def)}</dd></div>`).join('')}</dl></details>`;
+}
+function GUIDES(){
+  const ix=(c,v)=>`<span class="ix ${c}">${v}</span>`,b=v=>`<b class="num" style="color:var(--navy)">${v}</b>`,bd=v=>`<bdi dir="ltr">${v}</bdi>`;
+  const DONE=`<span class="ci ok">${I.check}</span>`,PEND=`<span class="ci pe">${I.clock}</span>`,NA=`<span class="ci na">${ic('x')}</span>`,LOCK=`<span class="ci na">${I.lock}</span>`;
+  const STG=[['Applied','Application received, not reviewed yet.'],['Under Review','HR is checking the documents and eligibility.'],['Assessment','The online IQ and personality test was sent (Summer, Winter and Referral).'],['Interview','Eidaad only: the department interviews the candidate.'],['Selected','Accepted by HR and placed in a department. Next step: the medical check-up.'],['Medical','Waiting for the medical check-up at the company clinic.'],['Pre-Training','Passed the medical. Completing induction, agreement, card and email before day one.'],['Training','Training in the department now.'],['Completed','Finished the training.'],['Not Selected','The application is closed.']].map(([s,d])=>[stagePill(s),s,d]);
+  return {
+  'h.overview':[[b(46),'Under process','Applicants still being reviewed, tested, interviewed or waiting for the medical check-up.'],[b(20),'Starting soon','Passed the medical check-up and preparing for day one.'],[b(24),'Currently training','Trainees working in a department now.'],[b('80%'),'Seat capacity','How many training seats are taken across all departments.']],
+  'h.applicants':[...STG,[priPill('High'),'Priority','High: training is required for graduation and it is the first time here. Medium: one of the two. Standard: neither.'],[b(83),'Score','Online test score: 60% IQ and 40% personality.']],
+  'h.medical':[[`<span class="ci na">${I.send}</span>`,'Send SMS','Choose the date and time first, then send the appointment to the trainee.'],[pill(t('Sent'),'ok',1),'Sent','The trainee has received the appointment.'],[pill(t('Fit'),'ok'),'Fit','Passed. The trainee moves to Pre-Training.'],[pill(t('Unfit'),'bad'),'Unfit','Did not pass. The application is closed.']],
+  'h.trainees':[[DONE,'Done','The item is complete.'],[PEND,'Pending','Not done yet. Select it to mark it done.'],[NA,'Not needed for this trainee','For example PPE for an office role, or a laptop for a site role.'],[pill(fms(mlabel(LAST_CLOSED))+' '+t('due'),'warn'),'Evaluation due','The month has ended and the supervisor has not sent the evaluation yet.'],[pill(bd('3.2 / 4'),'ok'),'Last monthly rating','The latest evaluation result out of 4.'],[`<b class="muted">—</b>`,'Not started','Training has not started yet, so there is no evaluation.'],['','Active and Completed','Active shows what is needed before and during training. Completed shows what must be handed back, and the certificate.']],
+  'h.eidaad':[[ix('i-good','93'),'Commitment index','The month’s score: 70% attendance and 30% rating. Green 88% or more, amber 80 to 87%, red below 80%.'],[ix('i-due',t('Due')),'Due','The month has ended but the supervisor has not sent the evaluation yet.'],[ix('i-now',t('Now')),'Now','The current month. It is evaluated at the end of the month.'],[ix('i-fut',''),'Upcoming','Months still to come.'],['','Programme dates','From 1 September to 30 June, ten months. Graduation in July.']],
+  'h.evaluations':[[b(12),'Submitted','Evaluations the supervisors have sent for the month.'],[pill(t('Due'),'warn',1),'Waiting for supervisors','The month has ended and the evaluation is not sent yet. Use Remind.'],[pill(t('Awaiting signatures'),'info',1),'Waiting for HR signature','Sent by the supervisor. HR reviews it and signs to close it.'],[pill(t('Signed off'),'ok',1),'Signed off','Signed by HR. The supervisor can no longer edit it.']],
+  'h.allowance':[[b('88%'),'Commitment index','70% attendance and 30% rating. A rating of 3 of 4 (meets expectations) counts as full marks.'],[pill('100%','ok'),'Full allowance','Index of 88% or more.'],[pill('90%','warn'),'Reduced allowance','A lower index is paid at 90%, 80% or 60%.'],[pill(t('On hold'),'neu'),'On hold','The supervisor has not sent this month’s evaluation yet. It is paid once it is sent.'],['','Approve for payroll','Sends the month’s amounts to payroll. Do it after the evaluations are in.']],
+  'h.reports':[[`<span class="kpi-i ic-navy" style="width:24px;height:24px">${I.file}</span>`,'University report','For every trainee in every programme. Sent to the university or college. The allowance is not included.'],[`<span class="kpi-i ic-teal" style="width:24px;height:24px">${I.report}</span>`,'BDO report','Eidaad only. Sent to BDO and includes the allowance paid. Eidaad trainees have two reports: university and BDO.']],
+  'h.departments':[[b(6),'Capacity','The most trainees the department can host.'],[b(4),'Current','Trainees in training or starting soon.'],[pill(t('Full capacity'),'bad',1),'Full capacity','No seats left. New trainees go to another department.']],
+  'h.history':[[pill(t('For hiring'),'teal'),'For hiring','Average rating of 3.3 or more and recommended by the supervisor.'],[`<span class="mono">••••1234</span>`,'Civil ID','Only the last four digits are shown.']],
+  't.dashboard':[[b('90%'),'Attendance','Days attended out of the days scheduled. Approved sick leave and university exams count as attended.'],[b(bd('3.2 / 4')),'Rating','Your supervisor’s monthly rating out of 4. 3 means you meet expectations.'],[b('92%'),'Commitment index','70% attendance and 30% rating. 88% or more gives the full allowance.'],[b('250'),'Allowance','The amount for the month in Omani rials.']],
+  't.journey':[[DONE,'Done','The step is complete.'],[PEND,'Pending','Still to do.'],[LOCK,'Opens later','Available at the end of your training.']],
+  't.evaluations':[[pill(t('Final'),'navy'),'Final evaluation','The evaluation for your last month.'],['','Sign evaluation','Confirms you have read it. You can add a comment before signing.'],[ix('i-good','92'),'Index','Your commitment index for the month.']],
+  't.sessions':[[pill(t('Attended'),'ok',1),'Attended','You attended the session.'],[pill(t('Missed'),'bad',1),'Missed','You did not attend.'],[pill(t('Upcoming'),'info',1),'Upcoming','Scheduled during your training.']],
+  't.documents':[[pill(t('Available'),'ok'),'Available','Ready to view.'],[pill(t('Pending'),'warn'),'Pending','Not ready yet.']],
+  's.trainees':[[pill(tt('{n} due',{n:1}),'warn',1),'Due','A month has ended without your evaluation. Select Evaluate.'],[pill(t('Up to date'),'ok',1),'Up to date','All evaluations are sent.'],[pill(t('Starting soon'),'teal'),'Starting soon','The trainee has not started yet.']],
+  's.evaluations':[[pill(t('Due'),'warn',1),'Due','The month has ended. Start the evaluation.'],[pill(t('Awaiting signatures'),'info',1),'Awaiting signatures','You sent it. The trainee and HR still need to sign. You can still edit it.'],[pill(t('Signed off'),'ok',1),'Signed off','Signed by HR. It is final and cannot be edited.']]
+  };
+}
 
 function notifs(k){
   const out=[];const add=(n,i,c,txt,a,v,id,sub)=>{if(n)out.push({i,c,t:txt,a,v,id,s:sub})};
@@ -1098,7 +1139,7 @@ function notifs(k){
 
 /* ============ HR pages ============ */
 function vHR(){
-  const pg=S.page.h;
+  const pg=S.page.h;S._g='h.'+pg;
   const body={overview:hrOverview,applicants:hrApplicants,medical:hrMedical,trainees:hrTrainees,eidaad:hrEidaad,evaluations:hrEvals,allowance:hrAllowance,reports:hrReports,departments:hrDepts,history:hrHistory,settings:hrSettings}[pg]();
   return shell('h',body);
 }
@@ -1136,7 +1177,10 @@ function hrApplicants(){
   if(F.track!=='all')L=L.filter(r=>r.track===F.track);if(F.pri!=='all')L=L.filter(r=>priority(r)===F.pri);
   if(F.q){const q=F.q.toLowerCase();L=L.filter(r=>(r.name+' '+r.id+' '+r.uni+' '+r.major+' '+r.civil).toLowerCase().includes(q))}
   const rk={High:0,Medium:1,Standard:2};L.sort((a,b)=>(rk[priority(a)]??3)-(rk[priority(b)]??3)||(score(b)??-1)-(score(a)??-1));
+  const ORDER=['Applied','Under Review','Assessment','Interview','Selected','Medical','Pre-Training','Training','Completed','Not Selected'];
+  const base=ALL.filter(r=>F.track==='all'||r.track===F.track);
   return `${ph(t('Applicants'),tt('{n} applicants',{n:L.length}))}
+  <div class="stg-s" role="group" aria-label="${t('Stages')}">${[['all','All',base.length,'']].concat(ORDER.map((s,i)=>[s,s,base.filter(r=>r.stage===s).length,i<9?tt('Step {n}',{n:i+1}):''])).map(([v,l,n,st])=>`<button data-act="stg" data-v="${v}" class="${F.stage===v?'on':''}"><small>${st||'&nbsp;'}</small><b>${n}</b><span>${t(l)}</span></button>`).join('')}</div>
   <div class="card cp"><div class="flt"><div class="field grow"><label for="f-q">${t('Search')}</label><div class="inp-ic">${I.search}<input class="inp" id="f-q" value="${esc(F.q)}" placeholder="${t('Name, SA number, university')}"></div></div>
     <div class="field"><label for="f-track">${t('Programme')}</label><select class="inp" id="f-track"><option value="all">${t('All')}</option>${Object.keys(TRACK).map(k=>`<option value="${k}" ${F.track===k?'selected':''}>${trk(k)}</option>`).join('')}</select></div>
     <div class="field"><label for="f-pri">${t('Priority')}</label><select class="inp" id="f-pri"><option value="all">${t('All')}</option>${['High','Medium','Standard'].map(p=>`<option value="${p}" ${F.pri===p?'selected':''}>${t(p)}</option>`).join('')}</select></div>
@@ -1160,7 +1204,6 @@ function hrTrainees(){
   const cols=T.mode==='active'?PRE:POST,sec=T.mode==='active'?'pre':'post';
   const short={'Medical Check-up':'Medical','Safety Induction':'Induction','Agreement Signature':'Agreement','Required Documents':'Documents','Access / ID Card':'Card','Company Email':'Email','Bank Details':'Bank','PPE Issued':'PPE','Laptop Issued':'Laptop','Hand Over PPE':'PPE','Access Card Hand Over':'Card','Return Laptop':'Laptop','Trainee Feedback':'Feedback','Issue Certificate':'Certificate'};
   return `${ph(t('Trainee procedures'),t('Select a cell to mark an item done.'),`<div class="seg"><button data-act="tmode" data-v="active" class="${T.mode==='active'?'on':''}">${t('Active')}</button><button data-act="tmode" data-v="completed" class="${T.mode==='completed'?'on':''}">${t('Completed')}</button></div>${T.mode==='active'?`<label class="chk"><input type="checkbox" id="t-inc" ${T.inc?'checked':''}>${t('Needs attention only')}</label>`:''}`)}
-  ${symKey([[KEY_DONE[0],t('Done')],[KEY_PEND[0],t('Pending · select it to mark done')],[KEY_NA[0],t('Not needed for this trainee (for example PPE for an office role)')],[pill(fms(mlabel(LAST_CLOSED))+' '+t('due'),'warn'),t('Monthly evaluation not submitted yet')],[pill('3.2 / 4','ok').replace('3.2 / 4','<bdi dir="ltr">3.2 / 4</bdi>'),t('Last monthly rating')],['<b class="muted">—</b>',t('Training has not started yet')]])}
   <div class="card"><div class="tw" style="border:0"><table><tr><th>${t('Trainee')}</th><th>${t('Department')}</th>${cols.map(c=>`<th class="c">${t(short[c[1]]||c[1])}</th>`).join('')}<th>${t('Evaluation')}</th></tr>
   ${L.map(r=>{const d=dueMonths(r),le=r.evals[r.evals.length-1];return `<tr><td style="cursor:pointer" data-act="open" data-id="${r.id}">${who(r.name,`<span class="mono">${r.id}</span> · ${r.stage==='Pre-Training'?t('starts')+' '+fd(r.start):trk(r.track)}`)}</td><td><b style="font-weight:500">${dn(r.dept)}</b><div class="cap">${esc(r.sup.name)}</div></td>
   ${cols.map(([k])=>{const v=(sec==='post'?r.post:r.pre)[k];return `<td class="c"><button class="ci ${v==='done'?'ok':v==='na'?'na':'pe'}" style="border:0;width:30px;height:30px" data-act="tog" data-id="${r.id}" data-k="${k}" data-sec="${sec}" ${v==='na'?'disabled':''} title="${t(v==='done'?'Done':v==='na'?'Not needed':'Pending')}">${v==='done'?I.check:v==='na'?ic('x'):I.clock}</button></td>`}).join('')}
@@ -1171,7 +1214,7 @@ function hrEidaad(){
   const cand=ALL.filter(r=>r.track==='Eidaad'&&r.stage!=='Training');
   const tabs=`<div class="tabs">${[['overview','Overview'],['profiles','Trainee profiles'],['candidates','Candidates'],['reports','Reports']].map(([k,l])=>`<button data-act="etab" data-v="${k}" class="${tab===k?'on':''}">${t(l)}</button>`).join('')}</div>`;
   let body='';
-  if(tab==='overview')body=`<div class="g g4">${kpi('cap','ic-navy',t('Eidaad 2026 trainees'),L.length+' / 10')}${kpi('cal','ic-teal',t('Programme month'),monthsOf(D(2026,6,1),TODAY).length+' / 10')}${kpi('clock','ic-ok',t('Average attendance'),mean(all.map(e=>e.attPct)).toFixed(0)+'%')}${kpi('star','ic-info',t('Average rating'),mean(all.map(e=>e.avg)).toFixed(2)+' / 4')}</div>
+  if(tab==='overview')body=`<div class="g g4">${kpi('cap','ic-navy',t('Eidaad 2026 trainees'),L.length+' / 10')}${kpi('cal','ic-teal',t('Programme month'),monthsOf(EID_START,TODAY).length+' / 10')}${kpi('clock','ic-ok',t('Average attendance'),mean(all.map(e=>e.attPct)).toFixed(0)+'%')}${kpi('star','ic-info',t('Average rating'),mean(all.map(e=>e.avg)).toFixed(2)+' / 4')}</div>
    <div class="g g2" style="margin-top:16px"><div class="card cp"><div class="ch"><h3>${t('Seats')}</h3><span class="cap">BDO · Eidaad 2026</span></div><div class="row" style="justify-content:space-between"><b class="h2">${L.length} / 10</b>${pill(t('Full'),'ok',1)}</div><div class="bar" style="margin-top:12px"><i style="width:${L.length*10}%"></i></div><p class="cap" style="margin-top:8px">${t('One trainee in each of ten departments')}</p></div>
    <div class="card cp"><div class="ch"><h3>${t('Registration link')}</h3><span class="cap">Eidaad 2027</span></div><div class="lk"><input class="inp" id="eid-link" readonly value="https://alumate.sohar-alu.om/eidaad/2027"><button class="btn btn-p btn-sm" data-act="copy-link">${I.copy} ${t('Copy')}</button></div><p class="cap" style="margin-top:8px">${tt('{n} registrations for the next cohort',{n:ALL.filter(r=>r.intake==='Eidaad 2027').length})}</p></div></div>
    <div class="card cp" style="margin-top:16px"><div class="ch"><h3>${t('Monthly commitment index')}</h3><div class="lgd"><span><i style="background:var(--success-50);border:1px solid var(--success)"></i><bdi dir="ltr">88%+</bdi></span><span><i style="background:var(--warning-50);border:1px solid var(--warning)"></i><bdi dir="ltr">80–87%</bdi></span><span><i style="background:var(--danger-50);border:1px solid var(--danger)"></i><bdi dir="ltr">&lt;80%</bdi></span><span><span class="ix i-due" style="min-width:30px;height:20px">${t('Due')}</span>${t('Evaluation not submitted')}</span><span><span class="ix i-now" style="min-width:30px;height:20px">${t('Now')}</span>${t('Current month')}</span><span><span class="ix i-fut" style="min-width:30px;height:20px"></span>${t('Upcoming')}</span></div></div>
@@ -1183,10 +1226,10 @@ function hrEidaad(){
     <div class="row"><button class="btn btn-n btn-sm" data-act="rep" data-id="${r.id}" data-v="uni">${I.file} ${t('University report')}</button><button class="btn btn-s btn-sm" data-act="rep" data-id="${r.id}" data-v="bdo">${t('BDO report')}</button></div></div>`}).join('')}</div>`;
   if(tab==='candidates')body=`<div class="card"><div class="tw" style="border:0"><table><tr><th>${t('Candidate')}</th><th>${t('Intake')}</th><th>${t('Department')}</th><th>${t('Interview')}</th><th>${t('Status')}</th></tr>${cand.map(r=>`<tr class="clk" data-act="open" data-id="${r.id}"><td>${who(r.name,esc(t(r.uni)))}</td><td>${r.intake}</td><td>${dn(r.dept||'—')}</td><td class="num">${r.interview!=null?r.interview+' / 100':'—'}</td><td>${stagePill(r.stage)}</td></tr>`).join('')||`<tr><td colspan="5" class="empty">${t('No candidates')}</td></tr>`}</table></div></div>`;
   if(tab==='reports')body=repTable(L);
-  return `${ph(t('Eidaad Programme'),t('BDO cohort 2026 · 1 Jun 2026 – 31 Mar 2027'))}${tabs}${body}`;
+  return `${ph(t('Eidaad Programme'),t('BDO cohort 2026 · 1 Sep 2026 – 30 Jun 2027 · graduation July 2027'))}${tabs}${body}`;
 }
-function repTable(L){return `<div class="card"><div class="tw" style="border:0"><table><tr><th>${t('Trainee')}</th><th>${t('University')}</th><th>${t('Department')}</th><th>${t('Months evaluated')}</th><th class="e">${t('Reports')}</th></tr>
-  ${L.map(r=>`<tr><td>${who(r.name,`<span class="mono">${r.id}</span>`)}</td><td>${esc(t(r.uni))}<div class="cap">${t(r.college)}</div></td><td>${dn(r.dept)}</td><td class="num">${r.evals.length}</td><td class="e"><div class="row" style="justify-content:flex-end;gap:6px;flex-wrap:nowrap"><button class="btn btn-n btn-sm" data-act="rep" data-id="${r.id}" data-v="uni">${I.file} ${t('University')}</button><button class="btn btn-s btn-sm" data-act="rep" data-id="${r.id}" data-v="bdo">BDO</button></div></td></tr>`).join('')}</table></div></div>`}
+function repTable(L,uniOnly){return `<div class="card"><div class="tw" style="border:0"><table><tr><th>${t('Trainee')}</th><th>${t('University')}</th><th>${t('Department')}</th><th>${t('Months evaluated')}</th><th class="e">${t('Reports')}</th></tr>
+  ${L.map(r=>`<tr><td>${who(r.name,`<span class="mono">${r.id}</span>`)}</td><td>${esc(t(r.uni))}<div class="cap">${t(r.college||COLLEGE(r.major))}</div></td><td>${dn(r.dept)}</td><td class="num">${r.evals.length}</td><td class="e"><div class="row" style="justify-content:flex-end;gap:6px;flex-wrap:nowrap"><button class="btn btn-n btn-sm" data-act="rep" data-id="${r.id}" data-v="uni">${I.file} ${t('University')}</button>${uniOnly?'':`<button class="btn btn-s btn-sm" data-act="rep" data-id="${r.id}" data-v="bdo">BDO</button>`}</div></td></tr>`).join('')||`<tr><td colspan="5" class="empty">${t('No trainees with evaluations yet')}</td></tr>`}</table></div></div>`}
 function hrEvals(){
   const m=mlabel(LAST_CLOSED);const L=ALL.filter(r=>r.stage==='Training'||(r.stage==='Completed'&&false));
   const due=L.filter(r=>dueMonths(r).length),pendHR=[];ALL.forEach(r=>r.evals.forEach((e,i)=>{if(!e.sign.hr)pendHR.push({r,e,i})}));
@@ -1220,7 +1263,8 @@ function hrAllowance(){
 function hrReports(){const L=eidList();
   return `${ph(t('Reports'),t('Individual progress reports for universities and BDO'))}
   <div class="g g3" style="margin-bottom:16px">${[['file','ic-navy','University reports','One report per trainee for their university and college. Allowance is not included.'],['report','ic-teal','BDO reports','One report per trainee for BDO, with the monthly allowance paid.'],['wallet','ic-info','Monthly allowance','Payable amount by month and programme.']].map(([i,c,h,p],k)=>`<div class="card cp"><span class="kpi-i ${c}">${I[i]}</span><h3 class="h4" style="margin-top:12px">${t(h)}</h3><p class="small muted" style="margin-top:4px">${t(p)}</p>${k===2?`<button class="link" style="margin-top:10px" data-act="pg" data-v="allowance">${t('Open')} ${I.chev}</button>`:''}</div>`).join('')}</div>
-  <h2 class="h4" style="margin-bottom:12px">${t('Eidaad 2026 · individual reports')}</h2>${repTable(L)}`}
+  <h2 class="h4" style="margin-bottom:4px">${t('Eidaad 2026 · individual reports')}</h2><p class="cap" style="margin-bottom:12px">${t('Two reports per trainee: university and BDO.')}</p>${repTable(L)}
+  <h2 class="h4" style="margin:24px 0 4px">${t('Summer, Winter and Referral')}</h2><p class="cap" style="margin-bottom:12px">${t('One report per trainee, for the university or college only.')}</p>${repTable(ALL.filter(r=>r.track!=='Eidaad'&&(r.stage==='Training'||r.stage==='Completed')&&r.evals.length).sort((a,b)=>b.start-a.start),true)}`}
 function hrDepts(){
   return `${ph(t('Departments'),t('Capacity control'),`<div class="lgd"><span><i style="background:var(--navy)"></i>${t('Occupied')}</span><span><i style="background:#fff;border:1.5px solid var(--teal)"></i>${t('Available')}</span></div>`)}
   <div class="g g3">${DEPTS.map(d=>{const c=current(d.n),a=Math.max(0,d.cap-c),full=!a;return `<div class="card capc" style="${full?'border-color:#F3C4C4':''}"><div class="row"><h3 class="h4">${dn(d.n)}</h3><span class="sp"></span>${full?pill(t('Full capacity'),'bad',1):pill(tt('{n} available',{n:a}),'ok',1)}</div>
@@ -1258,7 +1302,7 @@ function journey(r){
 }
 function preItem(r,k){const v=r.pre[k];return ({medical:v==='done'?'Fit · Medical Centre':'Appointment pending',siti:v==='done'?'Completed':'First morning, 07:30',agreement:v==='done'?'Signed':'Sign before day one',docs:v==='done'?'CV, transcript and Civil ID received':'University letter missing',card:v==='done'?'Issued':'Photo taken on day one at Security',email:v==='done'?r.cemail:'Being created by IT',bank:v==='done'?r.bank+' · '+mask(r.acct):'Add your bank account for the allowance',ppe:v==='na'?'Not needed for an office role':v==='done'?'Issued':'Sizes recorded',laptop:v==='na'?'Not needed for a site role':v==='done'?'Issued by IT':'Collect from the IT Service Desk'})[k]}
 function vTrainee(){
-  const r=byId(S.auth.t),pg=S.page.t;let c='';
+  const r=byId(S.auth.t),pg=S.page.t;let c='';S._g='t.'+pg;
   const [pa,pb]=preDone(r),le=r.evals[r.evals.length-1];
   const head=`<div class="card cp" style="margin-bottom:16px"><div class="row" style="flex-wrap:nowrap;align-items:flex-start">${avatar(r.name,'lg t')}<div style="flex:1;min-width:0"><div class="row" style="gap:8px">${pill(trk(r.track),'navy')}${stagePill(r.stage)}</div><h2 class="h3" style="margin-top:6px">${esc(r.name)}</h2><p class="cap" style="margin-top:2px"><span class="mono">${r.id}</span> · ${dn(r.dept)} · ${t('Supervisor')}: ${esc(r.sup.name)} · ${fd(r.start)} – ${fd(r.end)}</p></div></div></div>`;
   if(pg==='dashboard'){
@@ -1274,7 +1318,6 @@ function vTrainee(){
   }
   if(pg==='journey'){
     c=`${ph(t('My Journey'),'')}${head}<div class="card cp" style="margin-bottom:16px">${journey(r)}</div>
-    ${symKey([[KEY_DONE[0],t('Done')],[KEY_PEND[0],t('Pending')],[`<span class="ci na">${I.lock}</span>`,t('Opens later')]])}
     <div class="g g3"><div class="card cp"><div class="ch"><h3>${t('Pre-Training')}</h3>${pill(pa+' / '+pb,pa===pb?'ok':'warn')}</div><div class="cl">${PRE.filter(([k])=>r.pre[k]!=='na').map(([k,l])=>`<div>${stIco(r.pre[k])}<div class="tx"><b>${t(l)}</b><small>${esc(t(preItem(r,k)))}</small></div></div>`).join('')}</div></div>
     <div class="card cp"><div class="ch"><h3>${t('During Training')}</h3>${r.plan.length?pill(r.plan.filter(p=>p.done).length+' / '+r.plan.length,'teal'):''}</div><div class="cl">${r.plan.map(p=>`<div>${stIco(p.done?'done':'pending')}<div class="tx"><b style="font-weight:500">${esc(t(p.t))}</b></div></div>`).join('')||`<p class="small muted">${t('Your department plan starts on day one.')}</p>`}</div></div>
     <div class="card cp"><div class="ch"><h3>${t('Post Training')}</h3></div><div class="cl">${POST.filter(([k])=>!(k==='ppe'&&!OPS.includes(r.dept))&&!(k==='laptop'&&OPS.includes(r.dept))).map(([k,l])=>{const v=r.stage==='Completed'?r.post[k]:'pending';return `<div>${r.stage==='Completed'?stIco(v):`<span class="ci na">${I.lock}</span>`}<div class="tx"><b>${t(l)}</b><small>${r.stage==='Completed'?t(v==='done'?'Completed':'Pending'):tt('Opens on {d}',{d:fd(r.end)})}</small></div></div>`}).join('')}</div></div></div>`;
@@ -1300,7 +1343,7 @@ function certificate(r){const fin=mean(r.evals.map(e=>e.avg)).toFixed(2);
 
 /* ============ Supervisor portal ============ */
 function vSup(){
-  const me=supList().find(x=>x.id===S.auth.s),pg=S.page.s;
+  const me=supList().find(x=>x.id===S.auth.s),pg=S.page.s;S._g='s.'+pg;
   const mine=ALL.filter(r=>r.sup&&r.sup.id===me.id&&(r.stage==='Training'||r.stage==='Pre-Training'));
   let c='';
   if(pg==='trainees')c=`${ph(t('My Trainees'),dn(me.dept))}<div class="g g3">${mine.map(r=>{const d=dueMonths(r),le=r.evals[r.evals.length-1];return `<div class="card cp" style="display:flex;flex-direction:column;gap:14px"><div class="row" style="flex-wrap:nowrap">${avatar(r.name)}<div style="flex:1;min-width:0"><b style="display:block">${esc(r.name)}</b><span class="cap">${trk(r.track)} · <span class="mono">${r.id}</span></span></div>${r.stage==='Pre-Training'?pill(t('Starting soon'),'teal'):d.length?pill(tt('{n} due',{n:d.length}),'warn',1):pill(t('Up to date'),'ok',1)}</div>
@@ -1308,7 +1351,7 @@ function vSup(){
     <div class="row">${d.length?`<button class="btn btn-p btn-sm" data-act="ev-start" data-id="${r.id}">${I.edit} ${t('Evaluate')} ${fms(d[0])}</button>`:''}<button class="btn btn-s btn-sm" data-act="sup-open" data-id="${r.id}">${t('View')}</button></div></div>`}).join('')||`<div class="card"><div class="empty">${I.users}<b>${t('No trainees assigned')}</b></div></div>`}</div>`;
   if(pg==='evaluations'){const due=mine.filter(r=>dueMonths(r).length);
     c=`${ph(t('Evaluations'),tt('Monthly evaluations · {m}',{m:fm(mlabel(LAST_CLOSED))}))}<div class="card"><div class="tw" style="border:0"><table><tr><th>${t('Trainee')}</th><th>${t('Month')}</th><th>${t('Type')}</th><th>${t('Status')}</th><th></th></tr>
-    ${mine.flatMap(r=>[...dueMonths(r).map(m=>({r,m,due:1})),...r.evals.slice().reverse().map(e=>({r,m:e.month,e}))]).map(x=>`<tr><td>${who(x.r.name,trk(x.r.track))}</td><td>${fm(x.m)}</td><td>${t(mlabel(x.r.end)===x.m?'Final evaluation':'Monthly review')}</td><td>${x.due?pill(t('Due'),'warn',1):pill(t(x.e.sign.hr?'Completed':'Submitted'),x.e.sign.hr?'ok':'info',1)}</td><td class="e">${x.due?`<button class="btn btn-p btn-sm" data-act="ev-start" data-id="${x.r.id}">${t('Start')}</button>`:`<button class="btn btn-g btn-sm" data-act="open-ev" data-id="${x.r.id}" data-v="${x.r.evals.indexOf(x.e)}">${t('View')}</button>`}</td></tr>`).join('')}</table></div></div>`}
+    ${mine.flatMap(r=>[...dueMonths(r).map(m=>({r,m,due:1})),...r.evals.slice().reverse().map(e=>({r,m:e.month,e}))]).map(x=>`<tr><td>${who(x.r.name,trk(x.r.track))}</td><td>${fm(x.m)}</td><td>${t(mlabel(x.r.end)===x.m?'Final evaluation':'Monthly review')}</td><td>${x.due?pill(t('Due'),'warn',1):pill(t(x.e.sign.hr?'Signed off':'Awaiting signatures'),x.e.sign.hr?'ok':'info',1)}</td><td class="e">${x.due?`<button class="btn btn-p btn-sm" data-act="ev-start" data-id="${x.r.id}">${t('Start')}</button>`:`<div class="row" style="justify-content:flex-end;gap:6px;flex-wrap:nowrap">${x.e.sign.hr?'':`<button class="btn btn-s btn-sm" data-act="ev-edit" data-id="${x.r.id}" data-v="${x.r.evals.indexOf(x.e)}">${I.edit} ${t('Edit')}</button>`}<button class="btn btn-g btn-sm" data-act="open-ev" data-id="${x.r.id}" data-v="${x.r.evals.indexOf(x.e)}">${t('View')}</button></div>`}</td></tr>`).join('')}</table></div></div>`}
   if(pg==='trainee'){const r=byId(S.supSel);
     c=`<button class="btn btn-g btn-sm" data-act="pg" data-v="trainees" style="margin-bottom:12px">${I.back} ${t('My Trainees')}</button>
     <div class="card cp" style="margin-bottom:16px"><div class="row">${avatar(r.name,'lg')}<div style="flex:1;min-width:0"><div class="row" style="gap:8px">${pill(trk(r.track),'navy')}${stagePill(r.stage)}</div><h2 class="h3" style="margin-top:6px">${esc(r.name)}</h2><p class="cap"><span class="mono">${r.id}</span> · ${esc(t(r.uni))} · ${esc(t(r.major))} · ${t('Mentor')}: ${esc(r.mentor.name)}</p></div>${dueMonths(r).length?`<button class="btn btn-p" data-act="ev-start" data-id="${r.id}">${I.edit} ${t('Evaluate')} ${fm(dueMonths(r)[0])}</button>`:''}</div></div>
@@ -1321,6 +1364,8 @@ function vSup(){
 
 /* ============ Evaluation form (5 steps) ============ */
 const EV_STEPS=['Trainee details','Performance','Attendance & allowance','Feedback & outcome','Signatures'];
+/* open a submitted evaluation again, until HR signs it */
+function evEdit(r,i){const e=r.evals[i];return {id:r.id,month:e.month,step:0,sched:e.sched,attended:e.attended,excused:e.excused||0,scores:e.scores.slice(),cmts:(e.cmts||COMP.map(()=>'')).slice(),open:{},strengths:e.strengths||'',develop:e.develop||'',mentorFb:e.mentorFb||'',completion:e.completion,rec:e.rec,confirm:false,saved:null,err:'',edit:i}}
 function evNew(r){const month=dueMonths(r)[0];const key=r.id+'|'+month;if(S.drafts[key])return S.drafts[key];
   return S.drafts[key]={id:r.id,month,step:0,sched:22,attended:'',excused:0,scores:Array(COMP.length).fill(null),cmts:Array(COMP.length).fill(''),open:{},strengths:'',develop:'',mentorFb:'',completion:null,rec:null,confirm:false,saved:null,err:''}}
 function evCalc(E){const filled=E.scores.filter(v=>v!=null).length,avg=filled?E.scores.reduce((a,b)=>a+(b||0),0)/filled:null;
@@ -1361,7 +1406,7 @@ function evForm(me){
   const side=`<div class="ev-side"><div class="card cp" style="text-align:center"><span class="cap">${t('Overall average')}</span><div style="display:grid;place-items:center;margin:10px 0">${donut(c.avg?c.avg/4*100:0,150,c.avg?c.avg.toFixed(2):'—',t('out of 4'))}</div><span class="small">${tt('{a} of {b} criteria rated',{a:c.filled,b:COMP.length})}</span></div>
     <div class="card cp">${AREAS.map(([a],i)=>{const sc=E.scores.slice(i*3,i*3+3).filter(x=>x!=null);return `<div style="margin-bottom:12px"><div class="row" style="justify-content:space-between;font-size:12.5px"><span>${t(a)}</span><b>${sc.length?mean(sc).toFixed(1):'—'}</b></div><div class="bar" style="margin-top:6px"><i style="width:${sc.length?mean(sc)/4*100:0}%"></i></div></div>`}).join('')}</div></div>`;
   return `<button class="btn btn-g btn-sm" data-act="ev-exit" style="margin-bottom:12px">${I.back} ${t('Back')}</button>
-  ${ph(t('Trainee Evaluation Form'),`${esc(r.name)} · ${fm(E.month)}`)}
+  ${ph(t('Trainee Evaluation Form'),`${esc(r.name)} · ${fm(E.month)}`,E.edit!=null?pill(t('Editing a sent evaluation'),'info',1):'')}${E.edit!=null?`<div class="code-pv" style="margin-bottom:16px">${I.edit}<span>${t('Your changes replace the sent evaluation. The trainee will be asked to sign it again.')}</span></div>`:''}
   <div class="card cp" style="margin-bottom:16px">${stepper(EV_STEPS,st,'ev-goto')}</div>
   <div class="ev-wrap"><div style="min-width:0">${b}${E.err?`<div class="msg-err" style="margin-top:16px">${I.alert}${esc(E.err)}</div>`:''}</div>${side}</div>
   <div class="sbar"><div class="st"><span>${tt('Step {a} of {b}',{a:st+1,b:5})}</span><span>${t('Rated')} <b>${c.filled}/12</b></span><span>${t('Average')} <b>${c.avg?c.avg.toFixed(2):'—'}</b></span>${E.saved?`<span class="saved">${I.check}${tt('Draft kept in this session · {t}',{t:E.saved})}</span>`:''}</div><span class="sp"></span>
@@ -1381,7 +1426,7 @@ AR={
 'Gain hands-on experience during your summer break.':'اكتسب خبرة عملية خلال إجازتك الصيفية.','Short placements between university semesters.':'تدريب قصير بين الفصول الدراسية.',
 'For relatives of Sohar Aluminium employees.':'لأقارب موظفي صحار ألمنيوم.','A ten-month programme for the BDO cohort.':'برنامج لمدة عشرة أشهر لدفعة BDO.',
 '2 months':'شهران','10 months':'10 أشهر','Online assessment':'اختبار إلكتروني','Department interview':'مقابلة القسم',
-'Every step is tracked in one place.':'كل خطوة تُتابَع في مكان واحد.','Online form':'نموذج إلكتروني','Assessment':'التقييم','Test or interview':'اختبار أو مقابلة',
+'Every step is tracked in one place.':'كل خطوة تُتابَع في مكان واحد.','Online form':'نموذج إلكتروني','Assessment':'الاختبار الإلكتروني','Test or interview':'اختبار أو مقابلة',
 'Selection':'الاختيار','By HR criteria':'حسب معايير الموارد البشرية','Medical':'الفحص الطبي','At the company clinic':'في عيادة الشركة','Training':'التدريب',
 'Monthly evaluation':'تقييم شهري','Certificate':'الشهادة','On completion':'عند الإتمام',
 'Real opportunities':'فرص حقيقية','for real growth':'لنمو حقيقي','Support at every step':'دعم في كل خطوة','from day one to graduation':'من اليوم الأول حتى التخرج','A stronger workforce':'قوى عاملة أقوى','for Oman':'لعُمان',
@@ -1417,7 +1462,7 @@ AR={
 '{n} trainees with incomplete procedures':'{n} متدربين إجراءاتهم ناقصة','{n} monthly evaluations due':'{n} تقييمات شهرية مستحقة','{n} medical appointments not sent':'{n} مواعيد فحص طبي لم تُرسل','{n} access cards or PPE not returned':'{n} بطاقات دخول أو معدات سلامة لم تُسلَّم',
 'Overview':'نظرة عامة','Welcome back, {n}':'مرحباً بعودتك، {n}','Total trainees 2026':'إجمالي المتدربين 2026','in the last 30 days':'في آخر 30 يوماً','Under process':'قيد الإجراء','new to review':'جديدة للمراجعة','Starting soon':'يبدأون قريباً','start next week':'يبدأون الأسبوع القادم','Currently training':'في التدريب حالياً','completed this year':'أتمّوا هذا العام',
 'Quick actions':'إجراءات سريعة','Review applicants':'مراجعة المتقدمين','Monthly evaluations':'التقييمات الشهرية','Generate a report':'إنشاء تقرير','Manage seats':'إدارة المقاعد',
-'Recent applications':'أحدث الطلبات','View all':'عرض الكل','Name':'الاسم','Date':'التاريخ','Status':'الحالة','Applied':'قُدّم','Under Review':'قيد المراجعة','Interview':'المقابلة','Selected':'تم الاختيار','Not Selected':'لم يُختر','Completed':'مكتمل',
+'Recent applications':'أحدث الطلبات','View all':'عرض الكل','Name':'الاسم','Date':'التاريخ','Status':'الحالة','Applied':'قُدّم','Under Review':'قيد المراجعة','Interview':'المقابلة','Selected':'مقبول مبدئياً','Not Selected':'لم يُختر','Completed':'مكتمل',
 'Seat capacity':'سعة المقاعد','Details':'التفاصيل','Occupied':'مشغول','Available':'متاح','Needs attention':'يحتاج متابعة','Open':'فتح',
 'Trainees by department':'المتدربون حسب القسم','Training and starting soon':'في التدريب ويبدأون قريباً','Trainees accepted per month':'المقبولون شهرياً','Trainees by university':'المتدربون حسب الجامعة',
 'Starting next week':'يبدأون الأسبوع القادم','Department':'القسم','Start date':'تاريخ البدء','Procedures':'الإجراءات','No trainees start next week.':'لا يوجد متدربون يبدأون الأسبوع القادم.',
@@ -1429,7 +1474,7 @@ AR={
 'Trainee procedures':'إجراءات المتدربين','Select a cell to mark an item done.':'اضغط على الخانة لتسجيل اكتمال البند.','Active':'الحاليون','Needs attention only':'من يحتاج متابعة فقط',
 'Induction':'التوعية','Agreement':'الاتفاقية','Card':'البطاقة','Email':'البريد','Bank':'البنك','PPE':'معدات السلامة','Laptop':'الحاسوب','Feedback':'الملاحظات','Evaluation':'التقييم','starts':'يبدأ','Done':'مكتمل','Not needed':'غير مطلوب','Pending':'معلّق','due':'مستحق','Nothing needs attention':'لا شيء يحتاج متابعة',
 'Trainee profiles':'ملفات المتدربين','Candidates':'المرشحون','Eidaad 2026 trainees':'متدربو إعداد 2026','Programme month':'شهر البرنامج','Average attendance':'متوسط الحضور','Average rating':'متوسط التقييم','Seats':'المقاعد','Full':'مكتمل','One trainee in each of ten departments':'متدرب واحد في كل قسم من عشرة أقسام',
-'Registration link':'رابط التسجيل','Copy':'نسخ','{n} registrations for the next cohort':'{n} تسجيلات للدفعة القادمة','Monthly commitment index':'مؤشر الالتزام الشهري','Attendance':'الحضور','Rating':'التقييم','Now':'الآن','Due':'مستحق','Eidaad Programme':'برنامج إعداد','BDO cohort 2026 · 1 Jun 2026 – 31 Mar 2027':'دفعة BDO 2026 · من 1 يونيو 2026 إلى 31 مارس 2027',
+'Registration link':'رابط التسجيل','Copy':'نسخ','{n} registrations for the next cohort':'{n} تسجيلات للدفعة القادمة','Monthly commitment index':'مؤشر الالتزام الشهري','Attendance':'الحضور','Rating':'التقييم','Now':'الآن','Due':'مستحق','Eidaad Programme':'برنامج إعداد','BDO cohort 2026 · 1 Sep 2026 – 30 Jun 2027 · graduation July 2027':'دفعة BDO 2026 · من 1 سبتمبر 2026 إلى 30 يونيو 2027 · التخرج يوليو 2027',
 'Candidate':'المرشح','Intake':'الدفعة','No candidates':'لا يوجد مرشحون','College':'الكلية','Work setting':'بيئة العمل','Mentor':'المرشد','Project':'المشروع','University report':'تقرير الجامعة','BDO report':'تقرير BDO','University':'الجامعة','Months evaluated':'الأشهر المقيّمة',
 'College of Engineering':'كلية الهندسة','College of Computing & IT':'كلية الحاسوب وتقنية المعلومات','College of Applied Sciences':'كلية العلوم التطبيقية','College of Business':'كلية إدارة الأعمال',
 'Monthly evaluations · {m}':'التقييمات الشهرية · {m}','Submitted':'مُرسل','Waiting for supervisors':'بانتظار المشرفين','Waiting for HR signature':'بانتظار توقيع الموارد البشرية','Supervisors with evaluations due':'مشرفون لديهم تقييمات مستحقة','Remind':'تذكير','Sign':'توقيع','All evaluations submitted':'تم إرسال جميع التقييمات','Nothing to sign':'لا شيء للتوقيع','Reminder prepared for {s}':'تم تجهيز تذكير لـ {s}',
@@ -1493,6 +1538,23 @@ AR={
 'You are all caught up':'لا توجد إشعارات جديدة','{n} new applications to review':'{n} طلبات جديدة للمراجعة','{n} evaluations waiting for your signature':'{n} تقييمات بانتظار توقيعك','Read it and add your signature.':'اطّلع عليه وأضف توقيعك.','{n} pre-training items still pending':'{n} بنود ما قبل التدريب لم تكتمل','Training starts on {d}':'يبدأ التدريب في {d}','Upcoming session: {s}':'ورشة قادمة: {s}','Your certificate is ready':'شهادتك جاهزة','Evaluate {n} for {m}':'قيّم {n} عن {m}',
 'Key':'دليل الرموز','Pending · select it to mark done':'معلّق · اضغط عليه لتسجيله مكتملاً','Not needed for this trainee (for example PPE for an office role)':'غير مطلوب لهذا المتدرب (مثل معدات السلامة لعمل مكتبي)','Monthly evaluation not submitted yet':'التقييم الشهري لم يُرسل بعد','Last monthly rating':'آخر تقييم شهري','Training has not started yet':'لم يبدأ التدريب بعد','Not needed for this trainee':'غير مطلوب لهذا المتدرب',
 'Evaluation not submitted':'التقييم لم يُرسل','Current month':'الشهر الحالي','Each number is the commitment index for the month: 70% attendance and 30% rating.':'كل رقم هو مؤشر الالتزام للشهر: 70٪ حضور و30٪ تقييم.','Opens later':'يُفتح لاحقاً',
+'What do these mean?':'دليل المفاهيم: ماذا تعني هذه الكلمات والرموز؟','Stages':'المراحل','Step {n}':'المرحلة {n}','Awaiting signatures':'بانتظار التواقيع','Signed off':'معتمد','Edit':'تعديل','Editing a sent evaluation':'تعديل تقييم مُرسل','Your changes replace the sent evaluation. The trainee will be asked to sign it again.':'تعديلاتك تحل محل التقييم المُرسل، وسيُطلب من المتدرب التوقيع عليه من جديد.','{m} evaluation updated':'تم تحديث تقييم {m}',
+'No trainees with evaluations yet':'لا يوجد متدربون لديهم تقييمات بعد','Two reports per trainee: university and BDO.':'تقريران لكل متدرب: للجامعة ولـ BDO.','Summer, Winter and Referral':'الصيفي والشتوي والترشيح','One report per trainee, for the university or college only.':'تقرير واحد لكل متدرب، للجامعة أو الكلية فقط.',
+'Application received, not reviewed yet.':'استُلم الطلب ولم تتم مراجعته بعد.','HR is checking the documents and eligibility.':'الموارد البشرية تراجع المستندات والأهلية.','The online IQ and personality test was sent (Summer, Winter and Referral).':'أُرسل له اختبار الذكاء والشخصية الإلكتروني (الصيفي والشتوي والترشيح).','Eidaad only: the department interviews the candidate.':'لبرنامج إعداد فقط: القسم يقابل المرشح.','Accepted by HR and placed in a department. Next step: the medical check-up.':'قبلته الموارد البشرية ووزّعته على قسم. الخطوة التالية: الفحص الطبي.','Waiting for the medical check-up at the company clinic.':'بانتظار الفحص الطبي في عيادة الشركة.','Passed the medical. Completing induction, agreement, card and email before day one.':'اجتاز الفحص الطبي، ويُكمل التوعية والاتفاقية والبطاقة والبريد قبل اليوم الأول.','Training in the department now.':'يتدرب في القسم حالياً.','Finished the training.':'أنهى التدريب.','The application is closed.':'أُغلق الطلب.',
+'High: training is required for graduation and it is the first time here. Medium: one of the two. Standard: neither.':'عالية: التدريب شرط للتخرج وأول تدريب هنا. متوسطة: أحد الشرطين. عادية: لا هذا ولا ذاك.','Online test score: 60% IQ and 40% personality.':'درجة الاختبار الإلكتروني: 60٪ ذكاء و40٪ شخصية.',
+'Applicants still being reviewed, tested, interviewed or waiting for the medical check-up.':'متقدمون قيد المراجعة أو الاختبار أو المقابلة أو بانتظار الفحص الطبي.','Passed the medical check-up and preparing for day one.':'اجتازوا الفحص الطبي ويستعدون لليوم الأول.','Trainees working in a department now.':'متدربون يعملون في الأقسام حالياً.','How many training seats are taken across all departments.':'نسبة مقاعد التدريب المشغولة في كل الأقسام.',
+'Choose the date and time first, then send the appointment to the trainee.':'اختر التاريخ والوقت أولاً، ثم أرسل الموعد للمتدرب.','The trainee has received the appointment.':'وصل الموعد للمتدرب.','Passed. The trainee moves to Pre-Training.':'اجتاز الفحص، وينتقل إلى ما قبل التدريب.','Did not pass. The application is closed.':'لم يجتز الفحص، ويُغلق الطلب.',
+'The item is complete.':'البند مكتمل.','Not done yet. Select it to mark it done.':'لم يكتمل بعد. اضغط عليه لتسجيله مكتملاً.','For example PPE for an office role, or a laptop for a site role.':'مثل معدات السلامة لعمل مكتبي، أو الحاسوب لعمل ميداني.','Evaluation due':'تقييم مستحق','The month has ended and the supervisor has not sent the evaluation yet.':'انتهى الشهر ولم يرسل المشرف التقييم بعد.','The latest evaluation result out of 4.':'نتيجة آخر تقييم من 4.','Not started':'لم يبدأ','Training has not started yet, so there is no evaluation.':'التدريب لم يبدأ بعد، فلا يوجد تقييم.','Active and Completed':'الحاليون والمكتملون','Active shows what is needed before and during training. Completed shows what must be handed back, and the certificate.':'«الحاليون» يعرض المطلوب قبل التدريب وأثناءه، و«المكتملون» يعرض ما يجب تسليمه والشهادة.',
+'The month’s score: 70% attendance and 30% rating. Green 88% or more, amber 80 to 87%, red below 80%.':'درجة الشهر: 70٪ حضور و30٪ تقييم. أخضر 88٪ فأكثر، برتقالي من 80 إلى 87٪، أحمر أقل من 80٪.','The month has ended but the supervisor has not sent the evaluation yet.':'انتهى الشهر لكن المشرف لم يرسل التقييم بعد.','The current month. It is evaluated at the end of the month.':'الشهر الحالي، ويُقيَّم في نهايته.','Months still to come.':'أشهر قادمة.','Programme dates':'مدة البرنامج','From 1 September to 30 June, ten months. Graduation in July.':'من 1 سبتمبر إلى 30 يونيو، عشرة أشهر. التخرج في يوليو.',
+'Evaluations the supervisors have sent for the month.':'التقييمات التي أرسلها المشرفون لهذا الشهر.','The month has ended and the evaluation is not sent yet. Use Remind.':'انتهى الشهر ولم يُرسل التقييم بعد. استخدم «تذكير».','Sent by the supervisor. HR reviews it and signs to close it.':'أرسله المشرف، وتراجعه الموارد البشرية وتوقّعه لاعتماده.','Signed by HR. The supervisor can no longer edit it.':'وقّعته الموارد البشرية، ولا يمكن للمشرف تعديله بعد ذلك.',
+'70% attendance and 30% rating. A rating of 3 of 4 (meets expectations) counts as full marks.':'70٪ حضور و30٪ تقييم. تقييم 3 من 4 (يلبي التوقعات) يُحسب درجة كاملة.','Index of 88% or more.':'مؤشر 88٪ فأكثر.','A lower index is paid at 90%, 80% or 60%.':'المؤشر الأقل يُصرف بنسبة 90٪ أو 80٪ أو 60٪.','The supervisor has not sent this month’s evaluation yet. It is paid once it is sent.':'المشرف لم يرسل تقييم هذا الشهر بعد، وتُصرف العلاوة بعد إرساله.','Approve for payroll':'اعتماد للرواتب','Sends the month’s amounts to payroll. Do it after the evaluations are in.':'يرسل مبالغ الشهر إلى الرواتب. يُعتمد بعد وصول التقييمات.',
+'University report':'تقرير الجامعة','For every trainee in every programme. Sent to the university or college. The allowance is not included.':'لكل متدرب في كل البرامج، يُرسل إلى الجامعة أو الكلية، بدون العلاوة.','Eidaad only. Sent to BDO and includes the allowance paid. Eidaad trainees have two reports: university and BDO.':'لبرنامج إعداد فقط، يُرسل إلى BDO ويشمل العلاوة المصروفة. لمتدربي إعداد تقريران: للجامعة ولـ BDO.',
+'The most trainees the department can host.':'أقصى عدد متدربين يستضيفه القسم.','Trainees in training or starting soon.':'متدربون في التدريب أو يبدأون قريباً.','No seats left. New trainees go to another department.':'لا توجد مقاعد، ويُوزَّع المتدربون الجدد على قسم آخر.',
+'Average rating of 3.3 or more and recommended by the supervisor.':'متوسط تقييم 3.3 فأكثر مع توصية المشرف.','Only the last four digits are shown.':'تظهر آخر أربعة أرقام فقط.',
+'Days attended out of the days scheduled. Approved sick leave and university exams count as attended.':'أيام الحضور من أيام العمل. الإجازة المرضية المعتمدة واختبارات الجامعة تُحسب حضوراً.','Your supervisor’s monthly rating out of 4. 3 means you meet expectations.':'تقييم مشرفك الشهري من 4. الرقم 3 يعني أنك تلبي التوقعات.','70% attendance and 30% rating. 88% or more gives the full allowance.':'70٪ حضور و30٪ تقييم. 88٪ فأكثر تعني علاوة كاملة.','The amount for the month in Omani rials.':'مبلغ الشهر بالريال العماني.',
+'The step is complete.':'الخطوة مكتملة.','Still to do.':'لم تكتمل بعد.','Available at the end of your training.':'تُتاح في نهاية تدريبك.','The evaluation for your last month.':'تقييم شهرك الأخير.','Confirms you have read it. You can add a comment before signing.':'يؤكد أنك اطلعت عليه، ويمكنك إضافة تعليق قبل التوقيع.','Your commitment index for the month.':'مؤشر التزامك لهذا الشهر.',
+'You attended the session.':'حضرت الورشة.','You did not attend.':'لم تحضر.','Scheduled during your training.':'مجدولة خلال فترة تدريبك.','Ready to view.':'جاهز للعرض.','Not ready yet.':'غير جاهز بعد.',
+'A month has ended without your evaluation. Select Evaluate.':'انتهى شهر بدون تقييمك. اضغط «تقييم».','All evaluations are sent.':'كل التقييمات مُرسلة.','The trainee has not started yet.':'المتدرب لم يبدأ بعد.','The month has ended. Start the evaluation.':'انتهى الشهر، ابدأ التقييم.','You sent it. The trainee and HR still need to sign. You can still edit it.':'أرسلته، وما زال المتدرب والموارد البشرية بحاجة للتوقيع. يمكنك تعديله.','Signed by HR. It is final and cannot be edited.':'وقّعته الموارد البشرية، وهو نهائي ولا يمكن تعديله.',
 'Chemical Engineering':'الهندسة الكيميائية','Mechanical Engineering':'الهندسة الميكانيكية','Electrical Engineering':'الهندسة الكهربائية','Industrial Engineering':'الهندسة الصناعية','Marine Engineering':'الهندسة البحرية','Logistics Management':'إدارة اللوجستيات','Computer Science':'علوم الحاسوب','Information Technology':'تقنية المعلومات','Human Resource Management':'إدارة الموارد البشرية','Business Administration':'إدارة الأعمال','Occupational Health & Safety':'الصحة والسلامة المهنية','Environmental Science':'العلوم البيئية','Mass Communication':'الإعلام','Marketing':'التسويق','Supply Chain Management':'إدارة سلسلة الإمداد'
 };
 
@@ -1504,7 +1566,7 @@ function drawer(){
   return `<div class="scrim" data-act="close"></div><aside class="drawer" role="dialog" aria-label="${t('Trainee profile')}"><div class="dr-h">${avatar(r.name,'t')}<div style="flex:1;min-width:0"><h3>${esc(r.name)}</h3><small>${trk(r.track)} · ${esc(r.intake)}</small></div><button class="icon-btn" data-act="close" aria-label="${t('Close')}">${I.x}</button></div>
   <div class="dr-b">
   ${act?`<div class="card cp row"><div><span class="cap">${t('Current stage')}</span><div style="margin-top:4px">${stagePill(r.stage)}</div></div><span class="sp"></span>${ns?`<button class="btn btn-p btn-sm" data-act="adv" data-id="${r.id}">${tt('Move to {s}',{s:t(ns)})}</button>`:''}<button class="btn btn-d btn-sm" data-act="rej" data-id="${r.id}">${t('Not selected')}</button></div>`:''}
-  ${r.track==='Eidaad'&&r.stage==='Training'?`<div class="card cp row"><span class="kpi-i ic-navy">${I.file}</span><b style="flex:1">${t('Progress reports')}</b><button class="btn btn-n btn-sm" data-act="rep" data-id="${r.id}" data-v="uni">${t('University')}</button><button class="btn btn-s btn-sm" data-act="rep" data-id="${r.id}" data-v="bdo">BDO</button></div>`:''}
+  ${(r.stage==='Training'||r.stage==='Completed')&&r.evals.length?`<div class="card cp row"><span class="kpi-i ic-navy">${I.file}</span><b style="flex:1">${t('Progress reports')}</b><button class="btn btn-n btn-sm" data-act="rep" data-id="${r.id}" data-v="uni">${t('University')}</button>${r.track==='Eidaad'?`<button class="btn btn-s btn-sm" data-act="rep" data-id="${r.id}" data-v="bdo">BDO</button>`:''}</div>`:''}
   ${r.track!=='Eidaad'?`<div class="card cp"><div class="ch" style="margin-bottom:8px"><h3>${t('Priority')}</h3>${priPill(p)}</div><div class="cl"><div>${r.reqGrad?`<span class="ci ok">${I.check}</span>`:`<span class="ci na">${ic('x')}</span>`}<span class="tx small">${t('Training required for graduation')}</span></div><div>${!trainedBefore(r)?`<span class="ci ok">${I.check}</span>`:`<span class="ci na">${ic('x')}</span>`}<span class="tx small">${r.histFound?t('Trained here before · found in history by Civil ID'):trainedBefore(r)?t('Trained here before'):t('First training at Sohar Aluminium')}</span></div></div>
     ${score(r)!=null?`<p class="small" style="margin-top:10px">${t('Assessment score')} <b>${score(r)}</b> <span class="cap">IQ ${r.iq} · ${t('Personality')} ${r.pers} · GPA ${r.gpa}</span></p>`:''}</div>`:`<div class="card cp"><span class="cap">${t('Department interview')}</span><p style="margin-top:4px"><b>${r.interview??'—'} / 100</b> ${r.reason?'· '+esc(r.reason):''}</p></div>`}
   ${r.ref?`<div class="card cp"><span class="cap">${t('Referral')}</span><p style="margin-top:4px">${esc(r.ref.empName)} · <span class="mono">${esc(r.ref.empId)}</span> · ${t(r.ref.rel)}</p></div>`:''}
@@ -1524,27 +1586,27 @@ function modal(){const M=S.modal;if(!M)return '';let h='',c='',f='';
 
 /* ============ A4 report (English, for universities and BDO) ============ */
 function reportView(){
-  const r=byId(S.report.id),to=S.report.to,E=r.evals,le=E[E.length-1],mn=monthsOf(r.start,TODAY).length,tot=monthsOf(r.start,r.end).length;
+  const r=byId(S.report.id),to=r.track==='Eidaad'?S.report.to:'uni',E=r.evals,le=E[E.length-1],tot=monthsOf(r.start,r.end).length,mn=Math.min(tot,monthsOf(r.start,TODAY).length),col=r.college||COLLEGE(r.major),upto=r.end<LAST_CLOSED?r.end:LAST_CLOSED;
   const ar=AREAS.map(([a],i)=>[a,mean(E.map(e=>mean(e.scores.slice(i*3,i*3+3))))]);const ses=r.sessions.filter(x=>x.done);
   const kv=rows=>`<table class="rkv">${rows.map(([k,v])=>`<tr><th>${k}</th><td>${v}</td></tr>`).join('')}</table>`;
-  return `<div class="rep" role="dialog" aria-label="Progress report"><div class="rep-bar"><button class="btn btn-s btn-sm" data-act="rep-close">${I.x} ${t('Close')}</button><div class="seg"><button data-act="rep-to" data-v="uni" class="${to==='uni'?'on':''}">${t('University')}</button><button data-act="rep-to" data-v="bdo" class="${to==='bdo'?'on':''}">BDO</button></div><span class="sp"></span><button class="btn btn-p btn-sm" data-act="rep-pdf">${I.down} ${t('Download PDF')}</button></div>
+  return `<div class="rep" role="dialog" aria-label="Progress report"><div class="rep-bar"><button class="btn btn-s btn-sm" data-act="rep-close">${I.x} ${t('Close')}</button>${r.track==='Eidaad'?`<div class="seg"><button data-act="rep-to" data-v="uni" class="${to==='uni'?'on':''}">${t('University')}</button><button data-act="rep-to" data-v="bdo" class="${to==='bdo'?'on':''}">BDO</button></div>`:''}<span class="sp"></span><button class="btn btn-p btn-sm" data-act="rep-pdf">${I.down} ${t('Download PDF')}</button></div>
   <article class="a4"><header class="rh">${brand(false,'')}<div class="rh-r"><b style="color:var(--navy);font-size:12px">Sohar Aluminium · Human Resources</b><br>Ref. ${r.id}-${to==='uni'?'U':'B'}-${String(TODAY.getMonth()+1).padStart(2,'0')} · ${fmt(TODAY)}</div></header>
-  <div class="rtl"><span class="eb">${to==='uni'?'University Internship Report':'BDO Programme Report'} · Eidaad 2026</span><h1>Trainee Progress Report</h1><p>Prepared for <b>${to==='uni'?esc(r.uni)+' · '+esc(r.college):'BDO · Eidaad Programme Office'}</b> · Period ${fmt(r.start)} – ${fmt(LAST_CLOSED)}</p></div>
-  <section class="rs rs2"><div><h2>Trainee</h2>${kv([['Name',esc(r.name)],['Trainee no.',r.id],['Civil ID',mask(r.civil)],['University',esc(r.uni)],['College',esc(r.college)],['Major',esc(r.major)],['GPA',r.gpa],['Graduation year',r.gradYear]].concat(to==='bdo'?[['BDO reference',r.bdo]]:[]))}</div>
-  <div><h2>Placement</h2>${kv([['Department',esc(r.dept)],['Work setting',esc(r.env)],['Supervisor',esc(r.sup.name)+' · '+r.sup.id],['Mentor',esc(r.mentor.name)],['Period',fmt(r.start)+' – '+fmt(r.end)],['Progress','Month '+mn+' of '+tot],['Status',le&&le.idx>=ALLOW[0].min?'On track':'Needs follow-up']])}</div></section>
+  <div class="rtl"><span class="eb">${to==='uni'?'University Internship Report':'BDO Programme Report'} · ${esc(r.intake)}</span><h1>Trainee Progress Report</h1><p>Prepared for <b>${to==='uni'?esc(r.uni)+' · '+esc(col):'BDO · Eidaad Programme Office'}</b> · Period ${fmt(r.start)} – ${fmt(upto)}</p></div>
+  <section class="rs rs2"><div><h2>Trainee</h2>${kv([['Name',esc(r.name)],['Trainee no.',r.id],['Civil ID',mask(r.civil)],['University',esc(r.uni)],['College',esc(col)],['Major',esc(r.major)],['GPA',r.gpa],['Graduation year',r.gradYear]].concat(to==='bdo'?[['BDO reference',r.bdo]]:[]))}</div>
+  <div><h2>Placement</h2>${kv([['Department',esc(r.dept)]].concat(r.env?[['Work setting',esc(r.env)]]:[],[['Supervisor',esc(r.sup.name)+' · '+r.sup.id],['Mentor',esc(r.mentor.name)],['Period',fmt(r.start)+' – '+fmt(r.end)],['Progress','Month '+mn+' of '+tot],['Status',r.stage==='Completed'?'Completed':le&&le.idx>=ALLOW[0].min?'On track':'Needs follow-up']]))}</div></section>
   <section class="rs"><div class="rk"><div><b>${mean(E.map(e=>e.attPct)).toFixed(0)}%</b><span>Average attendance</span></div><div><b>${mean(E.map(e=>e.avg)).toFixed(2)}</b><span>Average rating / 4</span></div><div><b>${mean(E.map(e=>e.idx)).toFixed(0)}%</b><span>Commitment index</span></div><div><b>${E.length}</b><span>Months evaluated</span></div></div></section>
   <section class="rs"><h2>Monthly record</h2><table class="rt"><tr><th>Month</th><th>Days attended</th><th>Excused</th><th>Attendance</th><th>Rating</th><th>Index</th>${to==='bdo'?'<th>Allowance</th><th>Amount (OMR)</th>':''}</tr>
   ${E.map(e=>`<tr><td>${e.month}</td><td>${e.attended} / ${e.sched}</td><td>${e.excused||0}</td><td>${Math.round(e.attPct)}%</td><td>${e.avg.toFixed(2)}</td><td>${e.idx.toFixed(1)}%</td>${to==='bdo'?`<td>${TIERS[e.att].p}%</td><td>${(STIPEND[r.track]*TIERS[e.att].p/100).toFixed(0)}</td>`:''}</tr>`).join('')}${to==='bdo'?`<tr class="tot"><td colspan="7">Total allowance paid</td><td>${E.reduce((a,e)=>a+STIPEND[r.track]*TIERS[e.att].p/100,0).toFixed(0)}</td></tr>`:''}</table></section>
   <section class="rs rs2"><div><h2>Competency summary</h2>${ar.map(([a,v])=>`<div class="rb"><span>${a}</span><i><em style="width:${v/4*100}%"></em></i><b>${v.toFixed(2)}</b></div>`).join('')}<p class="cap" style="font-size:9.5px;margin-top:4px">Scale 1–4 · 4 exceeds expectations · 3 meets expectations</p></div>
   <div><h2>Supervisor feedback · ${le?le.month:''}</h2><p class="rf"><b>Key strengths</b>${esc(le?le.strengths:'—')}</p><p class="rf"><b>Areas for development</b>${esc(le?le.develop:'—')}</p><p class="rf"><b>Mentor</b>${esc(le?le.mentorFb:'—')}</p></div></section>
-  <section class="rs rs2"><div><h2>Training sessions attended</h2><ul class="ru">${ses.map(x=>`<li>${esc(x.n)}<span>${typeof x.d==='string'?x.d:fmt(x.d)}</span></li>`).join('')||'<li>—</li>'}</ul></div><div><h2>Department project</h2><p class="rf"><b>${esc(r.project.t)}</b>Status: ${r.project.st}</p><p class="rf"><b>Plan progress</b>${r.plan.filter(p=>p.done).length} of ${r.plan.length} plan activities completed</p></div></section>
+  <section class="rs rs2"><div><h2>Training sessions attended</h2><ul class="ru">${ses.map(x=>`<li>${esc(x.n)}<span>${typeof x.d==='string'?x.d:fmt(x.d)}</span></li>`).join('')||'<li>—</li>'}</ul></div><div><h2>${r.project?'Department project':'Department plan'}</h2>${r.project?`<p class="rf"><b>${esc(r.project.t)}</b>Status: ${r.project.st}</p>`:''}<p class="rf"><b>Plan progress</b>${r.plan.filter(p=>p.done).length} of ${r.plan.length} plan activities completed</p></div></section>
   <footer class="rsg"><div><b>${esc(r.sup.name)}</b>Supervisor · ${esc(r.dept)}</div><div><b>${HRS[0]}</b>HR · Professional & Organisational Development</div></footer>
   <p class="rc">Confidential · prepared for ${to==='uni'?'the trainee’s university':'BDO'} only · ALUMATE Trainee Management System</p></article></div>`;
 }
 
 /* ============ Render ============ */
 function render(keep){
-  applyLang();const y=window.scrollY;let h;
+  applyLang();S._g=null;const y=window.scrollY;let h;
   if(S.view==='home')h=vHome();else if(S.view==='apply')h=vApply();else if(S.view==='signin')h=vSignin();else h=S.portal==='h'?vHR():S.portal==='t'?vTrainee():vSup();
   document.getElementById('app').innerHTML=h;
   document.getElementById('layer').innerHTML=(S.drawer?drawer():'')+modal()+(S.report?reportView():'');
@@ -1556,6 +1618,7 @@ const now=()=>{const d=new Date();return String(d.getHours()).padStart(2,'0')+':
 function touch(){if(S.ev){S.ev.saved=now();S.ev.err=''}}
 function evSubmit(){const r=byId(S.ev.id),E=S.ev,c=evCalc(E),cc=c.cc;
   const ev={month:E.month,type:mlabel(r.end)===E.month?'Final evaluation':'Monthly review',sched:c.sched,attended:c.att,excused:c.exc,idx:cc.idx,attPct:cc.att,att:cc.ti,scores:E.scores.slice(),cmts:E.cmts.slice(),avg:c.avg,final:Math.round(c.avg/4*100),strengths:E.strengths,develop:E.develop,mentorFb:E.mentorFb,traineeCmt:'',completion:E.completion,rec:E.rec,by:r.sup.name,sign:{sup:true,mentor:!!E.mentorFb.trim(),trainee:false,hr:false}};
+  if(E.edit!=null){r.evals[E.edit]=ev;lg(r,TODAY,r.sup.name,`${E.month} evaluation edited and sent again · ${c.avg.toFixed(2)} / 4 · allowance ${cc.p}%`);S.ev=null;S.page.s='evaluations';toast(tt('{m} evaluation updated',{m:fm(E.month)}));return}
   r.evals=r.evals.concat([ev]).sort((a,b)=>new Date('1 '+a.month)-new Date('1 '+b.month));delete S.drafts[r.id+'|'+E.month];
   lg(r,TODAY,r.sup.name,`${E.month} evaluation signed and submitted · ${c.avg.toFixed(2)} / 4 · allowance ${cc.p}%`);S.ev=null;S.page.s='trainee';toast(tt('{m} evaluation submitted',{m:fm(E.month)}))}
 
@@ -1600,6 +1663,7 @@ document.addEventListener('click',e=>{
     case 'med-send':{const r=byId(id);r.medSms=true;lg(r,TODAY,HRS[0],`Medical SMS prepared · ${fmt(r.medDate)} ${r.medTime}`);S.modal=null;toast(t('SMS marked as sent'));render(true);break}
     case 'med-res':{const r=byId(id);if(v==='Fit'){r.stage='Pre-Training';r.start=D(2026,11,1);r.end=D(2026,12,31);setSup(r);setPre(r,0);LOAD[r.dept]++;lg(r,TODAY,'Medical Centre','Fit · moved to Pre-Training');toast(t('Fit · moved to Pre-Training'))}else{r.stage='Not Selected';r.reason='Medical';lg(r,TODAY,'Medical Centre','Unfit');toast(t('Recorded as unfit'))}render(true);break}
     case 'tog':{const r=byId(id),o=el.dataset.sec==='post'?r.post:r.pre,k=el.dataset.k;o[k]=o[k]==='done'?'pending':'done';if(el.dataset.sec==='post'&&['ppe','card','laptop'].every(x=>r.post[x]!=='pending'))r.post.cert='done';lg(r,TODAY,HRS[0],(PRE.concat(POST).find(p=>p[0]===k)||[k,k])[1]+' · '+o[k]);render(true);break}
+    case 'stg':S.f.stage=S.f.stage===v&&v!=='all'?'pipeline':v;render(true);break;
     case 'tmode':S.tf.mode=v;render(true);break;
     case 'etab':S.eTab=v;render(true);break;
     case 'copy-link':{const n=document.getElementById('eid-link');const ok=()=>toast(t('Link copied'));try{navigator.clipboard.writeText(n.value).then(ok,()=>{n.select();toast(t('Select the link and copy it'))})}catch(err){n.select()}break}
@@ -1616,6 +1680,7 @@ document.addEventListener('click',e=>{
       STIPEND.Eidaad=e1;STIPEND.Summer=STIPEND.Winter=STIPEND.Referral=o1;ALLOW[0].min=th;ALLOW.forEach((x,i)=>TIERS[i].p=x.p);
       ALL.forEach(r=>r.evals.forEach(x=>{const c=allowCalc(x.sched,x.attended,x.excused,x.avg);x.idx=c.idx;x.att=c.ti}));toast(t('Settings saved'));render(true);break}
     case 'sup-open':S.supSel=id;S.page.s='trainee';render();window.scrollTo(0,0);break;
+    case 'ev-edit':{const r=byId(id),i=Number(v);if(!r.evals[i]||r.evals[i].sign.hr)break;S.supSel=id;S.ev=evEdit(r,i);S.page.s='form';render();window.scrollTo(0,0);break}
     case 'ev-start':S.supSel=id;S.ev=evNew(byId(id));S.page.s='form';render();window.scrollTo(0,0);break;
     case 'ev-exit':S.page.s=S.supSel?'trainee':'trainees';S.ev=null;render();window.scrollTo(0,0);break;
     case 'ev-goto':E.step=Number(v);E.err='';render();window.scrollTo(0,0);break;
@@ -1650,6 +1715,7 @@ document.addEventListener('change',e=>{const el=e.target,id=el.id;
   if(el.dataset.plan!=null){byId(S.supSel).plan[Number(el.dataset.plan)].done=el.checked;render(true);return}
   if(el.dataset.med){const r=byId(el.dataset.id);if(el.dataset.med==='date')r.medDate=el.value?new Date(el.value+'T00:00'):null;else r.medTime=el.value;render(true)}
 });
+document.addEventListener('toggle',e=>{const d=e.target;if(d&&d.dataset&&d.dataset.gd)S.gd[d.dataset.gd]=d.open},true);
 document.addEventListener('submit',e=>{e.preventDefault();const f={'f-t1':lgT1,'f-t2':lgT2,'f-s':lgS,'f-h1':lgH1,'f-h2':lgH2}[e.target.id];if(f){f();render(true);refocus(S.lt==='t'?'g-code':'g-hc')}});
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(S.notif)S.notif=false;else if(S.report)S.report=null;else if(S.modal)S.modal=null;else if(S.drawer)S.drawer=null;else if(S.side)S.side=false;else return;render(true)});
 /* start in the language from ?lang=, the last choice (shared with the other pages) or the browser */
