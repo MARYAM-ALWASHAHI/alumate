@@ -670,7 +670,13 @@ function assign(r,ignoreCap){
   const d=opts[0]; r.dept=d.n; if(!ignoreCap)LOAD[d.n]++;
   r.major=d.m.includes(r.major)?r.major:pick(d.m);
 }
-function setSup(r){if(r.dept){const s=pick(deptOf(r.dept).s);r.sup={name:s[0],id:s[1]};r.mentor={name:`${pick(R()<.5?FF:FM)} ${pick(FATHER)} ${pick(FAM)}`,id:'E-'+ri(24000,27999)}}}
+/* one supervisor per trainee: a trainee in training or starting soon gets a supervisor who has no other current trainee;
+   if the department has none free, a new supervisor is added to it */
+let SUPSEQ=16100;
+const supBusy=(id,me)=>ALL.some(x=>x!==me&&x.sup&&x.sup.id===id&&(x.stage==='Training'||x.stage==='Pre-Training'));
+function setSup(r){if(r.dept){const d=deptOf(r.dept);let s=(r.stage==='Training'||r.stage==='Pre-Training')?d.s.find(x=>!supBusy(x[1],r)):pick(d.s);
+  if(!s){s=[`${pick(R()<.5?FF:FM)} ${pick(FATHER)} ${pick(FAM)}`,'E-'+(SUPSEQ++)];d.s.push(s)}
+  r.sup={name:s[0],id:s[1]};r.mentor={name:`${pick(R()<.5?FF:FM)} ${pick(FATHER)} ${pick(FAM)}`,id:'E-'+ri(24000,27999)}}}
 function setPre(r,p){
   const ops=OPS.includes(r.dept);
   PRE.forEach(([k])=>{
