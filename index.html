@@ -493,12 +493,6 @@ html[dir=rtl] .toast{transform:translateX(50%)}
   .a4 *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
-/* Home: numbers band */
-.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:40px}
-.nums .card{padding:22px 20px;text-align:center}
-.nums b{display:block;font-size:30px;line-height:38px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
-.nums span{font-size:13px;color:var(--muted)}
-@media (max-width:800px){.nums{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* Home: FAQ */
 .faq{display:flex;flex-direction:column;gap:10px}
 .faq details{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-xs)}
@@ -950,16 +944,11 @@ function vHome(){
   <div class="card cp"><div class="jr">${[['Apply','Online form'],['Assessment','Test or interview'],['Selection','By HR criteria'],['Medical','At the company clinic'],['Training','Monthly evaluation'],['Certificate','On completion']].map((s,i)=>`<div class="${i<1?'dn':''}"><i>${i+1}</i><b>${t(s[0])}</b><span class="cap">${t(s[1])}</span></div>`).join('')}</div></div>
 
   <div class="band">${[['trend','Real opportunities','for real growth'],['users','Support at every step','from day one to graduation'],['shield','A stronger workforce','for Oman']].map(([i,a,b])=>`<div>${I[i]}<p><b>${t(a)}</b><span>${t(b)}</span></p></div>`).join('')}</div>
-  ${homeNums()}
   <div class="sec-t" id="sec-faq"><div><h2 class="h2">${t('Frequently asked questions')}</h2><p class="muted">${t('Everything you need to know before you apply.')}</p></div></div>
   <div class="faq">${faqItems().map(([q,a],i)=>`<details ${i?'':'open'}><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>
   ${siteFoot()}</main>`;
 }
 
-function homeNums(){
-  const since=PAST.length+ALL.filter(r=>['Pre-Training','Training','Completed'].includes(r.stage)).length;
-  return `<div class="nums">${[[since,'Trainees since 2022'],[DEPTS.length,'Host departments'],[UNIS.length,'Partner universities'],[mean(PAST.map(p=>p.score)).toFixed(1)+' / 4','Average trainee rating']].map(([n,l])=>`<div class="card"><b><bdi dir="ltr">${n}</bdi></b><span>${t(l)}</span></div>`).join('')}</div>`;
-}
 function faqItems(){
   return [['Who can apply?','University and college students, and recent graduates. Family Referral is for relatives of Sohar Aluminium employees, and Eidaad is for the BDO cohort.'],
    ['How long is the training?','Summer, Winter and Family Referral placements last two months. The Eidaad Programme lasts ten months.'],
