@@ -257,6 +257,7 @@ html[dir=rtl] .snav button.on{box-shadow:inset -3px 0 0 var(--teal)}
 .snav button.on svg{color:var(--teal)}
 .snav .cnt{margin-inline-start:auto;font-size:11px;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:1px 8px}
 .side-b{margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
+.side-b:empty{display:none}
 .main{min-width:0;display:flex;flex-direction:column}
 .topb{position:sticky;top:0;z-index:20;height:68px;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 24px}
 .topb .inp-ic{flex:1;max-width:380px}
@@ -277,7 +278,7 @@ html[dir=rtl] .snav button.on{box-shadow:inset -3px 0 0 var(--teal)}
   .topb{padding:0 16px}.content{padding:20px 16px}
   .me div{display:none}
 }
-@media (max-width:600px){.topb .inp-ic{display:none}}
+@media (max-width:600px){.topb .inp-ic{display:none}.out-btn span{display:none}.out-btn{padding:0 10px}}
 .scrim{position:fixed;inset:0;background:rgba(11,45,74,.4);z-index:55}
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
 .tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;font-weight:600;color:var(--muted);white-space:nowrap;font-size:14px;margin-bottom:-1px}
@@ -1104,12 +1105,12 @@ function shell(k,content){
   const title={h:'HR Portal',t:'Trainee Portal',s:'Supervisor Portal'}[k];
   return `<div class="app"><aside class="side ${S.side?'open':''}" aria-label="${t(title)}"><button class="brand" data-act="go" data-v="home" style="padding:4px 8px 22px">${markSVG('')}<span>${wordmark('inv')}<small>${t(title)}</small></span></button>
     <nav class="snav">${nav.map(([v,l,i,c])=>`<button data-act="pg" data-v="${v}" class="${cur===v?'on':''}">${I[i]}<span>${t(l)}</span>${c?`<span class="cnt">${c}</span>`:''}</button>`).join('')}</nav>
-    <div class="side-b snav">${k==='h'?`<button data-act="pg" data-v="settings" class="${cur==='settings'?'on':''}">${I.cog}<span>${t('Settings')}</span></button>`:''}<button data-act="logout">${I.out}<span>${t('Sign out')}</span></button></div></aside>
+    <div class="side-b snav">${k==='h'?`<button data-act="pg" data-v="settings" class="${cur==='settings'?'on':''}">${I.cog}<span>${t('Settings')}</span></button>`:''}</div></aside>
   ${S.side?'<div class="scrim" data-act="side"></div>':''}
   <div class="main"><header class="topb"><button class="icon-btn menu-btn" data-act="side" aria-label="${t('Menu')}">${I.menu}</button>
     ${k==='h'?`<div class="inp-ic">${I.search}<input class="inp" id="top-q" placeholder="${t('Search trainees, SA number, university')}" value="${esc(S.f.q)}"></div>`:`<div class="sp"></div>`}
     <span class="sp"></span>${langSw()}${(()=>{const N=notifs(k);return `<div class="ntf-w"><button class="icon-btn" aria-label="${t('Notifications')}" aria-expanded="${S.notif}" data-act="bell">${I.bell}${N.length?'<span class="dot"></span>':''}</button>${S.notif?`<div class="ntf" role="dialog" aria-label="${t('Notifications')}"><div class="ntf-h"><b>${t('Notifications')}</b>${N.length?pill(String(N.length),'teal'):''}</div>${N.map(n=>`<button class="al" data-act="${n.a}" data-v="${n.v||''}" ${n.id?`data-id="${n.id}"`:''}><span class="kpi-i ${n.c}">${I[n.i]}</span><span class="tx"><b>${n.t}</b>${n.s?`<small>${n.s}</small>`:''}</span></button>`).join('')||`<div class="empty">${I.check}<b>${t('You are all caught up')}</b></div>`}</div>`:''}</div>`})()}
-    <div class="me">${avatar(nm,'t')}<div><b>${esc(nm)}</b><small>${role}</small></div></div></header>
+    <div class="me">${avatar(nm,'t')}<div><b>${esc(nm)}</b><small>${role}</small></div></div><button class="btn btn-s btn-sm out-btn" data-act="logout" aria-label="${t('Sign out')}">${I.out}<span>${t('Sign out')}</span></button></header>
   <main class="content">${content}</main></div></div>`;
 }
 const ph=(h,p,right)=>{const g=S._g,f=S._f;S._g=null;S._f=null;return `<div class="ph"><div><h1>${h}</h1>${p?`<p>${p}</p>`:''}</div>${right?`<div class="row">${right}</div>`:''}</div>${f?roleFlow(f):''}${g?guide(g):''}`};
