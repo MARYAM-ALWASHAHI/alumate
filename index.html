@@ -661,6 +661,11 @@ const ALL=[];
 let LOAD={}; DEPTS.forEach(d=>LOAD[d.n]=0);
 
 function emailBase(name){const p=name.split(' ');return (p[0][0]+'.'+p.slice(2).join('').replace(/^Al/,'al')).toLowerCase()}
+/* Oman: governorates and their wilayats */
+const REGIONS={'Muscat':['Muscat','Muttrah','Bawshar','As Seeb','Al Amerat','Qurayyat'],'North Al Batinah':['Sohar','Shinas','Liwa','Saham','Al Khaburah','As Suwayq'],'South Al Batinah':['Ar Rustaq','Al Awabi','Nakhal','Wadi Al Maawil','Barka','Al Musanaah'],'Ad Dakhiliyah':['Nizwa','Bahla','Manah','Al Hamra','Adam','Izki','Samail','Bidbid'],'Ad Dhahirah':['Ibri','Yanqul','Dhank'],'Al Buraimi':['Al Buraimi','Mahdah','As Sunaynah'],'North Ash Sharqiyah':['Ibra','Al Mudhaybi','Bidiyah','Al Qabil','Wadi Bani Khalid','Dima Wa At Taiyyin'],'South Ash Sharqiyah':['Sur','Al Kamil Wal Wafi','Jaalan Bani Bu Hassan','Jaalan Bani Bu Ali','Masirah'],'Dhofar':['Salalah','Taqah','Mirbat','Thumrait'],'Musandam':['Khasab','Bukha','Dibba'],'Al Wusta':['Haima','Duqm']};
+const GOVS=Object.keys(REGIONS);
+const RG=rng(9071),RG_W=[['North Al Batinah',45],['South Al Batinah',15],['Muscat',12],['Ad Dhahirah',7],['Al Buraimi',6],['Ad Dakhiliyah',6],['North Ash Sharqiyah',3],['South Ash Sharqiyah',2],['Dhofar',2],['Musandam',1],['Al Wusta',1]];
+function sampleRegion(){let x=RG()*100,g=RG_W[0][0];for(const [n,w] of RG_W){if(x<w){g=n;break}x-=w}const L=REGIONS[g];return [g,L[Math.floor(RG()*L.length)]]}
 function mk(o){
   const g=R()<.45?'F':'M';
   const name=`${pick(g==='F'?FF:FM)} ${pick(FATHER)} ${pick(FAM)}`;
@@ -670,7 +675,7 @@ function mk(o){
     start:o.start||null,end:o.end||null,applied:o.applied,accepted:o.accepted||null,iq:null,pers:null,interview:null,ref:null,
     pre:{},evals:[],sessions:[],plan:[],post:{},log:[],bank:pick(['Bank Muscat','Bank Dhofar','National Bank of Oman','Sohar International','Bank Nizwa','Oman Arab Bank']),
     acct:String(ri(1000,9999)),ppeSize:null,medDate:null,medTime:null,medSms:false,medResult:null,feedback:null,reason:null};
-  r.pemail=emailBase(name)+'@gmail.com';
+  r.pemail=emailBase(name)+'@gmail.com';[r.gov,r.wil]=sampleRegion();
   if(o.graduate){r.graduated=true;r.gradYear=2025;r.reqGrad=false}
   if(o.track==='Referral'){const d=pick(DEPTS),s=pick(d.s);r.ref={empId:s[1].replace('E-','E-3'),empName:`${pick(FM)} ${pick(FATHER)} ${r.name.split(' ').slice(2).join(' ')}`,rel:pick(['Son / Daughter','Brother / Sister','Nephew / Niece'])}}
   ALL.push(r);return r;
@@ -895,12 +900,13 @@ const fms=m=>S.lang==='ar'?MON_AR[MON.indexOf(m.slice(0,3))]:m.slice(0,3);
 
 /* ============ State ============ */
 const LAST_CLOSED=D(2026,9,30);
+const fDefault=()=>({track:'all',pri:'all',stage:'pipeline',q:'',gov:'all',gpa:'all',gen:'all',grad:'all',maj:'all',uni:'all'});
 const S={lang:'en',view:'home',portal:null,side:false,notif:false,gd:{},_g:null,
   page:{h:'overview',t:'dashboard',s:'trainees'},
   auth:{t:null,s:null,h:false},lt:'t',
   lg:{t:{sent:false,id:null,code:'',err:'',v:''},s:{err:'',fails:0,v:'',p:''},h:{step:1,err:'',fails:0,code:'',v:'',p:''}},
   apply:{step:0,track:null,f:{},done:null,err:''},
-  f:{track:'all',pri:'all',stage:'pipeline',q:''},tf:{mode:'active',inc:false},hf:{year:'all',dept:'all',q:''},
+  f:fDefault(),tf:{mode:'active',inc:false},hf:{year:'all',dept:'all',q:''},
   am:'Sep 2026',approved:{'Jun 2026':'02 Jul 2026','Jul 2026':'03 Aug 2026','Aug 2026':'02 Sep 2026'},amTrack:'all',
   eTab:'overview',drawer:null,modal:null,report:null,evOpen:null,after:null,
   supSel:null,stab:'overview',ev:null,drafts:{},tc:'',fb:{rating:0,text:''},q:''};
@@ -1012,13 +1018,13 @@ function vApply(){
     <div class="row" style="justify-content:center;margin-top:24px"><button class="btn btn-s" data-act="ap-new">${t('New application')}</button><button class="btn btn-p" data-act="go-hr-app" data-id="${r.id}">${t('View in HR Portal')}</button></div></div></main>`}
   const st=A.step;let body='';
   if(st===0)body=`<h2 class="h3">${t('Choose your programme')}</h2><div class="g g2" style="margin-top:16px">${PATHS.map(([k,icn,d,m])=>`<button class="card path" data-act="ap-track" data-v="${k}" style="${A.track===k?'border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-50)':''}"><span class="pi">${I[icn]}</span><h3>${trk(k)}</h3><p>${t(d)}</p><div class="meta">${m.map(x=>pill(t(x),'neu')).join('')}</div></button>`).join('')}</div>`;
-  else if(st===1){body=`<h2 class="h3">${t('Personal information')}</h2><div class="form-grid" style="margin-top:16px">${inp('name','Full name (as on Civil ID)')}${inp('civil','Civil ID number','text','8 digits')}${inp('phone','Mobile number','tel')}${inp('email','Personal email','email')}${sel('gender','Gender',['Male','Female'],1)}${inp('wilayat','Wilayat')}</div>`;
+  else if(st===1){body=`<h2 class="h3">${t('Personal information')}</h2><div class="form-grid" style="margin-top:16px">${inp('name','Full name (as on Civil ID)')}${inp('civil','Civil ID number','text','8 digits')}${inp('phone','Mobile number','tel')}${inp('email','Personal email','email')}${sel('gender','Gender',['Male','Female'],1)}${sel('gov','Governorate',GOVS,1)}${S.apply.f.gov?sel('wil','Wilayat',REGIONS[S.apply.f.gov],1):''}</div>`;
     if(A.track==='Referral')body+=`<h2 class="h4" style="margin-top:28px">${t('Referring employee')}</h2><div class="form-grid" style="margin-top:12px">${inp('empId','Employee ID')}${inp('empName','Employee name')}${sel('rel','Relationship',['Son / Daughter','Brother / Sister','Nephew / Niece','Spouse','Other'],1)}</div>`;
     if(A.track==='Eidaad')body+=`<div class="code-pv" style="margin-top:20px">${I.shield}<span>${t('Private Eidaad link verified · Eidaad 2027 cohort')}</span></div>`;}
   else if(st===2)body=`<h2 class="h3">${t('Academic information')}</h2><div class="form-grid" style="margin-top:16px">${sel('uni','University / College',UNIS,1)}${sel('major','Major',ALL_MAJORS,1)}${inp('gpa','GPA (out of 4.0)','number')}${yn('grad','Have you graduated?')}${A.f.grad?sel('gradYear',A.f.grad==='No'?'Expected graduation year':'Graduation year',A.f.grad==='No'?['2026','2027','2028','2029']:['2026','2025','2024','2023']):''}</div>
     ${A.track!=='Eidaad'?`<h2 class="h4" style="margin-top:28px">${t('Priority questions')}</h2><div class="form-grid" style="margin-top:12px">${yn('reqGrad','Is this training required for your graduation?')}${yn('before','Have you trained at Sohar Aluminium before?')}</div>`:''}`;
   else if(st===3)body=`<h2 class="h3">${t('Documents')}</h2><div class="g g2" style="margin-top:16px">${[['cv','CV'],['tr','Transcript'],['ul','University training letter'],['id','Civil ID copy']].filter(([k])=>k!=='ul'||A.f.reqGrad==='Yes').map(([k,l])=>`<label class="card" style="display:flex;gap:14px;align-items:center;padding:16px;cursor:pointer;border-style:dashed"><span class="kpi-i ${A.f['file_'+k]?'ic-ok':'ic-navy'}">${A.f['file_'+k]?I.check:I.file}</span><span style="flex:1;min-width:0"><b style="display:block">${t(l)}</b><small class="muted">${A.f['file_'+k]?esc(A.f['file_'+k]):t('PDF or image, up to 5 MB')}</small></span><input type="file" class="sr" data-file="${k}" accept=".pdf,image/*"></label>`).join('')}</div>`;
-  else{const f=A.f;const rows=[['Programme',trk(A.track)],['Full name',f.name],['Civil ID',f.civil],['Mobile number',f.phone],['Personal email',f.email],['University / College',t(f.uni)],['Major',t(f.major)],['GPA',f.gpa],['Graduated',f.grad==='Yes'?t('Yes')+' · '+f.gradYear:t('No')+' · '+(f.gradYear||'—')]];
+  else{const f=A.f;const rows=[['Programme',trk(A.track)],['Full name',f.name],['Civil ID',f.civil],['Mobile number',f.phone],['Personal email',f.email],['Gender',t(f.gender||'')],['Governorate',t(f.gov||'')],['Wilayat',t(f.wil||'')],['University / College',t(f.uni)],['Major',t(f.major)],['GPA',f.gpa],['Graduated',f.grad==='Yes'?t('Yes')+' · '+f.gradYear:t('No')+' · '+(f.gradYear||'—')]];
     if(A.track!=='Eidaad')rows.push(['Required for graduation',t(f.reqGrad)],['Trained here before',t(f.before)]);
     if(A.track==='Referral')rows.push(['Referring employee',(f.empName||'')+' · '+(f.empId||'')]);
     body=`<h2 class="h3">${t('Review and submit')}</h2><dl class="kv" style="margin-top:12px">${rows.map(r=>`<dt>${t(r[0])}</dt><dd>${esc(r[1]||'—')}</dd>`).join('')}</dl>`}
@@ -1035,14 +1041,14 @@ function vApply(){
 /* how the online test reaches the applicant: shown after applying and in the FAQ */
 function testSteps(){return `<div class="card cp" style="text-align:start;margin-top:20px;background:var(--grey)"><h3 class="h4" style="margin-bottom:10px">${t('How the online test works')}</h3><div class="cl">${[['msg','You receive an SMS and an email','They hold the test link and your 6-character access code.'],['link','Open the link','Enter the mobile number you applied with and the access code.'],['clip','Take the two tests once','IQ test first, then the personality test. Each is timed.'],['check','HR reviews the results','You hear back by SMS. The code works only once.']].map(([i,a,b],k)=>`<div><span class="ci ok" style="background:var(--teal-50);color:var(--teal-ink)">${k+1}</span><div class="tx"><b>${t(a)}</b><small>${t(b)}</small></div></div>`).join('')}</div></div>`}
 function apValidate(){const A=S.apply,f=A.f;
-  if(A.step===1){if(!f.name||!f.civil||!f.phone||!f.email)return t('Enter your name, Civil ID, mobile number and email.');if(!/^\d{8}$/.test(f.civil))return t('Civil ID must be 8 digits.');if(A.track==='Referral'&&(!f.empId||!f.empName))return t('Enter the referring employee ID and name.')}
+  if(A.step===1){if(!f.name||!f.civil||!f.phone||!f.email)return t('Enter your name, Civil ID, mobile number and email.');if(!f.gender||!f.gov||!f.wil)return t('Choose your gender, governorate and wilayat.');if(!/^\d{8}$/.test(f.civil))return t('Civil ID must be 8 digits.');if(A.track==='Referral'&&(!f.empId||!f.empName))return t('Enter the referring employee ID and name.')}
   if(A.step===2){if(!f.uni||!f.major||!f.gpa||!f.grad)return t('Complete university, major, GPA and graduation status.');if(A.track!=='Eidaad'&&(!f.reqGrad||!f.before))return t('Answer both priority questions.')}
   if(A.step===3&&(!f.file_cv||!f.file_tr))return t('Attach your CV and transcript.');
   return ''}
-function apSample(){const f=S.apply.f;Object.assign(f,{name:f.name||'Fatma Salim Al Shidi',civil:f.civil||'21458736',phone:f.phone||'92415870',email:f.email||'f.alshidi@gmail.com',gender:f.gender||'Female',wilayat:f.wilayat||'Sohar',empId:f.empId||'E-31882',empName:f.empName||'Salim Khamis Al Shidi',rel:f.rel||'Son / Daughter',uni:f.uni||'Sohar University',major:f.major||'Chemical Engineering',gpa:f.gpa||'3.41',grad:f.grad||'No',gradYear:f.gradYear||'2027',reqGrad:f.reqGrad||'Yes',before:f.before||'No',file_cv:f.file_cv||'CV_Fatma_AlShidi.pdf',file_tr:f.file_tr||'Transcript_Fall2026.pdf',file_ul:f.file_ul||'SU_Training_Letter.pdf'})}
+function apSample(){const f=S.apply.f;Object.assign(f,{name:f.name||'Fatma Salim Al Shidi',civil:f.civil||'21458736',phone:f.phone||'92415870',email:f.email||'f.alshidi@gmail.com',gender:f.gender||'Female',gov:f.gov||'North Al Batinah',wil:f.wil||'Sohar',empId:f.empId||'E-31882',empName:f.empName||'Salim Khamis Al Shidi',rel:f.rel||'Son / Daughter',uni:f.uni||'Sohar University',major:f.major||'Chemical Engineering',gpa:f.gpa||'3.41',grad:f.grad||'No',gradYear:f.gradYear||'2027',reqGrad:f.reqGrad||'Yes',before:f.before||'No',file_cv:f.file_cv||'CV_Fatma_AlShidi.pdf',file_tr:f.file_tr||'Transcript_Fall2026.pdf',file_ul:f.file_ul||'SU_Training_Letter.pdf'})}
 function apSubmit(){const A=S.apply,f=A.f;
   const r=mk({track:A.track,intake:A.track==='Eidaad'?'Eidaad 2027':A.track==='Referral'?'Referral 2026':'Winter 2026',stage:'Applied',major:f.major,applied:TODAY,graduate:f.grad==='Yes'});
-  Object.assign(r,{name:f.name,civil:f.civil,phone:f.phone,pemail:f.email,uni:f.uni,gpa:Number(f.gpa).toFixed(2),graduated:f.grad==='Yes',gradYear:Number(f.gradYear)||r.gradYear,reqGrad:f.reqGrad==='Yes',declaredBefore:f.before==='Yes'});
+  Object.assign(r,{name:f.name,g:f.gender==='Male'?'M':'F',gov:f.gov,wil:f.wil,civil:f.civil,phone:f.phone,pemail:f.email,uni:f.uni,gpa:Number(f.gpa).toFixed(2),graduated:f.grad==='Yes',gradYear:Number(f.gradYear)||r.gradYear,reqGrad:f.reqGrad==='Yes',declaredBefore:f.before==='Yes'});
   if(PAST.some(p=>p.civil===f.civil))r.histFound=true;
   if(A.track==='Referral')r.ref={empId:f.empId,empName:f.empName,rel:f.rel||'—'};
   r.log=[];lg(r,TODAY,'Applicant','Application submitted ('+TRACK[r.track].name+')');
@@ -1217,11 +1223,26 @@ function hrOverview(){
   <div class="card" style="margin-top:16px"><div class="cp" style="padding-bottom:12px"><div class="ch" style="margin:0"><h3>${t('Starting next week')}</h3><span class="cap">${fd(TODAY)} – ${fd(addDays(TODAY,7))}</span></div></div>
     <div class="tw" style="border:0;border-radius:0;border-top:1px solid var(--line)"><table><tr><th>${t('Trainee')}</th><th>${t('Department')}</th><th>${t('Start date')}</th><th>${t('Procedures')}</th></tr>${nextWeek.map(r=>{const [a,b]=preDone(r);return `<tr class="clk" data-act="open" data-id="${r.id}"><td>${who(r.name,trk(r.track))}</td><td>${dn(r.dept)}</td><td class="num">${fd(r.start)}</td><td>${pill(a+' / '+b,a===b?'ok':'warn')}</td></tr>`}).join('')||`<tr><td colspan="4" class="empty">${t('No trainees start next week.')}</td></tr>`}</table></div></div>`;
 }
-function hrApplicants(){
+/* the applicants list after every filter, in ranking order (used by the table and the export) */
+function applicantsList(){
   const F=S.f;let L=ALL.filter(r=>F.stage==='pipeline'?PIPE.includes(r.stage):F.stage==='all'?true:r.stage===F.stage);
   if(F.track!=='all')L=L.filter(r=>r.track===F.track);if(F.pri!=='all')L=L.filter(r=>priority(r)===F.pri);
-  if(F.q){const q=F.q.toLowerCase();L=L.filter(r=>(r.name+' '+r.id+' '+r.uni+' '+r.major+' '+r.civil).toLowerCase().includes(q))}
-  const rk={High:0,Medium:1,Standard:2};L.sort((a,b)=>(rk[priority(a)]??3)-(rk[priority(b)]??3)||(score(b)??-1)-(score(a)??-1));
+  if(F.gov!=='all')L=L.filter(r=>r.gov===F.gov);if(F.gpa!=='all')L=L.filter(r=>Number(r.gpa)>=Number(F.gpa));
+  if(F.gen!=='all')L=L.filter(r=>r.g===F.gen);if(F.grad!=='all')L=L.filter(r=>F.grad==='yes'?r.graduated:!r.graduated);
+  if(F.maj!=='all')L=L.filter(r=>r.major===F.maj);if(F.uni!=='all')L=L.filter(r=>r.uni===F.uni);
+  if(F.q){const q=F.q.toLowerCase();L=L.filter(r=>(r.name+' '+r.id+' '+r.uni+' '+r.major+' '+r.civil+' '+r.wil+' '+t(r.uni)+' '+t(r.wil)).toLowerCase().includes(q))}
+  const rk={High:0,Medium:1,Standard:2};return L.sort((a,b)=>(rk[priority(a)]??3)-(rk[priority(b)]??3)||(score(b)??-1)-(score(a)??-1));
+}
+function applicantsCsv(){
+  const L=applicantsList(),q=v=>`"${String(v??'').replace(/"/g,'""')}"`;
+  const head=['SA number','Name','Programme','Intake','Gender','Governorate','Wilayat','University','Major','GPA','Graduated','Graduation year','Required for graduation','Trained here before','Priority','Score','Status','Applied','Mobile','Email'];
+  const rows=L.map(r=>[r.id,r.name,TRACK[r.track].name,r.intake,r.g==='F'?'Female':'Male',r.gov,r.wil,r.uni,r.major,r.gpa,r.graduated?'Yes':'No',r.gradYear,r.track==='Eidaad'?'':r.reqGrad?'Yes':'No',trainedBefore(r)?'Yes':'No',priority(r)||'',score(r)??(r.interview??''),r.stage,iso(r.applied),'+968 '+r.phone,r.pemail]);
+  const csv='\ufeff'+[head,...rows].map(x=>x.map(q).join(',')).join('\r\n');
+  try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='alumate-applicants-'+iso(TODAY)+'.csv';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);toast(tt('{n} applicants exported',{n:L.length}))}catch(e){toast(t('Export is not available in this browser'))}
+}
+function hrApplicants(){
+  const F=S.f,L=applicantsList(),opt=(v,l,cur)=>`<option value="${esc(v)}" ${cur===v?'selected':''}>${esc(l)}</option>`;
+  const more=['gov','gpa','gen','grad','maj','uni'].filter(k=>F[k]!=='all').length;
   const ORDER=['Applied','Under Review','Assessment','Interview','Selected','Medical','Pre-Training','Training','Completed','Not Selected'];
   const base=ALL.filter(r=>F.track==='all'||r.track===F.track);
   return `${ph(t('Applicants'),tt('{n} applicants',{n:L.length}))}
@@ -1230,8 +1251,16 @@ function hrApplicants(){
     <div class="field"><label for="f-track">${t('Programme')}</label><select class="inp" id="f-track"><option value="all">${t('All')}</option>${Object.keys(TRACK).map(k=>`<option value="${k}" ${F.track===k?'selected':''}>${trk(k)}</option>`).join('')}</select></div>
     <div class="field"><label for="f-pri">${t('Priority')}</label><select class="inp" id="f-pri"><option value="all">${t('All')}</option>${['High','Medium','Standard'].map(p=>`<option value="${p}" ${F.pri===p?'selected':''}>${t(p)}</option>`).join('')}</select></div>
     <div class="field"><label for="f-stage">${t('Status')}</label><select class="inp" id="f-stage"><option value="pipeline" ${F.stage==='pipeline'?'selected':''}>${t('In process')}</option><option value="all" ${F.stage==='all'?'selected':''}>${t('All')}</option>${[...STAGES,'Not Selected'].map(s=>`<option value="${s}" ${F.stage===s?'selected':''}>${t(s)}</option>`).join('')}</select></div></div>
-  <div class="tw"><table><tr><th>${t('Applicant')}</th><th>${t('Programme')}</th><th>${t('University · Major')}</th><th>${t('Priority')}</th><th>${t('Score')}</th><th>${t('Status')}</th><th>${t('Applied')}</th></tr>
-  ${L.map(r=>`<tr class="clk" data-act="open" data-id="${r.id}"><td>${who(r.name,`<span class="mono">${r.id}</span>${r.histFound?' · <span style="color:var(--warning-ink)">'+t('in history')+'</span>':''}`)}</td><td>${trk(r.track)}</td><td><b style="font-weight:500">${esc(t(r.uni))}</b><div class="cap">${esc(t(r.major))}</div></td><td>${priPill(priority(r))}</td><td class="num">${score(r)!=null?`<b>${score(r)}</b>`:r.interview!=null?`<b>${r.interview}</b> <span class="cap">${t('interview')}</span>`:'<span class="muted">—</span>'}</td><td>${stagePill(r.stage)}</td><td class="num muted">${fd(r.applied)}</td></tr>`).join('')||`<tr><td colspan="7"><div class="empty">${I.search}<b>${t('No applicants match these filters')}</b></div></td></tr>`}</table></div></div>`;
+  <div class="flt">
+    <div class="field"><label for="f-gov">${t('Governorate')}</label><select class="inp" id="f-gov">${opt('all',t('All'),F.gov)}${GOVS.map(g=>opt(g,t(g),F.gov)).join('')}</select></div>
+    <div class="field"><label for="f-gpa">${t('Minimum GPA')}</label><select class="inp" id="f-gpa">${opt('all',t('All'),F.gpa)}${['3.5','3.0','2.75','2.5'].map(g=>opt(g,g+'+',F.gpa)).join('')}</select></div>
+    <div class="field"><label for="f-gen">${t('Gender')}</label><select class="inp" id="f-gen">${opt('all',t('All'),F.gen)}${opt('F',t('Female'),F.gen)}${opt('M',t('Male'),F.gen)}</select></div>
+    <div class="field"><label for="f-grad">${t('Graduation')}</label><select class="inp" id="f-grad">${opt('all',t('All'),F.grad)}${opt('yes',t('Graduated'),F.grad)}${opt('no',t('Still studying'),F.grad)}</select></div>
+    <div class="field"><label for="f-maj">${t('Major')}</label><select class="inp" id="f-maj">${opt('all',t('All'),F.maj)}${ALL_MAJORS.map(m=>opt(m,t(m),F.maj)).join('')}</select></div>
+    <div class="field"><label for="f-uni">${t('University')}</label><select class="inp" id="f-uni">${opt('all',t('All'),F.uni)}${UNIS.map(u=>opt(u,t(u),F.uni)).join('')}</select></div>
+    <div class="row" style="gap:8px;align-self:flex-end">${more?`<button class="btn btn-g btn-sm" data-act="f-reset">${t('Clear filters')}</button>`:''}<button class="btn btn-s btn-sm" data-act="csv">${I.down} ${t('Export to Excel (CSV)')}</button></div></div>
+  <div class="tw"><table><tr><th>${t('Applicant')}</th><th>${t('Programme')}</th><th>${t('University · Major')}</th><th>${t('GPA')}</th><th>${t('Region')}</th><th>${t('Priority')}</th><th>${t('Score')}</th><th>${t('Status')}</th><th>${t('Applied')}</th></tr>
+  ${L.map(r=>`<tr class="clk" data-act="open" data-id="${r.id}"><td>${who(r.name,`<span class="mono">${r.id}</span>${r.histFound?' · <span style="color:var(--warning-ink)">'+t('in history')+'</span>':''}`)}</td><td>${trk(r.track)}</td><td><b style="font-weight:500">${esc(t(r.uni))}</b><div class="cap">${esc(t(r.major))}</div></td><td class="num"><b>${r.gpa}</b><div class="cap">${t(r.graduated?'Graduated':'Student')} · ${r.gradYear}</div></td><td><b style="font-weight:500">${esc(t(r.wil))}</b><div class="cap">${esc(t(r.gov))}</div></td><td>${priPill(priority(r))}</td><td class="num">${score(r)!=null?`<b>${score(r)}</b>`:r.interview!=null?`<b>${r.interview}</b> <span class="cap">${t('interview')}</span>`:'<span class="muted">—</span>'}</td><td>${stagePill(r.stage)}</td><td class="num muted">${fd(r.applied)}</td></tr>`).join('')||`<tr><td colspan="9"><div class="empty">${I.search}<b>${t('No applicants match these filters')}</b></div></td></tr>`}</table></div></div>`;
 }
 /* medical appointments: every 15 minutes within working hours (7:00 to 16:00) */
 const MED_SLOTS=Array.from({length:36},(_,i)=>String(7+Math.floor(i/4)).padStart(2,'0')+':'+String(i%4*15).padStart(2,'0'));
@@ -1608,6 +1637,7 @@ AR={
 'Sohar Aluminium plant at dusk':'مصنع صحار ألمنيوم عند الغروب','How the online test works':'كيف يتم الاختبار الإلكتروني','You receive an SMS and an email':'تصلك رسالة SMS وبريد إلكتروني','They hold the test link and your 6-character access code.':'فيهما رابط الاختبار ورمز الدخول من 6 خانات.','Open the link':'افتح الرابط','Enter the mobile number you applied with and the access code.':'أدخل رقم الجوال الذي قدّمت به ورمز الدخول.','Take the two tests once':'أدِّ الاختبارين مرة واحدة','IQ test first, then the personality test. Each is timed.':'اختبار الذكاء أولاً ثم اختبار الشخصية، ولكل منهما وقت محدد.','HR reviews the results':'الموارد البشرية تراجع النتائج','You hear back by SMS. The code works only once.':'تصلك النتيجة برسالة SMS، والرمز يُستخدم مرة واحدة.',
 'How does the online test work?':'كيف يتم الاختبار الإلكتروني؟','After HR reviews your application, you receive an SMS and an email with the test link and a 6-character access code. Open the link, enter your mobile number and the code, and take the IQ and personality tests once.':'بعد مراجعة طلبك تصلك رسالة SMS وبريد إلكتروني فيهما رابط الاختبار ورمز دخول من 6 خانات. افتح الرابط وأدخل رقم جوالك والرمز، ثم أدِّ اختباري الذكاء والشخصية مرة واحدة.',
 'Online test':'الاختبار الإلكتروني','Waiting for the applicant':'بانتظار المتقدم','Link and access code sent by SMS and email.':'أُرسل الرابط ورمز الدخول بالـ SMS والبريد.','Code':'الرمز','Resend link':'إعادة إرسال الرابط','Mark as completed (demo)':'تسجيله مكتملاً (تجريبي)','Test recorded as completed':'سُجّل الاختبار مكتملاً','Online test SMS':'رسالة الاختبار الإلكتروني',
+'Governorate':'المحافظة','Choose your gender, governorate and wilayat.':'اختر الجنس والمحافظة والولاية.','Minimum GPA':'أقل معدل','Graduation':'التخرج','Still studying':'طالب','Student':'طالب','Region':'المنطقة','Clear filters':'مسح التصفية','Export to Excel (CSV)':'تنزيل Excel (CSV)','{n} applicants exported':'تم تنزيل {n} متقدم','Export is not available in this browser':'التنزيل غير متاح في هذا المتصفح','Application details':'بيانات الطلب','found in history':'موجود في السجل','Muscat':'مسقط','North Al Batinah':'شمال الباطنة','South Al Batinah':'جنوب الباطنة','Ad Dakhiliyah':'الداخلية','Ad Dhahirah':'الظاهرة','Al Buraimi':'البريمي','North Ash Sharqiyah':'شمال الشرقية','South Ash Sharqiyah':'جنوب الشرقية','Dhofar':'ظفار','Musandam':'مسندم','Al Wusta':'الوسطى','Muttrah':'مطرح','Bawshar':'بوشر','As Seeb':'السيب','Al Amerat':'العامرات','Qurayyat':'قريات','Sohar':'صحار','Shinas':'شناص','Liwa':'لوى','Saham':'صحم','Al Khaburah':'الخابورة','As Suwayq':'السويق','Ar Rustaq':'الرستاق','Al Awabi':'العوابي','Nakhal':'نخل','Wadi Al Maawil':'وادي المعاول','Barka':'بركاء','Al Musanaah':'المصنعة','Nizwa':'نزوى','Bahla':'بهلاء','Manah':'منح','Al Hamra':'الحمراء','Adam':'أدم','Izki':'إزكي','Samail':'سمائل','Bidbid':'بدبد','Ibri':'عبري','Yanqul':'ينقل','Dhank':'ضنك','Mahdah':'محضة','As Sunaynah':'السنينة','Ibra':'إبراء','Al Mudhaybi':'المضيبي','Bidiyah':'بدية','Al Qabil':'القابل','Wadi Bani Khalid':'وادي بني خالد','Dima Wa At Taiyyin':'دماء والطائيين','Sur':'صور','Al Kamil Wal Wafi':'الكامل والوافي','Jaalan Bani Bu Hassan':'جعلان بني بو حسن','Jaalan Bani Bu Ali':'جعلان بني بو علي','Masirah':'مصيرة','Salalah':'صلالة','Taqah':'طاقة','Mirbat':'مرباط','Thumrait':'ثمريت','Khasab':'خصب','Bukha':'بخا','Dibba':'دبا','Haima':'هيما','Duqm':'الدقم',
 'Chemical Engineering':'الهندسة الكيميائية','Mechanical Engineering':'الهندسة الميكانيكية','Electrical Engineering':'الهندسة الكهربائية','Industrial Engineering':'الهندسة الصناعية','Marine Engineering':'الهندسة البحرية','Logistics Management':'إدارة اللوجستيات','Computer Science':'علوم الحاسوب','Information Technology':'تقنية المعلومات','Human Resource Management':'إدارة الموارد البشرية','Business Administration':'إدارة الأعمال','Occupational Health & Safety':'الصحة والسلامة المهنية','Environmental Science':'العلوم البيئية','Mass Communication':'الإعلام','Marketing':'التسويق','Supply Chain Management':'إدارة سلسلة الإمداد'
 };
 
@@ -1624,6 +1654,7 @@ function drawer(){
     ${score(r)!=null?`<p class="small" style="margin-top:10px">${t('Assessment score')} <b>${score(r)}</b> <span class="cap">IQ ${r.iq} · ${t('Personality')} ${r.pers} · GPA ${r.gpa}</span></p>`:''}</div>`:`<div class="card cp"><span class="cap">${t('Department interview')}</span><p style="margin-top:4px"><b>${r.interview??'—'} / 100</b> ${r.reason?'· '+esc(r.reason):''}</p></div>`}
   ${r.stage==='Assessment'?`<div class="card cp"><div class="ch" style="margin-bottom:8px"><h3>${t('Online test')}</h3>${r.iq!=null?pill(t('Completed'),'ok',1):pill(t('Waiting for the applicant'),'warn',1)}</div><p class="small">${t('Link and access code sent by SMS and email.')}${r.testCode?` ${t('Code')}: <b class="mono">${r.testCode}</b> · ${fd(r.testSent)}`:''}</p><div class="row" style="margin-top:12px">${r.iq==null?`<button class="btn btn-s btn-sm" data-act="test-resend" data-id="${r.id}">${I.send} ${t('Resend link')}</button><button class="btn btn-g btn-sm" data-act="test-done" data-id="${r.id}">${t('Mark as completed (demo)')}</button>`:`<span class="small">${t('Assessment score')} <b>${score(r)}</b></span>`}</div></div>`:''}
   ${r.ref?`<div class="card cp"><span class="cap">${t('Referral')}</span><p style="margin-top:4px">${esc(r.ref.empName)} · <span class="mono">${esc(r.ref.empId)}</span> · ${t(r.ref.rel)}</p></div>`:''}
+  <div class="card cp"><div class="ch"><h3>${t('Application details')}</h3><span class="cap">${t('Applied')} ${fd(r.applied)}</span></div><dl class="kv">${[['Gender',t(r.g==='F'?'Female':'Male')],['Governorate',esc(t(r.gov))],['Wilayat',esc(t(r.wil))],['University / College',esc(t(r.uni))],['Major',esc(t(r.major))],['GPA',`<b>${r.gpa}</b> / 4.0`],['Graduation',t(r.graduated?'Graduated':'Still studying')+' · '+r.gradYear]].concat(r.track!=='Eidaad'?[['Required for graduation',t(r.reqGrad?'Yes':'No')],['Trained here before',t(trainedBefore(r)?'Yes':'No')+(r.histFound?' · '+t('found in history'):'')]]:[],[['Documents',[t('CV'),t('Transcript'),t('Civil ID copy')].concat(r.reqGrad&&r.track!=='Eidaad'?[t('University training letter')]:[]).join(' · ')]]).map(([k,v])=>`<dt>${t(k)}</dt><dd>${v}</dd>`).join('')}</dl></div>
   <div class="card cp"><div class="ch"><h3>${t('Trainee record')}</h3></div><dl class="kv">${kv.map(([k,v])=>`<dt>${t(k)}</dt><dd>${v}</dd>`).join('')}</dl></div>
   ${r.evals.length?`<div class="card cp"><div class="ch"><h3>${t('Evaluations')}</h3><span class="cap">${t('Average')} ${mean(r.evals.map(e=>e.avg)).toFixed(2)} / 4</span></div>${lineChart(r.evals)}
     <div class="col" style="gap:8px;margin-top:12px">${r.evals.map((e,i)=>({e,i})).reverse().map(({e,i})=>`<div style="border:1px solid var(--line);border-radius:10px;overflow:hidden"><button class="row" style="width:100%;background:#fff;border:0;padding:12px 14px;flex-wrap:nowrap" data-act="ev-open" data-v="${r.id}-${i}"><b style="font-weight:600">${fm(e.month)}</b><span class="sp"></span>${e.sign.hr?'':pill(t('HR signature pending'),'warn')}<b class="num">${e.avg.toFixed(2)}</b>${I.chev.replace('<svg','<svg width="16"')}</button>${S.evOpen===r.id+'-'+i?`<div style="padding:0 14px 14px">${evDetail(r,e)}${e.sign.hr?'':`<button class="btn btn-p btn-sm" style="margin-top:12px" data-act="ev-hr" data-id="${r.id}" data-v="${i}">${t('Sign as HR')}</button>`}</div>`:''}</div>`).join('')}</div></div>`:''}
@@ -1716,7 +1747,7 @@ document.addEventListener('click',e=>{
     case 'ap-sample':apSample();A.err='';render(true);break;
     case 'ap-submit':apSubmit();render();window.scrollTo(0,0);break;
     case 'ap-new':S.apply={step:0,track:null,f:{},done:null,err:''};render();break;
-    case 'go-hr-app':S.page.h='applicants';S.f={track:'all',pri:'all',stage:'pipeline',q:''};if(S.auth.h){S.portal='h';S.view='portal';S.drawer=id}else{S.after=id;S.lt='h';S.view='signin'}render();window.scrollTo(0,0);break;
+    case 'go-hr-app':S.page.h='applicants';S.f=fDefault();if(S.auth.h){S.portal='h';S.view='portal';S.drawer=id}else{S.after=id;S.lt='h';S.view='signin'}render();window.scrollTo(0,0);break;
     case 'pg':S.page[S.portal]=v;S.drawer=null;S.side=false;S.ev=null;render();window.scrollTo(0,0);break;
     case 'side':S.side=!S.side;render(true);break;
     case 'bell':S.notif=!S.notif;render(true);break;
@@ -1736,6 +1767,8 @@ document.addEventListener('click',e=>{
     case 'med-res':{const r=byId(id);if(v==='Fit'){r.stage='Pre-Training';r.start=D(2026,11,1);r.end=D(2026,12,31);setSup(r);setPre(r,0);LOAD[r.dept]++;lg(r,TODAY,'Medical Centre','Fit · moved to Pre-Training');toast(t('Fit · moved to Pre-Training'))}else{r.stage='Not Selected';r.reason='Medical';lg(r,TODAY,'Medical Centre','Unfit');toast(t('Recorded as unfit'))}render(true);break}
     case 'tog':{const r=byId(id),o=el.dataset.sec==='post'?r.post:r.pre,k=el.dataset.k;o[k]=o[k]==='done'?'pending':'done';if(el.dataset.sec==='post'&&['ppe','card','laptop'].every(x=>r.post[x]!=='pending'))r.post.cert='done';lg(r,TODAY,HRS[0],(PRE.concat(POST).find(p=>p[0]===k)||[k,k])[1]+' · '+o[k]);render(true);break}
     case 'stg':S.f.stage=S.f.stage===v&&v!=='all'?'pipeline':v;render(true);break;
+    case 'f-reset':{const k=S.f;S.f=Object.assign(fDefault(),{track:k.track,pri:k.pri,stage:k.stage,q:k.q});render(true);break}
+    case 'csv':applicantsCsv();break;
     case 'tmode':S.tf.mode=v;render(true);break;
     case 'etab':S.eTab=v;render(true);break;
     case 'copy-link':{const n=document.getElementById('eid-link');const ok=()=>toast(t('Link copied'));try{navigator.clipboard.writeText(n.value).then(ok,()=>{n.select();toast(t('Select the link and copy it'))})}catch(err){n.select()}break}
@@ -1778,9 +1811,9 @@ document.addEventListener('input',e=>{const el=e.target,id=el.id;
   if(id==='h-q'){S.hf.q=el.value;render(true);refocus(id);return}
 });
 document.addEventListener('change',e=>{const el=e.target,id=el.id;
-  if(el.dataset.ap){S.apply.f[el.dataset.ap]=el.value;return}
+  if(el.dataset.ap){S.apply.f[el.dataset.ap]=el.value;if(el.dataset.ap==='gov'){S.apply.f.wil='';render(true)}return}
   if(el.dataset.file){S.apply.f['file_'+el.dataset.file]=el.files&&el.files[0]?el.files[0].name:'';render(true);return}
-  const map={'f-track':v=>S.f.track=v,'f-pri':v=>S.f.pri=v,'f-stage':v=>S.f.stage=v,'h-year':v=>S.hf.year=v,'h-dept':v=>S.hf.dept=v,'am-m':v=>S.am=v,'am-t':v=>S.amTrack=v};
+  const map={'f-gov':v=>S.f.gov=v,'f-gpa':v=>S.f.gpa=v,'f-gen':v=>S.f.gen=v,'f-grad':v=>S.f.grad=v,'f-maj':v=>S.f.maj=v,'f-uni':v=>S.f.uni=v,'f-track':v=>S.f.track=v,'f-pri':v=>S.f.pri=v,'f-stage':v=>S.f.stage=v,'h-year':v=>S.hf.year=v,'h-dept':v=>S.hf.dept=v,'am-m':v=>S.am=v,'am-t':v=>S.amTrack=v};
   if(map[id]){map[id](el.value);render(true);return}
   if(id==='t-inc'){S.tf.inc=el.checked;render(true);return}
   if(id==='ev-conf'){S.ev.confirm=el.checked;S.ev.err='';render(true);return}
