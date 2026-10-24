@@ -589,7 +589,7 @@ const R=rng(20261013);
 const pick=a=>a[Math.floor(R()*a.length)];
 const ri=(a,b)=>a+Math.floor(R()*(b-a+1));
 const D=(y,m,d)=>new Date(y,m-1,d);
-const TODAY=D(2026,10,13);
+const TODAY=D(2026,10,24);
 const addDays=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const fmt=d=>d?`${String(d.getDate()).padStart(2,'0')} ${MON[d.getMonth()]} ${d.getFullYear()}`:'—';
@@ -656,7 +656,7 @@ const STAGES=['Applied','Under Review','Assessment','Interview','Selected','Medi
 const PIPE=['Applied','Under Review','Assessment','Interview','Selected','Medical'];
 const PRE=[['medical','Medical Check-up'],['siti','Safety Induction'],['agreement','Agreement Signature'],['docs','Required Documents'],['card','Access / ID Card'],['email','Company Email'],['bank','Bank Details'],['ppe','PPE Issued'],['laptop','Laptop Issued']];
 const POST=[['ppe','Hand Over PPE'],['card','Access Card Hand Over'],['laptop','Return Laptop'],['feedback','Trainee Feedback'],['cert','Issue Certificate']];
-const SESSIONS=[['Safety Induction','Every intake'],['Effective Communication',D(2026,6,24)],['Time Management',D(2026,7,15)],['Presentation Skills',D(2026,8,19)],['Problem Solving Basics',D(2026,9,23)],['Professional Email Writing',D(2026,10,21)],['Teamwork on Site',D(2026,11,18)]];
+const SESSIONS=[['Safety Induction','Every intake'],['Effective Communication',D(2026,6,24)],['Time Management',D(2026,7,15)],['Presentation Skills',D(2026,8,19)],['Problem Solving Basics',D(2026,9,23)],['Professional Email Writing',D(2026,10,21)],['Teamwork on Site',D(2026,11,4)],['Effective Communication',D(2026,11,18)],['Time Management',D(2026,12,2)],['Presentation Skills',D(2027,1,13)],['Report Writing',D(2027,2,10)],['Leading Small Projects',D(2027,3,10)],['Workplace Safety Refresher',D(2027,4,14)],['Career Readiness',D(2027,5,12)],['Final Project Presentations',D(2027,6,16)]];
 const OPS_PLAN=['Site orientation and safety walk-through','Shadow the shift engineer on area rounds','Assist with the equipment inspection checklist','Log one process reading per shift for a week','Prepare a short improvement proposal','Present the proposal to the section'];
 const OFF_PLAN=['Department orientation and system access','Learn the main reports and workflows','Support a live project task','Draft a process map for one routine task','Prepare a mini-project','Present the mini-project to the team'];
 const HRS=['Maryam Al Rawahi','Badr Al Badi'];
@@ -776,7 +776,7 @@ for(let i=0;i<6;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'
 for(let i=0;i<6;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'Training',start:D(2026,9,13),end:D(2026,11,12),applied:D(2026,7,ri(1,20)),accepted:D(2026,8,ri(10,25))});
   assign(r);setSup(r);r.iq=ri(70,94);r.pers=ri(62,92);setPre(r,1);setSessions(r);setPlan(r);
   if(i<5){const e=mkEval(r,D(2026,9,1),3,0),c=allowCalc(13,13-Math.min(1,i%3),0,e.avg);Object.assign(e,{sched:13,attended:13-Math.min(1,i%3),excused:0,idx:c.idx,attPct:c.att,att:c.ti});e.sign.trainee=i<3;e.sign.hr=i<2;r.evals.push(e)}}
-for(let i=0;i<4;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'Pre-Training',start:D(2026,10,20),end:D(2026,12,19),applied:D(2026,8,ri(1,20)),accepted:D(2026,9,ri(15,28))});
+for(let i=0;i<4;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'Pre-Training',start:D(2026,11,8),end:D(2027,1,7),applied:D(2026,8,ri(1,20)),accepted:D(2026,9,ri(15,28))});
   assign(r);setSup(r);r.iq=ri(70,94);r.pers=ri(62,92);setPre(r,.5)}
 [['Medical',2],['Assessment',4],['Under Review',3],['Applied',3],['Not Selected',2]].forEach(([st,n])=>{for(let i=0;i<n;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:st,applied:D(2026,st==='Applied'?10:9,ri(1,11))});
   if(['Medical','Assessment','Not Selected'].includes(st)){r.iq=ri(st==='Not Selected'?48:64,st==='Not Selected'?62:95);r.pers=ri(55,92)}
@@ -785,15 +785,15 @@ for(let i=0;i<4;i++){const r=mk({track:'Referral',intake:'Referral 2026',stage:'
 /* Winter 2026 */
 for(let i=0;i<8;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Training',start:D(2026,10,4),end:D(2026,12,3),applied:D(2026,8,ri(1,25)),accepted:D(2026,9,ri(5,20))});
   assign(r);setSup(r);r.iq=ri(72,97);r.pers=ri(64,94);setPre(r,1);setSessions(r);setPlan(r)}
-for(let i=0;i<16;i++){const st=i<6?D(2026,10,18):D(2026,11,1);const r=mk({track:'Winter',intake:'Winter 2026',stage:'Pre-Training',start:st,end:addDays(st,60),applied:D(2026,8,ri(5,30)),accepted:D(2026,i<6?9:10,i<6?ri(20,29):ri(1,8))});
+for(let i=0;i<16;i++){const st=i<6?D(2026,11,1):D(2026,11,15);const r=mk({track:'Winter',intake:'Winter 2026',stage:'Pre-Training',start:st,end:addDays(st,60),applied:D(2026,8,ri(5,30)),accepted:D(2026,i<6?9:10,i<6?ri(20,29):ri(1,8))});
   assign(r);setSup(r);r.iq=ri(70,96);r.pers=ri(62,94);setPre(r,i<6?.72:.4)}
-const MED_DATES=[[D(2026,10,15),'08:30'],[D(2026,10,15),'09:15'],[D(2026,10,18),'08:30'],null,null];
+const MED_DATES=[[D(2026,10,27),'08:30'],[D(2026,10,27),'09:15'],[D(2026,10,29),'08:30'],null,null];
 for(let i=0;i<5;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Medical',applied:D(2026,9,ri(1,20)),accepted:D(2026,10,ri(4,9))});
   assign(r,true);r.iq=ri(70,95);r.pers=ri(62,94);if(MED_DATES[i]){r.medDate=MED_DATES[i][0];r.medTime=MED_DATES[i][1];r.medSms=i<2}}
 for(let i=0;i<3;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Selected',applied:D(2026,9,ri(1,20)),accepted:D(2026,10,ri(9,12))});assign(r,true);r.iq=ri(74,95);r.pers=ri(62,94)}
 for(let i=0;i<10;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Assessment',applied:D(2026,9,ri(10,30))});r.iq=ri(52,97);r.pers=ri(50,95)}
-for(let i=0;i<7;i++){mk({track:'Winter',intake:'Winter 2026',stage:'Under Review',applied:D(2026,10,ri(1,9))})}
-for(let i=0;i<9;i++){mk({track:'Winter',intake:'Winter 2026',stage:'Applied',applied:D(2026,10,ri(6,12))})}
+for(let i=0;i<7;i++){mk({track:'Winter',intake:'Winter 2026',stage:'Under Review',applied:D(2026,10,ri(4,15))})}
+for(let i=0;i<9;i++){mk({track:'Winter',intake:'Winter 2026',stage:'Applied',applied:D(2026,10,ri(13,23))})}
 for(let i=0;i<6;i++){const r=mk({track:'Winter',intake:'Winter 2026',stage:'Not Selected',applied:D(2026,9,ri(1,20))});r.iq=ri(40,60);r.pers=ri(45,70);r.reason='Assessment score below cut-off'}
 
 /* Past interns (history) */
@@ -1025,7 +1025,7 @@ function vApply(){
     <p class="mono" style="font-size:20px;color:var(--navy);margin:12px 0">${r.id}</p>
     <p class="muted">${r.track==='Eidaad'?t('HR will confirm your registration against the PDO list and send your interview date by SMS.'):t('The link to your online assessment will arrive by SMS and email within two working days.')}</p>
     ${r.track!=='Eidaad'?testSteps():''}
-    <div class="row" style="justify-content:center;margin-top:24px"><button class="btn btn-s" data-act="ap-new">${t('New application')}</button><button class="btn btn-p" data-act="go-hr-app" data-id="${r.id}">${t('View in HR Portal')}</button></div></div></main>`}
+    <div class="row" style="justify-content:center;margin-top:24px"><button class="btn btn-s" data-act="ap-new">${t('New application')}</button><button class="btn btn-p" data-act="go" data-v="home">${t('Back to home')}</button></div></div></main>`}
   const st=A.step;let body='';
   if(st===0)body=`<h2 class="h3">${t('Choose your programme')}</h2><div class="g g2" style="margin-top:16px">${PATHS.map(([k,icn,d,m])=>`<button class="card path" data-act="ap-track" data-v="${k}" style="${A.track===k?'border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-50)':''}"><span class="pi">${I[icn]}</span><h3>${trk(k)}</h3><p>${t(d)}</p><div class="meta">${m.map(x=>pill(t(x),'neu')).join('')}</div></button>`).join('')}</div>`;
   else if(st===1){body=`<h2 class="h3">${t('Personal information')}</h2><div class="form-grid" style="margin-top:16px">${inp('name','Full name (as on Civil ID)')}${inp('civil','Civil ID number','text','8 digits')}${inp('phone','Mobile number','tel')}${inp('email','Personal email','email')}${sel('gender','Gender',['Male','Female'],1)}${sel('gov','Governorate',GOVS,1)}${S.apply.f.gov?sel('wil','Wilayat',REGIONS[S.apply.f.gov],1):''}</div>`;
@@ -1210,7 +1210,7 @@ function hrOverview(){
   const active=ALL.filter(r=>r.stage!=='Not Selected'),tr=ALL.filter(r=>r.stage==='Training'),pre=ALL.filter(r=>r.stage==='Pre-Training'),pipe=ALL.filter(r=>PIPE.includes(r.stage));
   const recent=ALL.filter(r=>PIPE.includes(r.stage)).sort((a,b)=>b.applied-a.applied).slice(0,6);
   const totCap=DEPTS.reduce((a,d)=>a+d.cap,0),used=DEPTS.reduce((a,d)=>a+current(d.n),0);
-  const nextWeek=pre.filter(r=>r.start>=TODAY&&r.start<=addDays(TODAY,7));
+  const nextWeek=pre.filter(r=>r.start>=TODAY&&r.start<=addDays(TODAY,14));
   const inc=ALL.filter(r=>isActive(r)&&incomplete(r)),evDue=tr.filter(r=>dueMonths(r).length),medNo=ALL.filter(r=>r.stage==='Medical'&&!r.medSms),cardsOut=ALL.filter(r=>r.stage==='Completed'&&(r.post.card==='pending'||r.post.ppe==='pending'));
   const alerts=[[inc.length,'ic-bad','alert',tt('{n} trainees with incomplete procedures',{n:inc.length}),'trainees'],[evDue.length,'ic-warn','clip',tt('{n} monthly evaluations due',{n:evDue.length}),'evaluations'],[medNo.length,'ic-warn','med',tt('{n} medical appointments not sent',{n:medNo.length}),'medical'],[cardsOut.length,'ic-bad','badge',tt('{n} access cards or PPE not returned',{n:cardsOut.length}),'trainees']].filter(a=>a[0]);
   const byDept=DEPTS.map(d=>[dn(d.n),current(d.n)]).sort((a,b)=>b[1]-a[1]);
@@ -1219,7 +1219,7 @@ function hrOverview(){
   return `${ph(t('Overview'),tt('Welcome back, {n}',{n:HRS[0].split(' ')[0]}),`<span class="cap">${fd(TODAY)}</span>`)}
   <div class="g g4">${kpi('users','ic-navy',t('Total trainees 2026'),active.length,`<em>+${ALL.filter(r=>r.applied>=addDays(TODAY,-30)).length}</em> ${t('in the last 30 days')}`,['pg','applicants'])}
     ${kpi('clock','ic-info',t('Under process'),pipe.length,`${ALL.filter(r=>r.stage==='Applied').length} ${t('new to review')}`,['pg','applicants'])}
-    ${kpi('route','ic-teal',t('Starting soon'),pre.length,`${nextWeek.length} ${t('start next week')}`,['pg','trainees'])}
+    ${kpi('route','ic-teal',t('Starting soon'),pre.length,`${nextWeek.length} ${t('start in the next 2 weeks')}`,['pg','trainees'])}
     ${kpi('trend','ic-ok',t('Currently training'),tr.length,`${ALL.filter(r=>r.stage==='Completed').length} ${t('completed this year')}`,['pg','trainees'])}</div>
   <h2 class="h4" style="margin:28px 0 12px">${t('Quick actions')}</h2>
   <div class="qa">${[['users','ic-navy','Review applicants','applicants'],['clip','ic-teal','Monthly evaluations','evaluations'],['report','ic-info','Generate a report','reports'],['grid','ic-warn','Manage seats','departments']].map(([i,c,l,v])=>`<button data-act="pg" data-v="${v}"><span class="kpi-i ${c}">${I[i]}</span>${t(l)}</button>`).join('')}</div>
@@ -1232,8 +1232,8 @@ function hrOverview(){
     <div class="card cp"><div class="ch"><h3>${t('Trainees by department')}</h3><span class="cap">${t('Training and starting soon')}</span></div>${hbars(byDept)}</div>
     <div class="col"><div class="card cp"><div class="ch"><h3>${t('Trainees accepted per month')}</h3><span class="cap">2026</span></div>${vbars(mon)}</div>
     <div class="card cp"><div class="ch"><h3>${t('Trainees by university')}</h3></div>${hbars(byUni,'tl')}</div></div></div>
-  <div class="card" style="margin-top:16px"><div class="cp" style="padding-bottom:12px"><div class="ch" style="margin:0"><h3>${t('Starting next week')}</h3><span class="cap">${fd(TODAY)} – ${fd(addDays(TODAY,7))}</span></div></div>
-    <div class="tw" style="border:0;border-radius:0;border-top:1px solid var(--line)"><table><tr><th>${t('Trainee')}</th><th>${t('Department')}</th><th>${t('Start date')}</th><th>${t('Procedures')}</th></tr>${nextWeek.map(r=>{const [a,b]=preDone(r);return `<tr class="clk" data-act="open" data-id="${r.id}"><td>${who(r.name,trk(r.track))}</td><td>${dn(r.dept)}</td><td class="num">${fd(r.start)}</td><td>${pill(a+' / '+b,a===b?'ok':'warn')}</td></tr>`}).join('')||`<tr><td colspan="4" class="empty">${t('No trainees start next week.')}</td></tr>`}</table></div></div>`;
+  <div class="card" style="margin-top:16px"><div class="cp" style="padding-bottom:12px"><div class="ch" style="margin:0"><h3>${t('Starting in the next 2 weeks')}</h3><span class="cap">${fd(TODAY)} – ${fd(addDays(TODAY,14))}</span></div></div>
+    <div class="tw" style="border:0;border-radius:0;border-top:1px solid var(--line)"><table><tr><th>${t('Trainee')}</th><th>${t('Department')}</th><th>${t('Start date')}</th><th>${t('Procedures')}</th></tr>${nextWeek.map(r=>{const [a,b]=preDone(r);return `<tr class="clk" data-act="open" data-id="${r.id}"><td>${who(r.name,trk(r.track))}</td><td>${dn(r.dept)}</td><td class="num">${fd(r.start)}</td><td>${pill(a+' / '+b,a===b?'ok':'warn')}</td></tr>`}).join('')||`<tr><td colspan="4" class="empty">${t('No trainees start in the next 2 weeks.')}</td></tr>`}</table></div></div>`;
 }
 /* the applicants list after every filter, in ranking order (used by the table and the export) */
 function applicantsList(){
@@ -1299,7 +1299,7 @@ const slotLabel=x=>{const [h,m]=x.split(':').map(Number);return `${h%12||12}:${S
 const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 function hrMedical(){const L=ALL.filter(r=>r.stage==='Medical');
   return `${ph(t('Medical check-up'),t('Sohar Aluminium Medical Centre'))}<div class="card"><div class="tw" style="border:0"><table><tr><th>${t('Trainee')}</th><th>${t('Department')}</th><th>${t('Date')}</th><th>${t('Time')}</th><th>${t('SMS')}</th><th>${t('Result')}</th></tr>
-  ${L.map(r=>`<tr><td>${who(r.name,`<span class="mono">${r.id}</span> · ${trk(r.track)}`)}</td><td>${dn(r.dept||'—')}</td><td><input class="inp" style="height:38px;min-width:150px" type="date" data-med="date" data-id="${r.id}" value="${r.medDate?iso(r.medDate):''}" min="2026-10-13"></td><td><select class="inp" style="height:38px;min-width:120px" data-med="time" data-id="${r.id}" aria-label="${t('Time')}"><option value="">${t('Select')}</option>${MED_SLOTS.map(x=>`<option value="${x}" ${r.medTime===x?'selected':''}>${slotLabel(x)}</option>`).join('')}</select></td>
+  ${L.map(r=>`<tr><td>${who(r.name,`<span class="mono">${r.id}</span> · ${trk(r.track)}`)}</td><td>${dn(r.dept||'—')}</td><td><input class="inp" style="height:38px;min-width:150px" type="date" data-med="date" data-id="${r.id}" value="${r.medDate?iso(r.medDate):''}" min="${iso(TODAY)}"></td><td><select class="inp" style="height:38px;min-width:120px" data-med="time" data-id="${r.id}" aria-label="${t('Time')}"><option value="">${t('Select')}</option>${MED_SLOTS.map(x=>`<option value="${x}" ${r.medTime===x?'selected':''}>${slotLabel(x)}</option>`).join('')}</select></td>
   <td>${r.medSms?pill(t('Sent'),'ok',1):`<button class="btn btn-n btn-sm" data-act="med-sms" data-id="${r.id}" ${r.medDate&&r.medTime?'':'disabled'}>${I.send} ${t('Send SMS')}</button>`}</td>
   <td><div class="row" style="gap:6px;flex-wrap:nowrap"><button class="btn btn-s btn-sm" data-act="med-res" data-id="${r.id}" data-v="Fit" ${r.medSms?'':'disabled'}>${t('Fit')}</button><button class="btn btn-d btn-sm" data-act="med-res" data-id="${r.id}" data-v="Unfit" ${r.medSms?'':'disabled'}>${t('Unfit')}</button></div></td></tr>`).join('')||`<tr><td colspan="6"><div class="empty">${I.med}<b>${t('No trainees waiting for a medical check-up')}</b></div></td></tr>`}</table></div></div>`}
 function hrTrainees(){
@@ -1677,6 +1677,7 @@ AR={
 'Nominate applicants, send them the link and access code, and follow who finished':'رشّح المتقدمين، وأرسل لهم الرابط ورمز الدخول، وتابع من أنهى الاختبار','Ready to nominate':'جاهزون للترشيح','Under review':'قيد المراجعة','Past the deadline':'انتهت المهلة','Resend to give a new chance':'أعد الإرسال لإعطاء فرصة جديدة','Nominate for the online test':'الترشيح للاختبار الإلكتروني','Summer, Winter and SA Employee Referral applicants whose documents are reviewed.':'متقدمو الصيفي والشتوي وترشيح الموظفين الذين رُوجعت مستنداتهم.','Time to finish':'مهلة الإنهاء','{n} days':'{n} أيام','Send link and code to {n}':'إرسال الرابط والرمز إلى {n}','Send link and code':'إرسال الرابط والرمز','Select all':'تحديد الكل','Nobody is waiting to be nominated':'لا يوجد أحد بانتظار الترشيح','Link sent':'أُرسل الرابط','Access code':'رمز الدخول','Sent':'أُرسل','Deadline':'آخر موعد','Resend':'إعادة الإرسال','No links sent yet':'لم يُرسل أي رابط بعد','Due today':'ينتهي اليوم','{n} days left':'باقي {n} أيام','Link and code sent to {n} applicants':'أُرسل الرابط والرمز إلى {n} متقدمين','The same message, each with its own code, went to {n} applicants. This is the first one.':'وصلت نفس الرسالة إلى {n} متقدمين، ولكل واحد رمزه. هذه رسالة أولهم.','{n} online tests past the deadline':'{n} اختبارات انتهت مهلتها',
 'Nominate':'الترشيح','Tick the applicants to invite, choose how many days they get (3 by default), then send.':'حدد المتقدمين، واختر عدد الأيام (3 افتراضياً)، ثم أرسل.','Each applicant gets their own 6-character code by SMS and email, with the link. It works once.':'كل متقدم يصله رمز خاص من 6 خانات مع الرابط بالـ SMS والبريد، ويُستخدم مرة واحدة.','Waiting':'بالانتظار','The link is sent and the deadline has not passed.':'أُرسل الرابط ولم تنتهِ المهلة.','The applicant did not finish in time. Resend gives a new code and a new deadline.':'لم ينهِ المتقدم في الوقت. إعادة الإرسال تعطيه رمزاً ومهلة جديدين.','The test is done and the score is in. Next: ranking and selection in Applicants.':'أُنجز الاختبار وظهرت الدرجة. التالي: الترتيب والاختيار في صفحة المتقدمين.',
 '{d} left':'متبقي {d}',
+'Back to home':'العودة للرئيسية','start in the next 2 weeks':'يبدأون خلال أسبوعين','Starting in the next 2 weeks':'يبدأون خلال الأسبوعين القادمين','No trainees start in the next 2 weeks.':'لا يوجد متدربون يبدأون خلال الأسبوعين القادمين.','Report Writing':'كتابة التقارير','Leading Small Projects':'قيادة المشاريع الصغيرة','Workplace Safety Refresher':'تجديد السلامة في مكان العمل','Career Readiness':'الجاهزية المهنية','Final Project Presentations':'عروض المشاريع النهائية',
 'Chemical Engineering':'الهندسة الكيميائية','Mechanical Engineering':'الهندسة الميكانيكية','Electrical Engineering':'الهندسة الكهربائية','Industrial Engineering':'الهندسة الصناعية','Marine Engineering':'الهندسة البحرية','Logistics Management':'إدارة اللوجستيات','Computer Science':'علوم الحاسوب','Information Technology':'تقنية المعلومات','Human Resource Management':'إدارة الموارد البشرية','Business Administration':'إدارة الأعمال','Occupational Health & Safety':'الصحة والسلامة المهنية','Environmental Science':'العلوم البيئية','Mass Communication':'الإعلام','Marketing':'التسويق','Supply Chain Management':'إدارة سلسلة الإمداد'
 };
 
@@ -1804,7 +1805,7 @@ document.addEventListener('click',e=>{
     case 'rej':{const r=byId(id);r.stage='Not Selected';r.reason='Not selected by HR';lg(r,TODAY,HRS[0],'Marked not selected');toast(t('Marked not selected'));render(true);break}
     case 'med-sms':S.modal={type:'sms',id};render(true);break;
     case 'med-send':{const r=byId(id);r.medSms=true;lg(r,TODAY,HRS[0],`Medical SMS prepared · ${fmt(r.medDate)} ${r.medTime}`);S.modal=null;toast(t('SMS marked as sent'));render(true);break}
-    case 'med-res':{const r=byId(id);if(v==='Fit'){r.stage='Pre-Training';r.start=D(2026,11,1);r.end=D(2026,12,31);setSup(r);setPre(r,0);LOAD[r.dept]++;lg(r,TODAY,'Medical Centre','Fit · moved to Pre-Training');toast(t('Fit · moved to Pre-Training'))}else{r.stage='Not Selected';r.reason='Medical';lg(r,TODAY,'Medical Centre','Unfit');toast(t('Recorded as unfit'))}render(true);break}
+    case 'med-res':{const r=byId(id);if(v==='Fit'){r.stage='Pre-Training';r.start=D(2026,11,15);r.end=D(2027,1,14);setSup(r);setPre(r,0);LOAD[r.dept]++;lg(r,TODAY,'Medical Centre','Fit · moved to Pre-Training');toast(t('Fit · moved to Pre-Training'))}else{r.stage='Not Selected';r.reason='Medical';lg(r,TODAY,'Medical Centre','Unfit');toast(t('Recorded as unfit'))}render(true);break}
     case 'tog':{const r=byId(id),o=el.dataset.sec==='post'?r.post:r.pre,k=el.dataset.k;o[k]=o[k]==='done'?'pending':'done';if(el.dataset.sec==='post'&&['ppe','card','laptop'].every(x=>r.post[x]!=='pending'))r.post.cert='done';lg(r,TODAY,HRS[0],(PRE.concat(POST).find(p=>p[0]===k)||[k,k])[1]+' · '+o[k]);render(true);break}
     case 'stg':S.f.stage=S.f.stage===v&&v!=='all'?'pipeline':v;render(true);break;
     case 'f-reset':{const k=S.f;S.f=Object.assign(fDefault(),{track:k.track,pri:k.pri,stage:k.stage,q:k.q});render(true);break}
