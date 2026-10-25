@@ -1207,17 +1207,17 @@ function vHR(){
   return shell('h',body);
 }
 function hrOverview(){
-  const active=ALL.filter(r=>r.stage!=='Not Selected'),tr=ALL.filter(r=>r.stage==='Training'),pre=ALL.filter(r=>r.stage==='Pre-Training'),pipe=ALL.filter(r=>PIPE.includes(r.stage));
+  const active=ALL.filter(r=>r.stage!=='Not Selected'),yr=ALL.filter(r=>['Pre-Training','Training','Completed'].includes(r.stage)),tr=ALL.filter(r=>r.stage==='Training'),pre=ALL.filter(r=>r.stage==='Pre-Training'),pipe=ALL.filter(r=>PIPE.includes(r.stage));
   const recent=ALL.filter(r=>PIPE.includes(r.stage)).sort((a,b)=>b.applied-a.applied).slice(0,6);
   const totCap=DEPTS.reduce((a,d)=>a+d.cap,0),used=DEPTS.reduce((a,d)=>a+current(d.n),0);
   const nextWeek=pre.filter(r=>r.start>=TODAY&&r.start<=addDays(TODAY,14));
   const inc=ALL.filter(r=>isActive(r)&&incomplete(r)),evDue=tr.filter(r=>dueMonths(r).length),medNo=ALL.filter(r=>r.stage==='Medical'&&!r.medSms),cardsOut=ALL.filter(r=>r.stage==='Completed'&&(r.post.card==='pending'||r.post.ppe==='pending'));
   const alerts=[[inc.length,'ic-bad','alert',tt('{n} trainees with incomplete procedures',{n:inc.length}),'trainees'],[evDue.length,'ic-warn','clip',tt('{n} monthly evaluations due',{n:evDue.length}),'evaluations'],[medNo.length,'ic-warn','med',tt('{n} medical appointments not sent',{n:medNo.length}),'medical'],[cardsOut.length,'ic-bad','badge',tt('{n} access cards or PPE not returned',{n:cardsOut.length}),'trainees']].filter(a=>a[0]);
   const byDept=DEPTS.map(d=>[dn(d.n),current(d.n)]).sort((a,b)=>b[1]-a[1]);
-  const uc={};active.forEach(r=>uc[t(r.uni)]=(uc[t(r.uni)]||0)+1);const byUni=Object.entries(uc).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const uc={};yr.forEach(r=>uc[t(r.uni)]=(uc[t(r.uni)]||0)+1);const byUni=Object.entries(uc).sort((a,b)=>b[1]-a[1]).slice(0,6);
   const mon=MON.slice(0,10).map((m,i)=>[S.lang==='ar'?MON_AR[i].slice(0,3):m,ALL.filter(r=>r.accepted&&r.accepted.getFullYear()===2026&&r.accepted.getMonth()===i).length]);
   return `${ph(t('Overview'),tt('Welcome back, {n}',{n:HRS[0].split(' ')[0]}),`<span class="cap">${fd(TODAY)}</span>`)}
-  <div class="g g4">${kpi('users','ic-navy',t('Total trainees 2026'),active.length,`<em>+${ALL.filter(r=>r.applied>=addDays(TODAY,-30)).length}</em> ${t('in the last 30 days')}`,['pg','applicants'])}
+  <div class="g g4">${kpi('users','ic-navy',t('Total trainees 2026'),yr.length,`<em>+${yr.filter(r=>r.accepted&&r.accepted>=addDays(TODAY,-30)).length}</em> ${t('in the last 30 days')}`,['pg','applicants'])}
     ${kpi('clock','ic-info',t('Under process'),pipe.length,`${ALL.filter(r=>r.stage==='Applied').length} ${t('new to review')}`,['pg','applicants'])}
     ${kpi('route','ic-teal',t('Starting soon'),pre.length,`${nextWeek.length} ${t('start in the next 2 weeks')}`,['pg','trainees'])}
     ${kpi('trend','ic-ok',t('Currently training'),tr.length,`${ALL.filter(r=>r.stage==='Completed').length} ${t('completed this year')}`,['pg','trainees'])}</div>
@@ -1383,8 +1383,9 @@ function hrHistory(){
   if(H.year!=='all')L=L.filter(p=>p.year===Number(H.year));if(H.dept!=='all')L=L.filter(p=>p.dept===H.dept);
   if(H.q){const q=H.q.toLowerCase();L=L.filter(p=>(p.name+' '+p.civil+' '+p.uni).toLowerCase().includes(q))}
   L.sort((a,b)=>b.year-a.year||b.score-a.score);const linked=ALL.filter(r=>r.histFound&&PIPE.includes(r.stage));
-  return `${ph(t('History'),t('All trainees since 2022'))}
-  <div class="g g4" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));margin-bottom:16px">${yrs.map(y=>`<button class="card kpi" data-act="hyear" data-v="${y}" style="${H.year==y?'border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-50)':''}"><span class="kpi-h">${y}</span><b>${[...cur,...PAST].filter(p=>p.year===y).length}</b><span class="tr">${t('trainees')}</span></button>`).join('')}</div>
+  const now=ALL.filter(r=>r.stage==='Training'||r.stage==='Pre-Training').length;
+  return `${ph(t('History'),t('Completed trainees since 2022'))}
+  <div class="g g4" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));margin-bottom:16px">${yrs.map(y=>`<button class="card kpi" data-act="hyear" data-v="${y}" style="${H.year==y?'border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-50)':''}"><span class="kpi-h">${y}</span><b>${[...cur,...PAST].filter(p=>p.year===y).length}</b><span class="tr">${t('completed')}</span>${y===2026&&now?`<span class="cap" style="display:block">${tt('+{n} still in training',{n:now})}</span>`:''}</button>`).join('')}</div>
   ${linked.length?`<div class="card cp" style="margin-bottom:16px;background:var(--warning-50);border-color:#F6DDB2"><b>${tt('{n} current applicants found in history',{n:linked.length})}</b><p class="small" style="margin-top:4px">${linked.map(r=>esc(r.name)).join(' · ')}</p></div>`:''}
   <div class="card cp"><div class="flt"><div class="field grow"><label for="h-q">${t('Search')}</label><div class="inp-ic">${I.search}<input class="inp" id="h-q" value="${esc(H.q)}" placeholder="${t('Name, Civil ID, university')}"></div></div>
   <div class="field"><label for="h-year">${t('Year')}</label><select class="inp" id="h-year"><option value="all">${t('All')}</option>${yrs.map(y=>`<option ${H.year==y?'selected':''}>${y}</option>`).join('')}</select></div>
@@ -1591,7 +1592,7 @@ AR={
 'Month':'الشهر','Payable · {m}':'المستحق · {m}','of the full amount':'من المبلغ الكامل','Full allowance':'علاوة كاملة','Reduced allowance':'علاوة مخفّضة','On hold':'معلّقة','Waiting for evaluation':'بانتظار التقييم','Index':'المؤشر','Amount (OMR)':'المبلغ (ر.ع)','Evaluation not submitted by {s}':'لم يرسل {s} التقييم بعد','Approved for payroll':'معتمدة للرواتب',
 'Individual progress reports for universities and PDO':'تقارير فردية للجامعات و PDO','University reports':'تقارير الجامعات','One report per trainee for their university and college. Allowance is not included.':'تقرير لكل متدرب موجّه لجامعته وكليته، بدون العلاوة.','PDO reports':'تقارير PDO','One report per trainee for PDO, with the monthly allowance paid.':'تقرير لكل متدرب موجّه لـ PDO، مع العلاوة الشهرية المصروفة.','Monthly allowance':'العلاوة الشهرية','Payable amount by month and programme.':'المبالغ المستحقة حسب الشهر والبرنامج.','Eidaad 2026 · individual reports':'إعداد 2026 · التقارير الفردية',
 'Capacity control':'التحكم بالسعة','{n} available':'{n} متاح','Capacity':'السعة','Current':'الحالي','Supervisors':'المشرفون','Full capacity':'مكتمل',
-'All trainees since 2022':'جميع المتدربين منذ 2022','trainees':'متدرب','{n} current applicants found in history':'{n} متقدمين حاليين موجودون في السجل','Name, Civil ID, university':'الاسم، الرقم المدني، الجامعة','Year':'السنة','Recommended':'موصى به','For hiring':'للتوظيف','{n} records':'{n} سجل','No records match.':'لا توجد سجلات مطابقة.',
+'All trainees since 2022':'جميع المتدربين منذ 2022','Completed trainees since 2022':'المتدربون المكملون منذ 2022','completed':'أكملوا','+{n} still in training':'+{n} ما زالوا في التدريب','trainees':'متدرب','{n} current applicants found in history':'{n} متقدمين حاليين موجودون في السجل','Name, Civil ID, university':'الاسم، الرقم المدني، الجامعة','Year':'السنة','Recommended':'موصى به','For hiring':'للتوظيف','{n} records':'{n} سجل','No records match.':'لا توجد سجلات مطابقة.',
 'Allowance policy':'سياسة العلاوة','Eidaad monthly allowance (OMR)':'علاوة إعداد الشهرية (ر.ع)','Summer, Winter and Referral (OMR)':'الصيفي والشتوي والترشيح (ر.ع)','Index for the full allowance (%)':'المؤشر المطلوب للعلاوة الكاملة (٪)','Save changes':'حفظ التغييرات','Settings saved':'تم حفظ الإعدادات','Check the values: minimum score between 51 and 100':'تحقق من القيم: الحد الأدنى بين 51 و 100',
 'last month':'آخر شهر','Complete':'مكتمل','Issued':'صدرت','Trainee profile':'ملف المتدرب','Close':'إغلاق','Progress reports':'تقارير الأداء','Trainee record':'بيانات المتدرب','Trainee number':'رقم المتدرب','End date':'تاريخ الانتهاء','Required documents':'المستندات المطلوبة','Access / ID card':'بطاقة الدخول','Monthly allowance':'العلاوة الشهرية','Not provided':'غير مُدخل','Expected':'متوقع',
 'Average':'المتوسط','Average rating by month':'متوسط التقييم الشهري','HR signature pending':'بانتظار توقيع الموارد البشرية','Sign as HR':'توقيع الموارد البشرية','Contact':'التواصل','Mobile':'الهاتف','Activity log':'سجل الإجراءات','excused':'بعذر',
